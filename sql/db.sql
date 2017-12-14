@@ -1,3 +1,4 @@
+
 CREATE DATABASE school;
 
 CREATE TABLE user_group( 
