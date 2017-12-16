@@ -23,8 +23,8 @@ CREATE TABLE exercise(
   
 CREATE TABLE solution( 
 	id INT AUTO_INCREMENT, 
-	created DATETIME, 
-	updated DATETIME, 
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+	updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
 	description TEXT, 
 	exercise_id INT, 
 	user_id BIGINT, 
