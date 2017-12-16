@@ -17,6 +17,7 @@ public class MySQLUserDao implements UserDao{
 	/**
 	 * @return newly created user's id or a -1 on error/failure
 	 */
+	@Override
 	public int save(User user) {
 		
 		String sql = "INSERT INTO user(username, email, password, user_group_id) " + "VALUES (?, ?,	?, ?)";
@@ -47,6 +48,7 @@ public class MySQLUserDao implements UserDao{
 	/**
 	 * @return true on success, false on failure or error
 	 */
+	@Override
 	public boolean update(User user) {
 		String sql = "UPDATE user " + " SET username = ?, email = ?, password = ?, user_group_id = ? "
 				+ " WHERE id = ?";
@@ -79,6 +81,7 @@ public class MySQLUserDao implements UserDao{
 	/**
 	 * @return the User with the given id or null on error or if not found
 	 */
+	@Override
 	public  User loadUserById(int id) {
 		String sql = "SELECT * FROM	user WHERE id = ?";
 		
@@ -99,7 +102,7 @@ public class MySQLUserDao implements UserDao{
 		return null;
 	}
 	
-	
+	@Override
 	public  Collection<User> loadAllUsers() {
 		
 		Collection<User> users = null;
@@ -124,6 +127,7 @@ public class MySQLUserDao implements UserDao{
 	/**
 	 * @return true on success, false on failure
 	 */
+	@Override
 	public boolean delete(long id) {
 
 		//  object is not in the db
@@ -144,6 +148,32 @@ public class MySQLUserDao implements UserDao{
 		
 		return false;  
 	}
+	
+	/**
+	 * @return a valid user if the user name and password are correct, null otherwise 
+	 */
+	@Override
+	public User loadUserByEmailAndPassword(String email, String password) {
+		
+		try (Connection conn = DbUtil.getConn();
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?")) {
+			
+			try {
+				ps.setString(1, email);
+				ps.setString(2, password);
+				ResultSet rs = ps.executeQuery();
+				
+				return extractUserFromRS(rs);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	//////////////////////// helper methods ///////////////////////////////////
 	
 	private static User extractUserFromRS(ResultSet rs) throws SQLException {
@@ -156,5 +186,6 @@ public class MySQLUserDao implements UserDao{
 		
 		return user;
 	}
+	
 
 }
