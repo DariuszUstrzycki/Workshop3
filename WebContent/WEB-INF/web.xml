@@ -9,4 +9,10 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+
+	<context-param>
+		<description>number of solutions displayed on the main page</description>
+		<param-name>numberOfSolutions</param-name>
+		<param-value>5</param-value>
+	</context-param>
 </web-app>
