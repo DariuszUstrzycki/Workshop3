@@ -16,12 +16,12 @@ public class User {
 	private String email;
 	private int userGroupId;
 
-	public User(String username, String email, String password) {
+	public User(String username, String email, String password, int userGroupId) {
 		this.id = 0l;
 		this.username = username;
 		this.email = email;
 		setPassword(password);
-		this.userGroupId = 0;
+		this.userGroupId = userGroupId;
 	}
 
 	public User() {
@@ -59,6 +59,10 @@ public class User {
 
 	public boolean checkPassword(String candidate) {
 		return BCrypt.checkpw(candidate, this.password);
+	}
+	
+	public static String hashPassword(String password) {
+		return BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
 	public String getEmail() {
