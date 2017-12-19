@@ -18,7 +18,15 @@ import pl.coderslab.db.DbUtil;
 /**
  * Servlet implementation class Home
  */
-@WebServlet({"/Home", "/"})
+
+
+
+
+
+
+
+/*@WebServlet({"/Home", "/"})
+ * */                                             //  !!!!!!!!!!!!!!!!!!!
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
