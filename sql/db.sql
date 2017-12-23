@@ -7,11 +7,11 @@ CREATE TABLE user_group(
 	PRIMARY KEY(id));
 
 CREATE TABLE user (
-  	id BIGINT AUTO_INCREMENT,
-  	username varchar(255) NOT NULL,
+  	id BIGINT UNSIGNED AUTO_INCREMENT,
+  	username varchar(255) NOT NULL UNIQUE,
   	email varchar(255) NOT NULL UNIQUE,
   	password varchar(255) NOT NULL,
-  	user_group_id INT DEFAULT NULL,
+  	user_group_id INT DEFAULT 1, -- by default everyone has the status of a student
   	PRIMARY KEY (id),
   	FOREIGN KEY (user_group_id) REFERENCES user_group (id) );
   

@@ -153,17 +153,18 @@ public class MySQLUserDao implements UserDao{
 	 * @return a valid user if the user name and password are correct, null otherwise 
 	 */
 	@Override
-	public User loadUserByEmailAndPassword(String email, String password) {
+	public User loadUserByEmail(String email) {
 		
 		try (Connection conn = DbUtil.getConn();
-				PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?")) {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE email = ?")) {
 			
 			try {
 				ps.setString(1, email);
-				ps.setString(2, password);
 				ResultSet rs = ps.executeQuery();
 				
-				return extractUserFromRS(rs);
+				if(rs.next()) {
+					return extractUserFromRS(rs);
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();

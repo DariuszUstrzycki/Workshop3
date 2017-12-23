@@ -54,16 +54,16 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.password = password;         //= BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
-	public boolean checkPassword(String candidate) {
+	/*public boolean checkPassword(String candidate) {
 		return BCrypt.checkpw(candidate, this.password);
 	}
 	
 	public static String hashPassword(String password) {
 		return BCrypt.hashpw(password, BCrypt.gensalt());
-	}
+	}*/
 
 	public String getEmail() {
 		return email;
