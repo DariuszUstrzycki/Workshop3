@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-/*@WebFilter(description = "blocks access to unlogged users to certain pages", urlPatterns = { "/*" })*/
+@WebFilter(description = "blocks access for unlogged users to certain pages", urlPatterns = { "/*" })
 public class LoginFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
@@ -33,15 +33,14 @@ public class LoginFilter implements Filter {
         String requestPath = request.getRequestURI();
         System.out.println("requestPath intercepted in LoginFilter: " + requestPath);
 
-        if (needsAuthentication(requestPath) ||
-            session == null ||
-            session.getAttribute("loggedUser") == null) { // 
+        if (needsAuthentication(requestPath) &&
+              (  session == null || session.getAttribute("loggedUser") == null) ) { // 
         	
-        	System.out.println("Filter redirects to login");
+        	System.out.println("-12- NEEDS needsAuthentication - returned true!  ");
 
-            response.sendRedirect("login"); // No logged-in user found, so redirect to login page.
+            response.sendRedirect("home"); // No logged-in user found, so redirect to login page.
         } else {
-        	System.out.println("Filter does doFilter()");
+        	System.out.println("-12- DOESNT NEED needsAuthentication  - Filter does doFilter()");
             chain.doFilter(req, res); // Logged-in user found, so just continue request.
         }
 	}
@@ -52,8 +51,8 @@ public class LoginFilter implements Filter {
 	
 	//basic validation of pages that do not require authentication
     private boolean needsAuthentication(String url) {
-        String[] validNonAuthenticationUrls = {"/Workshop3/views/login.jsp", "login",  "login.jsp","*/login.jsp","views/login.jsp", "/views/signup.jsp", "index.jsp" };
-        
+        String[] validNonAuthenticationUrls = {"/", "login",  "login.jsp" , "signup", "signup.jsp", "home", "index.jsp" };
+
         for(String validUrl : validNonAuthenticationUrls) {
             if (url.endsWith(validUrl)) {
                 return false;

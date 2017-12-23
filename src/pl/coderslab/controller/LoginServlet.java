@@ -15,9 +15,7 @@ import pl.coderslab.dao.MySQLUserDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.User;
 
-/**
- * Servlet implementation class LoginServlet
- */
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,10 +30,10 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User loggedUser = (User) session.getAttribute("loggedUser");
 		
-		if (loggedUser != null) {
-			response.sendRedirect("home");
-		} else {
+		if (loggedUser == null) {
 			response.sendRedirect("views/login.jsp");
+		} else {
+			response.sendRedirect("home");
 		}
 		
 	}

@@ -33,7 +33,7 @@
 <c:if test="${empty loggedUser}">
 <table>
 <tr><td>  <td></tr>
-<tr><td><%out.print("Please sign up or log in."); %></td></tr>
+<tr><td><%out.print("Please sign up or log in to fully use this website."); %></td></tr>
 <tr><td></td></tr>
 <tr><td><a href='login'>Log in</a></td></tr>
 <tr><td><a href='signup'>Sign up</a></td></tr>
