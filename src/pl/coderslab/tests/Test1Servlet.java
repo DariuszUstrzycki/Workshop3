@@ -1,33 +1,27 @@
-package pl.coderslab.controller;
+package pl.coderslab.tests;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LogOutServlet
+ * Servlet implementation class Test1Servlet
  */
-@WebServlet("/logout")
-public class LogOutServlet extends HttpServlet {
+@WebServlet("/test1")
+public class Test1Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession(false);
-		
-		if(session != null) {
-			session.invalidate(); // user logs out
-		}
-				
-		response.sendRedirect("home");
-		
+		response.getWriter().append("Welcome to test1 - served at: ").append(request.getContextPath());
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }

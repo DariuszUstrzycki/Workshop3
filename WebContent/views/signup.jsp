@@ -10,10 +10,16 @@
 </head>
 <body>
 
+<c:if test="${not empty loggedUser}">
+<% response.sendRedirect("../home"); %>
+</c:if>
+
+<!-- 
 <c:if test="${not empty cookie.loggedUser}">
 <% response.sendRedirect("../index.jsp"); %>
 </c:if>
-
+ -->
+ 
 <p>Complete all the fields to sign up</p>
 <p><font color='red'>${signupFailure}</font></p>
 

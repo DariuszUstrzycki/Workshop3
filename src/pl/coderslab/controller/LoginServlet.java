@@ -29,9 +29,11 @@ public class LoginServlet extends HttpServlet {
 		//getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
 		System.out.println("DoGet of LoginServlet called!");
 		
-		Cookie alreadyLogged = findCookie("loggedUser", request);
-		if (alreadyLogged != null) {
-			response.sendRedirect("index.jsp");
+		HttpSession session = request.getSession();
+		User loggedUser = (User) session.getAttribute("loggedUser");
+		
+		if (loggedUser != null) {
+			response.sendRedirect("home");
 		} else {
 			response.sendRedirect("views/login.jsp");
 		}
@@ -41,13 +43,12 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		System.out.println("DoPost of LoginServlet called!");
-
-
+																								System.out.println("DoPost of LoginServlet called!");
+		
 		String email = request.getParameter("email");
 
-		if (isValid(email, request.getParameter("password"))) {
-			System.out.println("1. Valid email and password");
+		if (notNullOrEmpty(email, request.getParameter("password"))) {
+																								System.out.println("1. not null/empty email and password");
 
 			UserDao dao = new MySQLUserDao();
 			User user = dao.loadUserByEmail(email);
@@ -56,28 +57,24 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("loginFailure", "Ooops, No email like this in the database!");
 				getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
 			} else {
-				System.out.println("2. User is NOT null");
+																									System.out.println("2. User is NOT null. Checking if passwords match...");
 				boolean match = ENCODER.validatePassword(request.getParameter("password"), user.getPassword());
 				
 				if(match) {
-					System.out.println("3. password matches");
-					
-					response.addCookie(new Cookie("loggedUser",user.getUsername()));
-					
-					////////////// ----------- czy ta czesc ma sens?
-					// tylko teraz po co trzymac w sesji calego user'a
-					/*HttpSession session = request.getSession();	    
-			        session.setAttribute("loggedUser",user); */
-			        /////////-------------
-			        
-					response.sendRedirect("index.jsp");
+																									System.out.println("3. passwords match!");
+					HttpSession session = request.getSession();
+					session.setAttribute("loggedUser", user); // dodany z haslem
+			        																					System.out.println("Logged user added to session. Redirect to home");
+					response.sendRedirect("home");
 				} else {
+																											System.out.println(" passwords  dont  match! forward to login");
 					request.setAttribute("loginFailure", "<font color=red>Either email or password is wrong.</font>");
 					getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
 				}
 			}
 			
 		} else {
+																										System.out.println("Incorrect login. forward to login.jsp");
 			request.setAttribute("loginFailure", "Ooops, the email and password fields can't be empty!");
 			getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
 		}
@@ -85,46 +82,10 @@ public class LoginServlet extends HttpServlet {
 
 	}
 	
-	/*private void upgradeUserStatus(HttpServletRequest request, HttpServletResponse response) {
-		
-		Cookie signedUp = findCookie("signedUp", request);
-		
-		if(signedUp != null) {
-			signedUp.setMaxAge(0);
-			response.addCookie(signedUp);
-		} else {
-			throw new IllegalStateException("The signedUp Cookie should not be null when user is logging!");
-		}
-				
-		response.addCookie(new Cookie("loggedUser", "loggedUser"));
-	}*/
 	
-	
-	private boolean isValid(String email, String password) {
+	private boolean notNullOrEmpty(String email, String password) {
 		return  ! (email == null || email.equals("") || password == null || password.equals(""));
 	}
-	
-	private Cookie findCookie(String cookieName, HttpServletRequest request) {
 
-		if(cookieName != null && !cookieName.equals("")) {
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie c : cookies) {
-					if (cookieName.equals(c.getName())) {
-						return c;
-					}
-				}
-			}
-					
-		}
-		
-		return null;		
-		
-	}
-
-	@Override
-	public void destroy() {
-		System.out.println("Destroy of loginServlet is called!");
-	}
 
 }

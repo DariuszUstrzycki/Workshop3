@@ -10,21 +10,27 @@
 </head>
 <body>
 <h1>Welcome to workshop 2/3!</h1>
-<% 
-/* HttpSession session = request.getSession();	    
-session.setAttribute("currentSessionUser",user);  */
-%>
+
+<!-- 
 <font color='blue'>
 <c:if test="${not empty cookie.loggedUser}">
 <c:out value="Logged in: ${cookie['loggedUser'].value}!"></c:out>
 <br><a href='logout'>Log out</a>
 </c:if>
 </font>
-
+ -->
+ 
+ <font color='blue'>
+<c:if test="${not empty loggedUser}">
+<c:out value="Logged in: ${loggedUser.username}!"></c:out>
+<br><a href='logout'>Log out</a>
+</c:if>
+ 
+ 
 <font color='green'>${message}</font>
 
 <br>
-<c:if test="${empty cookie.loggedUser}">
+<c:if test="${empty loggedUser}">
 <table>
 <tr><td>  <td></tr>
 <tr><td><%out.print("Please sign up or log in."); %></td></tr>
@@ -34,7 +40,7 @@ session.setAttribute("currentSessionUser",user);  */
 </table>
 </c:if>
 
-
+<br><a href='test1'>Test</a>
 
 
 

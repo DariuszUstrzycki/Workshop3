@@ -10,10 +10,11 @@
 </head>
 <body>
 
+<!-- 
 <c:if test="${not empty cookie.loggedUser}">
 <% response.sendRedirect("../index.jsp"); %>
 </c:if>
-
+ -->
 
 <p>Please log in.</p>
 <p><font color='red'>${loginFailure}</font></p>
