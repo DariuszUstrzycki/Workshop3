@@ -17,7 +17,7 @@ public class Test1Servlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Welcome to test1 - served at: ").append(request.getContextPath());
+		response.getWriter().append("Welcome to test1 gżźółąę- served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-		System.out.println("DoGet of LoginServlet called!");
+		//System.out.println("DoGet of LoginServlet called!");
 		
 		HttpSession session = request.getSession();
 		User loggedUser = (User) session.getAttribute("loggedUser");
