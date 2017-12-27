@@ -32,5 +32,7 @@ Enter your password:
 <input type="password" name='password'><br>
 <input type='submit'>
 </form>
+
+<br><br><a href='home'>Home</a>
 </body>
 </html>

@@ -16,13 +16,13 @@ import pl.coderslab.model.User;
 
 
 /*@WebFilter("/admin/*")*/
-public class AuthFilter implements Filter {
+public class AdminAuthFilter implements Filter {
 	
 	private String adminLogin = "admin";
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		
-		String param = fConfig.getInitParameter("login");
+		String param = fConfig.getServletContext().getInitParameter("login");
 		if(param != null)
 			adminLogin = param;
 		
@@ -42,16 +42,16 @@ public class AuthFilter implements Filter {
 				userName = user.getUsername();
 			}
 		}
-	//	request.getServletContext()
 		
 		if (userName == null || !userName.equals(adminLogin)){
 			System.out.println("!!!!--Unauthororized access attempt--!!!");
 			response.sendRedirect( request.getServletContext().getContextPath() + "/home"); 
+			return;
 		} else {
 			chain.doFilter(req, res); 
 		}
 		
-		chain.doFilter(request, response);
+		//chain.doFilter(request, response);
 	}
 
 	

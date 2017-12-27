@@ -10,5 +10,7 @@
 
 Thank you for signing up!
 
+<br><br><a href='home'>Home</a>
+
 </body>
 </html>

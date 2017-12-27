@@ -29,10 +29,14 @@ public class LoginFilter implements Filter {
 		String requestPath = request.getRequestURI();
 		System.out.print("-------LoginFilter's action: requestPath " + requestPath);
 
-		if (needsAuthentication(requestPath) && (session == null || session.getAttribute("loggedUser") == null)) { //
+		if (needsAuthentication(requestPath) && (session == null || session.getAttribute("loggedUser") == null)) { 
 			System.out.print(" NEEDS AUTHENTICATION. The LoggedUser is: " + session.getAttribute("loggedUser") + "\n");
+			
 
-			response.sendRedirect("home"); // No logged-in user found, so redirect to login page.
+			if(!response.isCommitted()) {
+				response.sendRedirect("home"); // No logged-in user found
+			}
+				
 		} else {
 			System.out.print(" DOESN'T NEED AUTHENTICATION\n");
 			chain.doFilter(req, res); // Logged-in user found, so just continue request.

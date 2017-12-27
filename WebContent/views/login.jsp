@@ -27,5 +27,7 @@ Enter your password:
 <input type='submit'>
 </form>
 
+<br><br><a href='home'>Home</a>
+
 </body>
 </html>

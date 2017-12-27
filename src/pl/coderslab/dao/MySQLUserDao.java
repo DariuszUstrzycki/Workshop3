@@ -102,6 +102,8 @@ public class MySQLUserDao implements UserDao{
 		return null;
 	}
 	
+	
+	
 	@Override
 	public  Collection<User> loadAllUsers() {
 		
@@ -175,8 +177,38 @@ public class MySQLUserDao implements UserDao{
 		
 		return null;
 	}
+	
+	/**
+	 * @return a valid user if the user name and password are correct, null otherwise 
+	 */
+	@Override
+	public User loadUserByUsername(String username) {
+		try (Connection conn = DbUtil.getConn();
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE username = ?")) {
+			
+			try {
+				ps.setString(1, username);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next()) {
+					return extractUserFromRS(rs);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
 	//////////////////////// helper methods ///////////////////////////////////
 	
+	
+
 	private static User extractUserFromRS(ResultSet rs) throws SQLException {
 		
 		User user = new User();

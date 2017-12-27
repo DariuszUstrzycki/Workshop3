@@ -41,6 +41,7 @@
 </c:if>
 
 <br><a href='test1'>Test</a>
+<br><a href='admin/page'>Admin Page</a>
 
 
 

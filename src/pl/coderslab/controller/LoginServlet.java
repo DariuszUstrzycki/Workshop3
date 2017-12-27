@@ -15,75 +15,69 @@ import pl.coderslab.dao.MySQLUserDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.User;
 
-
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final PasswordEncoder ENCODER = new PasswordEncoder();
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-		//System.out.println("DoGet of LoginServlet called!");
-		
+		// getServletContext().getRequestDispatcher("/views/login.jsp").forward(request,
+		// response);
+		// System.out.println("DoGet of LoginServlet called!");
+
 		HttpSession session = request.getSession();
 		User loggedUser = (User) session.getAttribute("loggedUser");
-		
+
 		if (loggedUser == null) {
 			response.sendRedirect("views/login.jsp");
 		} else {
 			response.sendRedirect("home");
 		}
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-																								System.out.println("DoPost of LoginServlet called!");
-		
+
 		String email = request.getParameter("email");
 
-		if (notNullOrEmpty(email, request.getParameter("password"))) {
-																								System.out.println("1. not null/empty email and password");
-
-			UserDao dao = new MySQLUserDao();
-			User user = dao.loadUserByEmail(email);
-			
-			if (user == null) {
-				request.setAttribute("loginFailure", "Ooops, No email like this in the database!");
-				getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-			} else {
-																									System.out.println("2. User is NOT null. Checking if passwords match...");
-				boolean match = ENCODER.validatePassword(request.getParameter("password"), user.getPassword());
-				
-				if(match) {
-																									System.out.println("3. passwords match!");
-					HttpSession session = request.getSession();
-					session.setAttribute("loggedUser", user); // dodany z haslem
-			        																					System.out.println("Logged user added to session. Redirect to home");
-					response.sendRedirect("home");
-				} else {
-																											System.out.println(" passwords  dont  match! forward to login");
-					request.setAttribute("loginFailure", "<font color=red>Either email or password is wrong.</font>");
-					getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-				}
-			}
-			
-		} else {
-																										System.out.println("Incorrect login. forward to login.jsp");
-			request.setAttribute("loginFailure", "Ooops, the email and password fields can't be empty!");
-			getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
+		if (nullOrEmpty(email, request.getParameter("password"))) {
+			forwardToLoginPage(request, response, "Ooops, the email and password fields can't be empty!");
+			return;
 		}
 
+		UserDao dao = new MySQLUserDao();
+		User user = dao.loadUserByEmail(email);
+
+		if (user == null) {
+			forwardToLoginPage(request, response, "Ooops, No email like this in the database!");
+			return;
+		}
+		
+		boolean match = ENCODER.validatePassword(request.getParameter("password"), user.getPassword());
+
+		if (match) {
+			request.getSession().setAttribute("loggedUser", user); // dodany z haslem
+			response.sendRedirect("home");
+		} else {
+			forwardToLoginPage(request, response, "Either email or password is wrong.");
+		}
 
 	}
-	
-	
-	private boolean notNullOrEmpty(String email, String password) {
-		return  ! (email == null || email.equals("") || password == null || password.equals(""));
+
+	private void forwardToLoginPage(HttpServletRequest request, HttpServletResponse response, String message)
+			throws ServletException, IOException {
+		request.setAttribute("loginFailure", "<font color=red>" + message + "</font>");
+
+		if (!response.isCommitted()) {
+			System.out.println("forwarding called!");
+			getServletContext().getRequestDispatcher("/views/signup.jsp").forward(request, response);
+		}
 	}
 
+	private boolean nullOrEmpty(String email, String password) {
+		return (email == null || email.equals("") || password == null || password.equals(""));
+	}
 
 }

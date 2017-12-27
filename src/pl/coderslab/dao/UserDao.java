@@ -10,6 +10,7 @@ public interface UserDao {
 	int save(User user);
 	boolean update(User user);
 	User loadUserById(int id);
+	User loadUserByUsername(String username);
 	User loadUserByEmail(String email);
 	Collection<User> loadAllUsers();
 	boolean delete(long id);
