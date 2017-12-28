@@ -25,13 +25,10 @@ public class EncodingFilter implements Filter {
 		if (charsetParam != null)
 			charset = charsetParam;
 
-		System.out.println("EncodingFilter initialized with " + contentTypeParam + ", " + charsetParam);
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
-		System.out.println("--------EncodingFilter sets encoding and content-type");
 
 		request.setCharacterEncoding(charset);
 		response.setCharacterEncoding(charset);
@@ -41,7 +38,6 @@ public class EncodingFilter implements Filter {
 	}
 
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 }

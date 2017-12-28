@@ -23,6 +23,14 @@ public class User {
 		setPassword(password);
 		this.userGroupId = userGroupId;
 	}
+	
+	public User(long id, String username, String email, String password, int userGroupId) {
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		setPassword(password);
+		this.userGroupId = userGroupId;
+	}
 
 	public User() {
 		this.id = 0L;

@@ -6,20 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Log in</title>
 </head>
 <body>
 
-<!-- 
-<c:if test="${not empty cookie.loggedUser}">
-<% response.sendRedirect("../index.jsp"); %>
-</c:if>
- -->
 
 <p>Please log in.</p>
 <p><font color='red'>${loginFailure}</font></p>
 <br>
-<form action="${pageContext.request.contextPath}/login" method='post'>
+<form action='${pageContext.request.contextPath}/login' method='post'>
 Enter your email:  
 <input type='email' name='email' required='required'><br>
 Enter your password:
@@ -27,7 +22,7 @@ Enter your password:
 <input type='submit'>
 </form>
 
-<br><br><a href='home'>Home</a>
+<br><br><a href='${pageContext.request.contextPath}/home'>Home</a>
 
 </body>
 </html>

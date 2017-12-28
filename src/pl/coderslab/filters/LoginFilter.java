@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 public class LoginFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		System.out.println("LoginFilter initialized");
-
 	}
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -27,23 +25,16 @@ public class LoginFilter implements Filter {
 		HttpSession session = request.getSession(false);
 
 		String requestPath = request.getRequestURI();
-		System.out.print("-------LoginFilter's action: requestPath " + requestPath);
 
-		if (needsAuthentication(requestPath) && (session == null || session.getAttribute("loggedUser") == null)) { 
-			System.out.print(" NEEDS AUTHENTICATION. The LoggedUser is: " + session.getAttribute("loggedUser") + "\n");
-			
+		if (needsAuthentication(requestPath) && (session == null || session.getAttribute("loggedUser") == null)) {
 
-			if(!response.isCommitted()) {
-				response.sendRedirect("home"); // No logged-in user found
+			if (!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/home");
 			}
-				
-		} else {
-			System.out.print(" DOESN'T NEED AUTHENTICATION\n");
-			chain.doFilter(req, res); // Logged-in user found, so just continue request.
-		}
-	}
 
-	public void destroy() {
+		} else {
+			chain.doFilter(req, res);
+		}
 	}
 
 	// basic validation of pages that do not require authentication
@@ -57,6 +48,9 @@ public class LoginFilter implements Filter {
 			}
 		}
 		return true;
+	}
+
+	public void destroy() {
 	}
 
 }

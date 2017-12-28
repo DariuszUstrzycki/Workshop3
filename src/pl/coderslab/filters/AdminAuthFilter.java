@@ -14,52 +14,44 @@ import javax.servlet.http.HttpSession;
 
 import pl.coderslab.model.User;
 
-
 /*@WebFilter("/admin/*")*/
 public class AdminAuthFilter implements Filter {
-	
+
 	private String adminLogin = "admin";
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		
-		String param = fConfig.getServletContext().getInitParameter("login");
-		if(param != null)
+
+		String param = fConfig.getServletContext().getInitParameter("adminLogin");
+		if (param != null)
 			adminLogin = param;
-		
-		System.out.println("AuthFilter initialized with " + param + " as authorized login");
 	}
-	
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		
+
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession(false);
-		
+
 		String userName = null;
-		if(session!= null) {
+
+		if (session != null) {
 			User user = (User) session.getAttribute("loggedUser");
-			if(user!= null ) {
+			if (user != null) {
 				userName = user.getUsername();
 			}
 		}
-		
-		if (userName == null || !userName.equals(adminLogin)){
-			System.out.println("!!!!--Unauthororized access attempt--!!!");
-			response.sendRedirect( request.getServletContext().getContextPath() + "/home"); 
+
+		if (userName == null || !userName.equals(adminLogin)) {
+			response.sendRedirect(request.getContextPath() + "/home"); // request.getServletContext().getContextPath()
 			return;
 		} else {
-			chain.doFilter(req, res); 
+			chain.doFilter(req, res);
 		}
-		
-		//chain.doFilter(request, response);
+
 	}
 
-	
-	
-	
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
-
 
 }

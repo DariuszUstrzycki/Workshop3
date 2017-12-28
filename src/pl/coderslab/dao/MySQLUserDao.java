@@ -52,6 +52,8 @@ public class MySQLUserDao implements UserDao{
 	public boolean update(User user) {
 		String sql = "UPDATE user " + " SET username = ?, email = ?, password = ?, user_group_id = ? "
 				+ " WHERE id = ?";
+		
+		System.out.println(user);
 
 		if (user.getId() != 0) {
 			
@@ -64,7 +66,7 @@ public class MySQLUserDao implements UserDao{
 				ps.setInt(4, user.getUserGroupId());
 				ps.setLong(5, user.getId());
 				int rowCount = ps.executeUpdate();
-
+						System.out.println("<<<<row count in dao is " + rowCount);
 				if (rowCount != 0) {
 					return true;
 				} 
@@ -214,6 +216,7 @@ public class MySQLUserDao implements UserDao{
 		User user = new User();
 		user.setId(rs.getInt("id"));
 		user.setUsername(rs.getString("username"));
+		user.setEmail(rs.getString("email"));
 		user.setPassword(rs.getString("password"));
 		user.setUserGroupId(rs.getInt("user_group_id"));
 		

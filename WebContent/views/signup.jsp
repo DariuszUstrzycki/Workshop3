@@ -6,24 +6,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Sign up</title>
 </head>
 <body>
 
 <c:if test="${not empty loggedUser}">
-<% response.sendRedirect("../home"); %>
+<% response.sendRedirect( request.getContextPath() + "/home"); %>
 </c:if>
 
-<!-- 
-<c:if test="${not empty cookie.loggedUser}">
-<% response.sendRedirect("../index.jsp"); %>
-</c:if>
- -->
- 
 <p>Complete all the fields to sign up</p>
 <p><font color='red'>${signupFailure}</font></p>
 
-<form action="${pageContext.request.contextPath}/signup" method='post'>
+<form action='${pageContext.request.contextPath}/signup' method='post'>
 Enter your user name: 
 <input type='text' name='username'><br>
 Enter your email:  
@@ -33,6 +27,6 @@ Enter your password:
 <input type='submit'>
 </form>
 
-<br><br><a href='home'>Home</a>
+<br><br><a href='${pageContext.request.contextPath}/home'>Home</a>
 </body>
 </html>

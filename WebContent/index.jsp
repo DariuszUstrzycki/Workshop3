@@ -6,42 +6,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Home</title>
 </head>
 <body>
 <h1>Welcome to workshop 2/3!</h1>
 
-<!-- 
-<font color='blue'>
-<c:if test="${not empty cookie.loggedUser}">
-<c:out value="Logged in: ${cookie['loggedUser'].value}!"></c:out>
-<br><a href='logout'>Log out</a>
-</c:if>
-</font>
- -->
- 
- <font color='blue'>
+<table>
 <c:if test="${not empty loggedUser}">
-<c:out value="Logged in: ${loggedUser.username}!"></c:out>
-<br><a href='logout'>Log out</a>
+<tr><td><c:out value="Logged in: ${loggedUser.username}!"></c:out></td></tr>
+<tr><td><a href='logout'>Log out</a></td></tr>
+<tr><td><a href='updateuser'>Update your personal details</a></td></tr>
 </c:if>
- 
+ </table>
  
 <font color='green'>${message}</font>
 
-<br>
-<c:if test="${empty loggedUser}">
 <table>
-<tr><td>  <td></tr>
+<c:if test="${empty loggedUser}">
 <tr><td><%out.print("Please sign up or log in to fully use this website."); %></td></tr>
 <tr><td></td></tr>
 <tr><td><a href='login'>Log in</a></td></tr>
 <tr><td><a href='signup'>Sign up</a></td></tr>
-</table>
 </c:if>
+</table>
 
-<br><a href='test1'>Test</a>
-<br><a href='admin/page'>Admin Page</a>
+
+<br><a href='test1'>Test - only logged users allowed</a>
+<br><a href='admin/page'>Admin Page - only admin allowed</a>
 
 
 

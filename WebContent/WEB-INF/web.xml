@@ -10,19 +10,16 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <context-param>
     <description>login of the application administrator</description>
     <param-name>adminLogin</param-name>
     <param-value>admin</param-value>
   </context-param>
-  
   <context-param>
     <description>initial password of the application administrator</description>
     <param-name>adminPass</param-name>
     <param-value>qwe</param-value>
   </context-param>
-  
   <context-param>
     <description>number of solutions displayed on the main page</description>
     <param-name>numberOfSolutions</param-name>
@@ -54,11 +51,11 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter>
-    <filter-name>AuthFilter</filter-name>
-    <filter-class>pl.coderslab.filters.AuthFilter</filter-class>
+    <filter-name>AdminAuthFilter</filter-name>
+    <filter-class>pl.coderslab.filters.AdminAuthFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
+    <filter-name>AdminAuthFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
 </web-app>
