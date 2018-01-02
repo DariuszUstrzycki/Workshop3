@@ -1,38 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="UTF-8">
+<%@include file="/WEB-INF/fragments/cssFileLocation.jspf"%>
 <title>Home</title>
+
 </head>
 <body>
-<h1>Welcome to workshop 2/3!</h1>
 
-<table>
-<c:if test="${not empty loggedUser}">
-<tr><td><c:out value="Logged in: ${loggedUser.username}!"></c:out></td></tr>
-<tr><td><a href='logout'>Log out</a></td></tr>
-<tr><td><a href='updateuser'>Update your personal details</a></td></tr>
-</c:if>
- </table>
- 
-<font color='green'>${message}</font>
+	<%@include file="/WEB-INF/fragments/header.jspf"%>
+	<hr>
+	<table>
+		<thead>
+			<tr>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>If there are any problems, make sure LoginFilter is not blocking access to a page
+			</tr>
+			<tr>
+				<c:if test="${empty loggedUser}">
+					<td>Please sign up or log in to fully use this website.</td>
+				</c:if>
 
-<table>
-<c:if test="${empty loggedUser}">
-<tr><td><%out.print("Please sign up or log in to fully use this website."); %></td></tr>
-<tr><td></td></tr>
-<tr><td><a href='login'>Log in</a></td></tr>
-<tr><td><a href='signup'>Sign up</a></td></tr>
-</c:if>
-</table>
+			</tr>
+			<tr>
+				<td><font color='green'>${message}</font></td>
+			</tr>
+			<tr height='100px'>
+				<td>
+					<!-- test links --> <a href='test1'>testlink - only logged
+						users allowed</a><br> <a href='admin/page'>testlink - only
+						admin allowed</a>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td><c:if test="${empty cookie.cookieConsent}">
+						<%@include file="/WEB-INF/fragments/cookieInfo.jspf"%>
+					</c:if></td>
+			</tr>
+		</tfoot>
+	</table>
 
 
-<br><a href='test1'>Test - only logged users allowed</a>
-<br><a href='admin/page'>Admin Page - only admin allowed</a>
+	<hr>
+	<td><%@include file="/WEB-INF/fragments/footer.jspf"%></td>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

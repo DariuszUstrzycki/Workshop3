@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@include file="/WEB-INF/fragments/cssFileLocation.jspf"%>
 <title>Update</title>
 </head>
 <body>
+<%@include file="/WEB-INF/fragments/header.jspf"%>
 
 <c:if test="${empty loggedUser}">
 <% response.sendRedirect(request.getContextPath() + "/home"); %>
@@ -24,7 +26,7 @@ Enter your email:
 Enter your password:
 <input type="password" name='password' ><br>
 <input type="hidden" name='id'  value='${loggedUser.id}'><br>
-<input type='submit'>
+<input class="btn" type='submit'>
 </form>
 
 <br><br><a href='${pageContext.request.contextPath}/deleteuser'>Delete my account</a>

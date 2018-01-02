@@ -6,9 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<%@include file="/WEB-INF/fragments/cssFileLocation.jspf"%>
 <title>Log in</title>
 </head>
 <body>
+<%@include file="/WEB-INF/fragments/header.jspf"%>
 
 
 <p>Please log in.</p>
@@ -19,10 +22,9 @@ Enter your email:
 <input type='email' name='email' required='required'><br>
 Enter your password:
 <input type="password" name='password' required='required'><br>
-<input type='submit'>
+<input class="btn" type='submit'>
 </form>
 
-<br><br><a href='${pageContext.request.contextPath}/home'>Home</a>
 
 </body>
 </html>

@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@include file="/WEB-INF/fragments/cssFileLocation.jspf"%>
 <title>Sign up</title>
 </head>
 <body>
+<%@include file="/WEB-INF/fragments/header.jspf"%>
 
 <c:if test="${not empty loggedUser}">
 <% response.sendRedirect( request.getContextPath() + "/home"); %>
@@ -24,9 +26,8 @@ Enter your email:
 <input type='email' name='email'><br>
 Enter your password:
 <input type="password" name='password'><br>
-<input type='submit'>
+<input class="btn" type='submit'>
 </form>
 
-<br><br><a href='${pageContext.request.contextPath}/home'>Home</a>
 </body>
 </html>

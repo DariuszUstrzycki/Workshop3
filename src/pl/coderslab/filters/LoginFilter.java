@@ -40,7 +40,7 @@ public class LoginFilter implements Filter {
 	// basic validation of pages that do not require authentication
 	private boolean needsAuthentication(String url) {
 		String[] validNonAuthenticationUrls = { "/", "login", "login.jsp", "signup", "signup.jsp", "home",
-				"index.jsp" };
+				"index.jsp", "/cookies", "/Cookie4Show", "/Cookie4Del", "stylesheet.css" };
 
 		for (String validUrl : validNonAuthenticationUrls) {
 			if (url.endsWith(validUrl)) {
