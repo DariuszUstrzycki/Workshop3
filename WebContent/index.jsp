@@ -13,56 +13,27 @@
 <body>
 
 	<%@include file="/WEB-INF/fragments/header.jspf"%>
-	<table>
-		<thead>
-			<tr>
-			</tr>
-		</thead>
-		<tbody>
-		<tr>If there are any problems, make sure LoginFilter is not blocking access to a page
-			</tr>
-			<tr>
-				<c:if test="${empty loggedUser}">
-					<td>Please sign up or log in to fully use this website.</td>
-				</c:if>
+<hr>
 
-			</tr>
-			<tr>
-				<td><font color='green'>${message}</font></td>
-			</tr>
-			<tr height='100px'>
-				<td>
-					<!-- test links --> <a href='test1'>testlink - only logged
-						users allowed</a><br> <a href='admin/page'>testlink - only
-						admin allowed</a>
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td><c:if test="${empty cookie.cookieConsent}">
-						<%@include file="/WEB-INF/fragments/cookieInfo.jspf"%>
-					</c:if></td>
-			</tr>
-		</tfoot>
-	</table>
+	<c:if test="${empty loggedUser}">
+		<p>Please sign up or log in to fully use this website. If there
+			are any problems, make sure LoginFilter is not blocking access to a
+			page</p>
+	</c:if>
+	<font color='green'>${message}</font>
+	
+	<%@include file="/WEB-INF/fragments/latestSolutions.jspf"%>
 
+	
 
-	<hr>
+	<c:if test="${empty cookie.cookieConsent}">
+	<div id='cookieInfo'>
+		<%@include file="/WEB-INF/fragments/cookieInfo.jspf"%>
+	</div>
+	</c:if>
+
+<hr>
 	<td><%@include file="/WEB-INF/fragments/footer.jspf"%></td>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

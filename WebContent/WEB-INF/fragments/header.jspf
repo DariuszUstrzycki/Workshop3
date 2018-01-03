@@ -15,10 +15,14 @@
 		<c:if test="${empty loggedUser}">
 			<%@include file="/WEB-INF/fragments/unloggedMenu.jspf"%>
 		</c:if>
+		<td><a href='test1'>LoggedOnly</a></td>
+		<td><a href='admin/page'>AdminOnly</a></td>
 	</tr>
 </table>
 
 <h1>School - workshop 2/3</h1>
-<hr>
+
+
 
 </header>
+

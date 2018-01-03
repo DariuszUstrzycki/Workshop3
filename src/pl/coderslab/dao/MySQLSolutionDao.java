@@ -15,7 +15,7 @@ import com.mysql.jdbc.Statement;
 import pl.coderslab.db.DbUtil;
 import pl.coderslab.model.Solution;
 
-public class MySQLSolution implements SolutionDao{
+public class MySQLSolutionDao implements SolutionDao{
 	/**
 	 * @return newly created solution's id or a -1 on error/failure
 	 */
