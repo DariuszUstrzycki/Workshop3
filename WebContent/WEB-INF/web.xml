@@ -21,8 +21,8 @@
     <param-value>qwe</param-value>
   </context-param>
   <context-param>
-    <description>number of solutions displayed on the main page</description>
-    <param-name>numberOfSolutions</param-name>
+    <description>number of solutions and exercises displayed on a webpage</description>
+    <param-name>numberOfDisplayed</param-name>
     <param-value>5</param-value>
   </context-param>
   <filter>

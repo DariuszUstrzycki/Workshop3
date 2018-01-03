@@ -1,7 +1,6 @@
 package pl.coderslab.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.ServletException;
@@ -11,14 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.MySQLExerciseDao;
 import pl.coderslab.dao.MySQLSolutionDao;
 import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
 
-@WebServlet({ "/home" })
-public class HomeServlet extends HttpServlet {
+
+@WebServlet("/exercises")
+public class ExercisesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int displayPerPage;
+
 	
 	@Override
 	public void init() throws ServletException {
@@ -31,27 +35,28 @@ public class HomeServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			displayPerPage = 4;
 		}
+		 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		loadLatestSolutions(request, response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("HomeServlet is working...");
-
+		loadLatestExercises(request,response);
+		
 		if (!response.isCommitted()) {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/views/exercises.jsp");
 		}
+		
 	}
+	
+	private void loadLatestExercises(HttpServletRequest request, HttpServletResponse response) {
 
-	private void loadLatestSolutions(HttpServletRequest request, HttpServletResponse response) {
-
-		SolutionDao dao = new MySQLSolutionDao(); // inject
-		Collection<Solution> allSolutions = dao.loadAllSolutions(); 
+		ExerciseDao dao = new MySQLExerciseDao(); // inject
+		Collection<Exercise> allExercises = dao.loadAllExercises(); 
 		HttpSession session = request.getSession();
-		session.setAttribute("allSolutions", allSolutions);
-		session.setAttribute("displayPerPage", displayPerPage); 
+		session.setAttribute("allExercises", allExercises);
+		session.setAttribute("displayPerPage", displayPerPage);
+		System.out.println("displayPerPage is " + displayPerPage);
+		
 	}
 
 }

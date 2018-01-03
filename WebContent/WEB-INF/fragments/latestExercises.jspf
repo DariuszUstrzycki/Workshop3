@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <style>
 #latestSolutions {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -27,28 +28,22 @@
 }
 </style>
 
-<h2>Solutions</h2>
+<h2>Exercises</h2>
 
 <table class='displayTable'>
 	<thead>
 		<tr>
 			<th>id</th>
-			<th>created</th>
-			<th>updated</th>
+			<th>title</th>
 			<th>description</th>
-			<th>exerciseId</th>
-			<th>userId</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="solution" begin="0" end="${displayPerPage-1}" items="${allSolutions}"> <!-- " -->
+		<c:forEach var="exercise"  begin="0" end="${displayPerPage-1}" items="${allExercises}"> 
 			<tr>
-				<td>${solution.id}</td>
-				<td>${solution.created}</td>
-				<td>${solution.updated}</td>
-				<td>${solution.description}</td>
-				<td>${solution.exerciseId}</td>
-				<td>${solution.userId}</td>
+				<td>${exercise.id}</td>
+				<td>${exercise.title}</td>
+				<td>${exercise.description}</td>
 			</tr>
 		</c:forEach>
 	</tbody>

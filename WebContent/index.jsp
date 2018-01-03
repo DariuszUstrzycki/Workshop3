@@ -13,7 +13,7 @@
 <body>
 
 	<%@include file="/WEB-INF/fragments/header.jspf"%>
-<hr>
+
 
 	<c:if test="${empty loggedUser}">
 		<p>Please sign up or log in to fully use this website. If there

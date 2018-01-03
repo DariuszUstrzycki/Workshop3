@@ -8,21 +8,24 @@
 <table>
 	<tr>
 		<td><a href='${pageContext.request.contextPath}/home'>Home</a></td>
-		
+
 		<c:if test="${not empty loggedUser}">
 			<%@include file="/WEB-INF/fragments/loggedMenu.jspf"%>
 		</c:if>
 		<c:if test="${empty loggedUser}">
 			<%@include file="/WEB-INF/fragments/unloggedMenu.jspf"%>
 		</c:if>
-		<td><a href='test1'>LoggedOnly</a></td>
-		<td><a href='admin/page'>AdminOnly</a></td>
+		<td><a href='${pageContext.request.contextPath}/test1'>LoggedOnly</a></td>
+		<td><a href='${pageContext.request.contextPath}/admin/page'>AdminOnly</a></td>
 	</tr>
 </table>
 
 <h1>School - workshop 2/3</h1>
 
+<c:if test="${not empty loggedUser}">
+	<%@include file="/WEB-INF/fragments/lowerNav.jspf"%>
+</c:if> 
 
-
+<hr>
 </header>
 
