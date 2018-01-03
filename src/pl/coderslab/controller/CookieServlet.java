@@ -19,12 +19,10 @@ public class CookieServlet extends HttpServlet {
 		
 		String cookieParam = request.getParameter("cookies");
 		
-		System.out.println("CookieServlet called");
-		
 		if(cookieParam != null && cookieParam.equals("accept")) {
 			Cookie c = new Cookie("cookieConsent", "accept");
+			c.setMaxAge(60*60*24*360);
 			response.addCookie(c);
-			System.out.println("Cookie created...");
 		}
 		
 		response.sendRedirect(request.getContextPath() + "/home");

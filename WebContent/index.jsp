@@ -13,7 +13,6 @@
 <body>
 
 	<%@include file="/WEB-INF/fragments/header.jspf"%>
-	<hr>
 	<table>
 		<thead>
 			<tr>

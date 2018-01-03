@@ -22,8 +22,14 @@ Enter your email:
 <input type='email' name='email' required='required'><br>
 Enter your password:
 <input type="password" name='password' required='required'><br>
+<c:if test="${empty cookie.rememeber}">
+	<input type="checkbox" name='remember' value='yes'>  Remember me on this computer.<br>
+</c:if>
 <input class="btn" type='submit'>
 </form>
+<hr>
+
+
 
 
 </body>

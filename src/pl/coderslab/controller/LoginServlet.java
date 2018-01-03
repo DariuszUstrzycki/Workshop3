@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +55,12 @@ public class LoginServlet extends HttpServlet {
 
 		if (match) {
 			request.getSession().setAttribute("loggedUser", user); // dodany z haslem
+			
+			if(request.getParameter("remember") != null) {
+				rememberUser(request, response, user.getId());
+			}
 			response.sendRedirect(request.getContextPath() + "/home");
+			
 		} else {
 			forwardToLoginPage(request, response, "Either email or password is wrong.");
 		}
@@ -71,6 +77,12 @@ public class LoginServlet extends HttpServlet {
 
 	private boolean nullOrEmpty(String email, String password) {
 		return (email == null || email.equals("") || password == null || password.equals(""));
+	}
+	
+	private void rememberUser(HttpServletRequest request,HttpServletResponse response, long userId) throws IOException {
+			Cookie c = new Cookie("remember", String.valueOf(userId));
+			c.setMaxAge(60*60*24*360);
+			response.addCookie(c);
 	}
 
 }

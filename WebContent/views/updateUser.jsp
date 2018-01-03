@@ -23,13 +23,13 @@
 <form action="${pageContext.request.contextPath}/updateuser" method='post'>
 Enter your email:  
 <input type='email' name='email' value='${loggedUser.email}'><br>
-Enter your password:
+Enter a new password:
 <input type="password" name='password' ><br>
 <input type="hidden" name='id'  value='${loggedUser.id}'><br>
 <input class="btn" type='submit'>
 </form>
 
 <br><br><a href='${pageContext.request.contextPath}/deleteuser'>Delete my account</a>
-<br><br><a href='${pageContext.request.contextPath}/home'>Home</a>
+
 </body>
 </html>
