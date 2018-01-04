@@ -35,12 +35,11 @@ public class ExercisesServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			displayPerPage = 4;
 		}
-		 
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		loadLatestExercises(request,response);
+		loadExercises(request,response);
 		
 		if (!response.isCommitted()) {
 			response.sendRedirect(request.getContextPath() + "/views/exercises.jsp");
@@ -48,14 +47,15 @@ public class ExercisesServlet extends HttpServlet {
 		
 	}
 	
-	private void loadLatestExercises(HttpServletRequest request, HttpServletResponse response) {
+	private void loadExercises(HttpServletRequest request, HttpServletResponse response) {
 
 		ExerciseDao dao = new MySQLExerciseDao(); // inject
 		Collection<Exercise> allExercises = dao.loadAllExercises(); 
 		HttpSession session = request.getSession();
+			System.out.println("allExercises size is: " + allExercises.size());
 		session.setAttribute("allExercises", allExercises);
 		session.setAttribute("displayPerPage", displayPerPage);
-		System.out.println("displayPerPage is " + displayPerPage);
+			System.out.println("displayPerPage is " + displayPerPage);
 		
 	}
 

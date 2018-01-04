@@ -36,7 +36,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		loadLatestSolutions(request, response);
+		loadSolutions(request, response);
 		
 		System.out.println("HomeServlet is working...");
 
@@ -45,7 +45,7 @@ public class HomeServlet extends HttpServlet {
 		}
 	}
 
-	private void loadLatestSolutions(HttpServletRequest request, HttpServletResponse response) {
+	private void loadSolutions(HttpServletRequest request, HttpServletResponse response) {
 
 		SolutionDao dao = new MySQLSolutionDao(); // inject
 		Collection<Solution> allSolutions = dao.loadAllSolutions(); 

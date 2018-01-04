@@ -18,6 +18,12 @@ public class Exercise {
 		this.description = "";
 	}
 
+	public Exercise(String title, String description) {
+		this.id = 0L;
+		this.title = title;
+		this.description = description;
+	}
+
 	public long getId() {
 		return id;
 	}

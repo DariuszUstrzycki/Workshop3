@@ -5,9 +5,9 @@
 <table>
 	<tr>
 		<td><a href='${pageContext.request.contextPath}/exercises'>Exercises</a></td>
-		<td><a href='${pageContext.request.contextPath}/exercises'>Add exercise</a></td>
+		<td><a href='${pageContext.request.contextPath}/addexercise'>Add exercise</a></td>
 		<td><a href='${pageContext.request.contextPath}/home'>Solutions</a></td>
-		<td><a href='${pageContext.request.contextPath}/exercises'>Add solution</a></td>
+		<td><a href='${pageContext.request.contextPath}/addsolution'>Add solution</a></td>
 	</tr>
 </table>
 
