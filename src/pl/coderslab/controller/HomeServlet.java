@@ -3,6 +3,7 @@ package pl.coderslab.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +49,8 @@ public class HomeServlet extends HttpServlet {
 	private void loadSolutions(HttpServletRequest request, HttpServletResponse response) {
 
 		SolutionDao dao = new MySQLSolutionDao(); // inject
-		Collection<Solution> allSolutions = dao.loadAllSolutions(); 
+		ArrayList<Solution> allSolutions = (ArrayList<Solution>) dao.loadAllSolutions(); 
+		Collections.reverse(allSolutions);
 		HttpSession session = request.getSession();
 		session.setAttribute("allSolutions", allSolutions);
 		session.setAttribute("displayPerPage", displayPerPage); 

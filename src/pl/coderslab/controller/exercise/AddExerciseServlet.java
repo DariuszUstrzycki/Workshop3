@@ -1,4 +1,4 @@
-package pl.coderslab.controller;
+package pl.coderslab.controller.exercise;
 
 import java.io.IOException;
 
@@ -44,10 +44,6 @@ public class AddExerciseServlet extends HttpServlet {
 				forwardToFormPage(request, response, "Exercise has been added.");
 			}
 		}
-		
-
-		
-		
 		
 	}
 	

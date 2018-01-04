@@ -11,11 +11,19 @@ public class Solution {
 	private long exerciseId;
 	private long userId;
 	
-	public Solution(long id, LocalDateTime created, LocalDateTime updated, String description, long exerciseId,
-			long userId) {
+	public Solution(long id, String description, long exerciseId, long userId) {
 		this.id = id;
-		this.created = created;
-		this.updated = updated;
+		this.created = LocalDateTime.now();
+		this.updated = LocalDateTime.now();
+		this.description = description;
+		this.exerciseId = exerciseId;
+		this.userId = userId;
+	}
+	
+	public Solution(String description, long exerciseId, long userId) {
+		this.id = 0L;
+		this.created = LocalDateTime.now();
+		this.updated = LocalDateTime.now();
 		this.description = description;
 		this.exerciseId = exerciseId;
 		this.userId = userId;

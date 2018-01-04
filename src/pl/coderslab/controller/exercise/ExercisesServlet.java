@@ -1,7 +1,8 @@
-package pl.coderslab.controller;
+package pl.coderslab.controller.exercise;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.dao.MySQLExerciseDao;
-import pl.coderslab.dao.MySQLSolutionDao;
-import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.model.Exercise;
-import pl.coderslab.model.Solution;
 
 
 @WebServlet("/exercises")
@@ -50,7 +48,8 @@ public class ExercisesServlet extends HttpServlet {
 	private void loadExercises(HttpServletRequest request, HttpServletResponse response) {
 
 		ExerciseDao dao = new MySQLExerciseDao(); // inject
-		Collection<Exercise> allExercises = dao.loadAllExercises(); 
+		ArrayList<Exercise> allExercises = (ArrayList<Exercise>) dao.loadAllExercises(); 
+		Collections.reverse(allExercises);
 		HttpSession session = request.getSession();
 			System.out.println("allExercises size is: " + allExercises.size());
 		session.setAttribute("allExercises", allExercises);
