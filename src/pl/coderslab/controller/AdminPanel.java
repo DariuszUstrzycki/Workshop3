@@ -35,6 +35,11 @@ public class AdminPanel extends HttpServlet {
 			deleteGroup(groupId, session);
 		}
 
+		String userId = request.getParameter("deleteUserId");
+		if (userId != null) {
+			deleteUser(userId, session);
+		}
+
 		generateGroupsAndUsers(session);
 
 		response.sendRedirect(theContext + theView);
@@ -59,10 +64,10 @@ public class AdminPanel extends HttpServlet {
 			persistGroup(groupName, request, response, session);
 			generateGroupsAndUsers(session);
 			response.sendRedirect(theContext + theView);
-			//doGet(request, response); // updates the view of groups and redirection clears form fields
+			// doGet(request, response); // updates the view of groups and redirection
+			// clears form fields
 		}
-		
-		
+
 	}
 
 	private boolean nullOrEmpty(String string) {
@@ -75,6 +80,16 @@ public class AdminPanel extends HttpServlet {
 			session.setAttribute("message", "The group has been successfully deleted.");
 		} else {
 			session.setAttribute("message", "Unexpected problem. The group can't be deleted.");
+		}
+	}
+
+	private void deleteUser(String userId, HttpSession session) {
+		System.out.println("User id is " + userId);
+		boolean deleted = userDao.delete(Long.parseLong(userId));
+		if (deleted) {
+			session.setAttribute("message", "The user has been successfully deleted.");
+		} else {
+			session.setAttribute("message", "Unexpected problem. The user can't be deleted.");
 		}
 	}
 
