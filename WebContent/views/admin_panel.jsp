@@ -13,14 +13,22 @@
 
 <!-- only admin access -->
 <%
-		if(session.isNew())
-			response.sendRedirect(getServletContext().getContextPath() + "/admin/panel");
 
+System.out.println("newSession is " + session.isNew() + ", session id is" + session.getId() + " created at " + session.getCreationTime());
+ session = request.getSession(true);
+if (session.isNew()) {
+  response.sendRedirect(getServletContext().getContextPath() + "/home");
+}
+
+//session.
+		
+	
+ 
 		User user = (User) request.getSession().getAttribute("loggedUser");
 		String name = "";
 		 if (user == null || !"admin".equals(user.getUsername())) {
 			response.sendRedirect(getServletContext().getContextPath() + "/home");
-		}  
+		}   
 %>
 
 <%@include file="/WEB-INF/fragments/header.jspf"%>
@@ -28,8 +36,8 @@
 <h2>Administrator's panel</h2>
 	
 	<!-- link to add  a group -->
-	<c:if test="${empty showForm}">
-	<a href='${pageContext.request.contextPath}/admin/panel?addGroup=yes' >Add group</a>
+	<c:if test="${empty param.showForm}">
+	<a href='${pageContext.request.contextPath}/views/admin_panel.jsp?showForm=yes' >Add group</a>
 	</c:if>
 	
 	<!-- display info about adding/deleting groups/users or errors -->
@@ -39,7 +47,7 @@
 	</c:if>
 	
 	<!-- display form to add a group -->
-	<c:if test="${not empty showForm}">
+	<c:if test="${not empty param.showForm}">
 	<%@include file="/WEB-INF/fragments/add_group.jspf"%>
 	</c:if>
 	
