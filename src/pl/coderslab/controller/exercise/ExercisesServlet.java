@@ -51,6 +51,7 @@ public class ExercisesServlet extends HttpServlet {
 		ArrayList<Exercise> allExercises = (ArrayList<Exercise>) dao.loadAllExercises(); 
 		Collections.reverse(allExercises);
 		HttpSession session = request.getSession();
+			System.out.println("When allExercises is added to session in ExercisesServlet on redirect to exercises.jsp, session id is: " + session.getId());
 			System.out.println("allExercises size is: " + allExercises.size());
 		session.setAttribute("allExercises", allExercises);
 		session.setAttribute("displayPerPage", displayPerPage);

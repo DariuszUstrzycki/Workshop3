@@ -1,8 +1,8 @@
 package pl.coderslab.controller;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import javax.servlet.ServletException;
@@ -54,6 +54,9 @@ public class HomeServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("allSolutions", allSolutions);
 		session.setAttribute("displayPerPage", displayPerPage); 
+		
+		System.out.println("When allSolutions is added to session in HomeServlet on redirect to exercises.jsp, session id is: " + session.getId());
+		System.out.println("Session recorded at " + LocalTime.now());
 	}
 
 }

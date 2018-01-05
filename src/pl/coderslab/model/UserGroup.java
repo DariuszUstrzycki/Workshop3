@@ -14,6 +14,11 @@ public class UserGroup {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public UserGroup(String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	public long getId() {
 		return id;

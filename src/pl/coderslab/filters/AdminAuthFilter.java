@@ -41,6 +41,8 @@ public class AdminAuthFilter implements Filter {
 				userName = user.getUsername();
 			}
 		}
+		
+		System.out.println("Username in AdminAuthFilter is " + userName);
 
 		if (userName == null || !userName.equals(adminLogin)) {
 			response.sendRedirect(request.getContextPath() + "/home"); // request.getServletContext().getContextPath()
