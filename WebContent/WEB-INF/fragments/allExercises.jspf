@@ -15,7 +15,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="exercise"  begin="0" end="${initParam.numberOfDisplayed-1}" items="${allExercises}" varStatus="status"> 
+		<c:forEach var="exercise"  items="${allExercises}" varStatus="status"> 
 			<tr>
 				<td>${exercise.id} ${status.index}<br>
 				<a href='${pageContext.request.contextPath}/addsolution?exIndex=${status.index}'>Add solution</a><br>

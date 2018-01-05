@@ -23,7 +23,7 @@
   <context-param>
     <description>number of solutions and exercises displayed on a webpage</description>
     <param-name>numberOfDisplayed</param-name>
-    <param-value>20</param-value>
+    <param-value>5</param-value>
   </context-param>
   <filter>
     <filter-name>EncodingFilter</filter-name>

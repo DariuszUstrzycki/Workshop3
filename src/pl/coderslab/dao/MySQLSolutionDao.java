@@ -106,6 +106,30 @@ public class MySQLSolutionDao implements SolutionDao{
 
 		return null;
 	}
+	
+
+	@Override
+	public Collection<Solution> loadSolutionsByExId(long exerciseId) {
+		Collection<Solution> solutions = null;
+		String sql = "SELECT * FROM solution " + 
+				     " WHERE exercise_id=?;";
+		
+		try (Connection conn = DbUtil.getConn(); 
+				PreparedStatement ps = conn.prepareStatement(sql)){
+			
+			ps.setLong(1, exerciseId);
+			try(ResultSet rs = ps.executeQuery()){
+				solutions = new ArrayList<>();
+				while (rs.next()) {
+					solutions.add(extractSolutionFromRS(rs));
+				}				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return solutions;
+	}
 
 	@Override
 	public Collection<Solution> loadAllSolutions() {

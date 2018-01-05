@@ -37,6 +37,14 @@ td {
     padding: 8px;
 }
 
+.displayTable td:nth-child(1) {
+    white-space:nowrap;
+}
+
+.displayTable td:nth-child(2) {
+    min-width: 150px;
+}
+
 .displayTable tr:nth-child(even){background-color: #f2f2f2;}
 
 .displayTable tr:hover {background-color: #ddd;}
@@ -45,6 +53,10 @@ td {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: darkcyan; 
     color: white;
+}
+
+#solutions th {
+	background-color: plum; 
 }

@@ -25,22 +25,8 @@ if( request.getParameter("exIndex") == null ){
 
 <h2>Add a solution</h2>
 
-<table class='displayTable'>
-	<thead>
-		<tr>
-			<th>id</th>
-			<th>title</th>
-			<th>description</th>
-		</tr>
-	</thead>
-	<tbody>
-			<tr>
-				<td>${allExercises[param.exIndex].id}</td>
-				<td>${allExercises[param.exIndex].title}</td>
-				<td>${allExercises[param.exIndex].description}</td>
-			</tr>
-	</tbody>
-</table>
+<!-- the exercise selected by the user -->
+<%@include file="/WEB-INF/fragments/selectedExercise.jspf"%>
 
 <p><font color='red'>${addSolStatus}</font></p>
 

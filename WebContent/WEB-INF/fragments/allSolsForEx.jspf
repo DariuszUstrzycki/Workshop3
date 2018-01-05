@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<h2>Solutions</h2>
 
 <table class='displayTable' id='solutions'>
 	<thead>
@@ -17,7 +14,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="solution" begin="0" end="${initParam.numberOfDisplayed-1}" items="${allSolutions}"> 
+		<c:forEach var="solution"  items="${allSolutions}"> 
 			<tr>
 				<td>${solution.id}</td>
 				<td>${solution.created}</td>
@@ -29,9 +26,4 @@
 		</c:forEach>
 	</tbody>
 </table>
-a. ${pageScope.number}
-b. ${number}
-c. number
-d. ${applicationScope.numberOfDisplayed}
-e. ${initParam.numberOfDisplayed}
-f. ${sessionScope.displayPerPage}
+

@@ -15,5 +15,8 @@
 
 
 <%@include file="/WEB-INF/fragments/latestExercises.jspf"%>
+
+<h2>ALL EXERCISES BELOW:</h2>
+<%@include file="/WEB-INF/fragments/allExercises.jspf"%>
 </body>
 </html>
