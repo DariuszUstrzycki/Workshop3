@@ -23,6 +23,11 @@
 
     <!-- url: The JDBC connection url for connecting to your MySQL database.
          -->
+         
+    <!-- A /META-INF/context.xml file can be used to define Tomcat specific configuration options, such as an access log, 
+    data sources, session manager configuration and more. 
+    This XML file must contain one Context element, which will be considered as if it was the child of the Host element 
+    corresponding to the Host to which the web application is being deployed. -->     
 <Context>
 	<Resource 
 	name="jdbc/school" 
@@ -33,6 +38,5 @@
 	driverClassName="com.mysql.jdbc.Driver"
 	url="jdbc:mysql://localhost:3306/school?useSSL=false" 
 	maxTotal="100" maxIdle="30" 
-	maxWait="10000" />
+	maxWaitMillis="10000" />
 </Context>
-<!-- maxActive="100" -->

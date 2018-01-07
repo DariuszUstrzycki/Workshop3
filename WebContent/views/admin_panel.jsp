@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="pl.coderslab.model.User"%>
+<%@ page import="pl.coderslab.model.User"%><%@ page import="java.time.LocalTime, java.util.*"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,24 +11,44 @@
 </head>
 <body>
 
+<%System.out.println("%%%%%%%%% JSP ADMIN_PANEL %%%%%%");%>
+
+<c:if test="${empty allUsers}">
+<%System.out.println("**************Using redirect for empty allUsers******************");%>
+<c:redirect url = "/admin/panel"/>
+</c:if>
+
+<c:if test="${empty allGroups}">
+<%System.out.println("**************Using redirect for empty allGroups********************");%>
+<c:redirect url = "/admin/panel"/>
+</c:if>
+
 <!-- only admin access -->
 <%
+//print session contents
 
-System.out.println("newSession is " + session.isNew() + ", session id is" + session.getId() + " created at " + session.getCreationTime());
- session = request.getSession(true);
+/* Enumeration e = session.getAttributeNames();
+while (e.hasMoreElements()) {
+    String name = (String)e.nextElement();
+    String value = session.getAttribute(name).toString();
+    out.println(name + " = " + value);
+} */
+
+
+
+
+System.out.println("newSession is " + session.isNew() + ", godzina teraz: " + LocalTime.now() + ", session id is" + session.getId() + " created at " + session.getCreationTime());
+ /* session = request.getSession(true);
 if (session.isNew()) {
   response.sendRedirect(getServletContext().getContextPath() + "/home");
-}
+} */
 
-//session.
-		
-	
  
-		User user = (User) request.getSession().getAttribute("loggedUser");
+		/* User user = (User) request.getSession().getAttribute("loggedUser");
 		String name = "";
 		 if (user == null || !"admin".equals(user.getUsername())) {
 			response.sendRedirect(getServletContext().getContextPath() + "/home");
-		}   
+		}   */ 
 %>
 
 <%@include file="/WEB-INF/fragments/header.jspf"%>

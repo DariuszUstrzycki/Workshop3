@@ -20,7 +20,7 @@ public class MySQLExerciseDao implements ExerciseDao {
 	public int save(Exercise ex) {
 		
 		
-		String sql = "INSERT INTO exercise( title, description ) " + "VALUES (?, ?)";
+		String sql = "INSERT INTO exercise( title, description, user_id ) " + "VALUES (?, ?, ?)";
 
 		if (ex.getId() == 0) {
 			
@@ -28,7 +28,8 @@ public class MySQLExerciseDao implements ExerciseDao {
 					PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 				
 				ps.setString(1, ex.getTitle());
-				ps.setString(2, ex.getDescription());				
+				ps.setString(2, ex.getDescription());
+				ps.setLong(3, ex.getUserId());	
 				ps.executeUpdate();
 
 				ResultSet rs = ps.getGeneratedKeys();
@@ -48,7 +49,7 @@ public class MySQLExerciseDao implements ExerciseDao {
 	 */
 	@Override
 	public boolean update(Exercise ex) {
-		String sql = "UPDATE exercise " + " SET title = ?, description = ? "
+		String sql = "UPDATE exercise " + " SET title = ?, description = ? user_id = ? "
 				+ " WHERE id = ?";
 
 		if (ex.getId() != 0) {
@@ -58,7 +59,8 @@ public class MySQLExerciseDao implements ExerciseDao {
 				
 				ps.setString(1, ex.getTitle());
 				ps.setString(2, ex.getDescription());	
-				ps.setLong(3, ex.getId());
+				ps.setLong(3, ex.getUserId());
+				ps.setLong(4, ex.getId());
 				int rowCount = ps.executeUpdate();
 
 				if (rowCount != 0) {
@@ -156,7 +158,7 @@ public class MySQLExerciseDao implements ExerciseDao {
 		ex.setId(rs.getInt("id"));
 		ex.setTitle(rs.getString("title"));
 		ex.setDescription(rs.getString("description"));
-
+		ex.setUserId(rs.getLong("user_id"));
 		return ex;
 	}
 

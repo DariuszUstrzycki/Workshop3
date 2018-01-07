@@ -12,7 +12,9 @@ CREATE TABLE exercise(
   	id INT AUTO_INCREMENT, 
   	title VARCHAR(255),  
   	description TEXT, 
-  	PRIMARY KEY(id) )
+  	user_id BIGINT UNSIGNED,
+  	PRIMARY KEY(id) 
+  	FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE SET NULL))
     CHARACTER SET utf8mb4;	
 
 CREATE TABLE user (  
@@ -22,7 +24,7 @@ CREATE TABLE user (
   	password VARCHAR(255) NOT NULL,
   	user_group_id INT DEFAULT 1, -- by default everyone has the status of a student
   	PRIMARY KEY (id),
-  	FOREIGN KEY (user_group_id) REFERENCES user_group (id) ON DELETE SET NULL)
+  	FOREIGN KEY (user_group_id) REFERENCES user_group (id) ON DELETE SET RESTRICT) -- cant remove a user group
     CHARACTER SET utf8mb4;
   
 CREATE TABLE solution( 
@@ -33,6 +35,6 @@ CREATE TABLE solution(
 	exercise_id INT, 
 	user_id BIGINT UNSIGNED, 
 	PRIMARY KEY(id), 
-	FOREIGN KEY(exercise_id) REFERENCES exercise(id) ON DELETE CASCADE, 
-	FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE NO ACTION)
+	FOREIGN KEY(exercise_id) REFERENCES exercise(id) ON DELETE CASCADE, -- solution will be removed
+	FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE SET NULL)
     CHARACTER SET utf8mb4;

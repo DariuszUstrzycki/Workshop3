@@ -28,27 +28,30 @@ public class AddExerciseServlet extends HttpServlet {
 		
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
+		String userIdString = request.getParameter("userId");
 		
-		System.out.println("Entering post with " + title + ", " + description);
+		System.out.println("Entering post with " + title + ", " + description + ", " + userIdString);
 		
-		if (nullOrEmpty(title, description)) {
+		if (nullOrEmpty(title, description, userIdString)) {
 			forwardToFormPage(request, response, "Ooops, the title/description fields can't be empty!");
 			return;
 		} else {
 			ExerciseDao dao = new MySQLExerciseDao();
 			System.out.println("About to add exercise");
-			long id = dao.save(new Exercise(title, description));
+			long userId = Long.parseLong(userIdString);
+			long id = dao.save(new Exercise(title, description, userId));
 			if (id > 0) {
 				System.out.println("id of exercise is " + id);
-				request.getSession().setAttribute("newExercise", new Exercise(id, title, description));
+				request.getSession().setAttribute("newExercise", new Exercise(id, title, description, userId));
 				forwardToFormPage(request, response, "Exercise has been added.");
 			}
 		}
 		
 	}
 	
-	private boolean nullOrEmpty(String title, String description) {
-		return (title == null || title.equals("") || description == null || description.equals(""));
+	private boolean nullOrEmpty(String title, String description, String userId) {
+		return (title == null || title.equals("") || description == null || description.equals("") ||
+				userId == null || userId.equals(""));
 	}
 	
 	private void forwardToFormPage(HttpServletRequest request, HttpServletResponse response, String message)

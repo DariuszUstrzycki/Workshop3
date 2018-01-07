@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>Workshop3</display-name>
+  <description>
+      This is version X.X of an application to perform
+      a wild and wonderful task, based on servlets and
+      JSP pages.  It was written by Dariusz Ustrzycki
+      (us3cki@zoho.com), who should be contacted for
+      more information.
+    </description>
+    
   <welcome-file-list>
     <welcome-file>home</welcome-file>
     <welcome-file>index.html</welcome-file>
@@ -10,6 +18,13 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <context-param>
+    <description>The EMAIL address of the administrator to whom questions 
+      and comments about this application should be addressed.</description>
+    <param-name>webmaster</param-name>
+    <param-value>us3cki@zoho.com</param-value>
+  </context-param>
   <context-param>
     <description>login of the application administrator</description>
     <param-name>adminLogin</param-name>
@@ -25,6 +40,27 @@
     <param-name>numberOfDisplayed</param-name>
     <param-value>5</param-value>
   </context-param>
+  
+  
+  <servlet>
+	<servlet-name>firstServlet</servlet-name>
+	<servlet-class>pl.coderslab.controller.First</servlet-class>
+	<init-param>
+            <param-name>database</param-name>
+            <param-value>CustomerSupport</param-value>
+        </init-param>
+        <init-param>
+            <param-name>server</param-name>
+            <param-value>10.0.12.5</param-value>
+        </init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+<servlet-name>firstServlet</servlet-name>
+<url-pattern>/first</url-pattern>
+</servlet-mapping>
+
+  
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>pl.coderslab.filters.EncodingFilter</filter-class>
