@@ -14,7 +14,9 @@
 <%@include file="/WEB-INF/fragments/header.jspf"%>
 
 <h2>Add an exercise</h2>
-<p><font color='red'>${addExStatus}</font></p>
+<p><font color='red'>${message}</font></p>
+<% session.setAttribute("message", null); %>
+
 <form action='${pageContext.request.contextPath}/addexercise' method='post'>
 Title: <br>
 <input type='text' name='title'><br>

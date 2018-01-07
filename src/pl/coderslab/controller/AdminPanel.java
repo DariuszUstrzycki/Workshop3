@@ -57,10 +57,10 @@ public class AdminPanel extends HttpServlet {
 
 		String groupName = request.getParameter("groupName");
 		if (nullOrEmpty(groupName)) {
-			session.setAttribute("message", "Ooops, the name field can't be empty!");
+			request.getSession().setAttribute("message", "Ooops, the name field can't be empty!");
 			response.sendRedirect(theContext + theView);
 		} else {
-			persistGroup(groupName, request, response, session);
+			persistGroup(groupName, request, response);
 			generateGroupsAndUsers(session);
 			response.sendRedirect(theContext + theView);
 			// doGet(request, response); // updates the view of groups and redirection
@@ -76,14 +76,13 @@ public class AdminPanel extends HttpServlet {
 	private void deleteGroup(String groupId, HttpSession session) {
 		boolean deleted = groupDao.delete(Long.parseLong(groupId));
 		if (deleted) {
-			session.setAttribute("message", "The group has been successfully deleted.");
+			session.setAttribute("message", "The group has been successfully deleted."); // to raczej nie na sesji; moze url encoded?
 		} else {
 			session.setAttribute("message", "Unexpected problem. The group can't be deleted.");
 		}
 	}
 
 	private void deleteUser(String userId, HttpSession session) {
-		System.out.println("User id is " + userId);
 		boolean deleted = userDao.delete(Long.parseLong(userId));
 		if (deleted) {
 			session.setAttribute("message", "The user has been successfully deleted.");
@@ -92,11 +91,10 @@ public class AdminPanel extends HttpServlet {
 		}
 	}
 
-	private void persistGroup(String groupName, HttpServletRequest request, HttpServletResponse response,
-			HttpSession session) throws ServletException, IOException {
+	private void persistGroup(String groupName, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long id = groupDao.save(new UserGroup(groupName));
 		if (id > 0) {
-			session.setAttribute("message", "Group has been added.");
+			request.getSession().setAttribute("message", "Group has been added.");
 		}
 	}
 
