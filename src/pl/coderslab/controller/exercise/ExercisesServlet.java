@@ -3,6 +3,7 @@ package pl.coderslab.controller.exercise;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,44 +20,28 @@ import pl.coderslab.model.Exercise;
 @WebServlet("/exercises")
 public class ExercisesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int displayPerPage;
-
 	
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		try {
-			Integer displayParam = Integer.parseInt(getServletContext().getInitParameter("numberOfDisplayed"));
-			if(displayParam!= null) {
-				displayPerPage = displayParam;
-			}
-		} catch (NumberFormatException e) {
-			displayPerPage = 4;
-		}
-	}
+	private final ExerciseDao exDao = new MySQLExerciseDao(); 
+	private final String theView = "/views/exercises.jsp";
+	private final String theContext = "/Workshop3"; // init param
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		loadExercises(request,response);
-		
-		if (!response.isCommitted()) {
-			response.sendRedirect(request.getContextPath() + "/views/exercises.jsp");
-		}
-		
+		generateExercises(request,response);
+		response.sendRedirect(theContext + theView);
 	}
 	
-	private void loadExercises(HttpServletRequest request, HttpServletResponse response) {
+	private void generateExercises(HttpServletRequest request, HttpServletResponse response) {
 
-		ExerciseDao dao = new MySQLExerciseDao(); // inject
-		ArrayList<Exercise> allExercises = (ArrayList<Exercise>) dao.loadAllExercises(); 
-		Collections.reverse(allExercises);
+		List<Exercise> allExercises = (List<Exercise>) exDao.loadAllExercises(); 
+		allExercises = orderByDateDesc(allExercises); // improve one day
 		HttpSession session = request.getSession();
-			System.out.println("When allExercises is added to session in ExercisesServlet on redirect to exercises.jsp, session id is: " + session.getId());
-			System.out.println("allExercises size is: " + allExercises.size());
 		session.setAttribute("allExercises", allExercises);
-		session.setAttribute("displayPerPage", displayPerPage);
-			System.out.println("displayPerPage is " + displayPerPage);
-		
+	}
+	
+	private List<Exercise> orderByDateDesc(List<Exercise> exercises) {
+		Collections.reverse(exercises);
+		return exercises;
 	}
 
 }

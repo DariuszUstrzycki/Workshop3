@@ -19,7 +19,7 @@ import pl.coderslab.model.Solution;
 @WebServlet({ "/home" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int displayPerPage;
+	private int displayPerPage; // usunac to dziadostwo, bo nigdzie indziej go nie ma
 	
 	@Override
 	public void init() throws ServletException {

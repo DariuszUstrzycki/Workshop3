@@ -41,7 +41,6 @@ public class AdminPanel extends HttpServlet {
 		}
 
 		generateGroupsAndUsers(session);
-
 		response.sendRedirect(theContext + theView);
 
 	}

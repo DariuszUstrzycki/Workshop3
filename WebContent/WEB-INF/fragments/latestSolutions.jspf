@@ -34,4 +34,4 @@ b. ${number}
 c. number
 d. ${applicationScope.numberOfDisplayed}
 e. ${initParam.numberOfDisplayed}
-f. ${sessionScope.displayPerPage}
+
