@@ -187,7 +187,7 @@ public class SolutionServlet extends HttpServlet {
 		String exIdString = request.getParameter("exId");
 		Exercise ex = getExercise(exIdString, response);
 		
-		request.setAttribute("selectedExercise", ex);
+		request.setAttribute("oneExercise", ex);
 		System.out.println("exId is " + exIdString +  " and the retrieved exercise is " + ex );
 		request.getRequestDispatcher(theView).forward(request, response);
 	}

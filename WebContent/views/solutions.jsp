@@ -40,7 +40,7 @@
 				}
 		%>
 		<br>
-		<%@include file="/WEB-INF/fragments/selected_exercise.jspf"%> <!-- the solution selected by the user -->
+		<%@include file="/WEB-INF/fragments/view_exercise.jspf"%> <!-- the solution selected by the user -->
 		<%@include file="/WEB-INF/fragments/add_solution.jspf"%>
 	</c:if>
 	
