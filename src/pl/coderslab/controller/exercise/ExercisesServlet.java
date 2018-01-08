@@ -22,7 +22,6 @@ public class ExercisesServlet extends HttpServlet {
 
 	private final ExerciseDao exDao = new MySQLExerciseDao();
 	private final String theView = "/views/exercises.jsp";
-	private final String theContext = "/Workshop3"; // init param
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,32 +31,48 @@ public class ExercisesServlet extends HttpServlet {
 			action = "list";
 		switch (action) {
 		case "create":
-			this.showExerciseForm(request,response);
+			showExerciseForm(request,response);
 			break;
 		case "view":
-			this.viewOneExercise(request, response); 
+			viewOneExercise(request, response); 
 			break;
 		/*case "download":
-			this.downloadAttachment(request, response);
+			downloadAttachment(request, response);
 			break;*/
 		case "list":
 		default:
-			this.listExercises(request, response);
-			break;
+			listExercises(request, response);
 		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		// add exercise
+		String action = request.getParameter("action");
+        if(action == null)
+            action = "list";
+        switch(action)
+        {
+            case "create":
+                this.createExercise(request, response);
+                break;
+            case "list":
+            default:
+                response.sendRedirect("exercises");
+                break;
+        }
+		
+	}
+
+	private void createExercise(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("create is called");
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
 		Long userId = getUserId(request);
 
 		if (nullOrEmpty(title, description) || userId == null) {
-			request.getSession().setAttribute("message", "Ooops, the title/description fields can't be empty!");
-			response.sendRedirect(theContext + theView);
+			System.out.println("forwarding is called");
+			response.sendRedirect("exercises" + "?action=create"); //reloads page; error message is missing
 			return;
 		} else {
 			long id = exDao.save(new Exercise(title, description, userId));
@@ -78,25 +93,22 @@ public class ExercisesServlet extends HttpServlet {
 			return;
 		} else {  
 			request.setAttribute("oneExercise", ex); // przekazany zostanie parametr: ?action=view&exerciseId=
-			request.getRequestDispatcher(theView).forward(request, response); // wczesniej byl sendredirect w doPost
+			request.getRequestDispatcher(theView).forward(request, response); //preceded by sendredirect w doPost
 		}
-		
 	}
 	
-	
-
 	private void listExercises(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// getExercises - generateExercises
 		List<Exercise> allExercises = (List<Exercise>) exDao.loadAllExercises();
-		
+
 		if (allExercises == null) {
 			response.sendRedirect("exercises");
 			return;
-		} else { 
+		} else {
 			Collections.reverse(allExercises); // to improve
 			request.getSession().setAttribute("allExercises", allExercises);
-			request.getRequestDispatcher(theView).forward(request, response); // mozna forward 
+			request.getRequestDispatcher(theView).forward(request, response); // mozna forward
 		}
 		
 	}
@@ -126,34 +138,31 @@ public class ExercisesServlet extends HttpServlet {
 		}
 	 }
 	 
-	 //////////////////////////////////////////////////////////////
 	 
-	 private Long getUserId(HttpServletRequest request) {
-			Long id = null;
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				User user = (User) session.getAttribute("loggedUser");
-				if (user != null) {
-					id = user.getId();
-				}
+	private Long getUserId(HttpServletRequest request) {
+		Long id = null;
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			User user = (User) session.getAttribute("loggedUser");
+			if (user != null) {
+				id = user.getId();
 			}
-			return id;
 		}
+		return id;
+	}
 	
-
 	
-	/*private void downloadAttachment(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	}*/
+	private void showExerciseForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("add", "add");
+		request.getRequestDispatcher(theView).forward(request, response);
+	}
 	
 	private boolean nullOrEmpty(String title, String description) {
 		return (title == null || title.equals("") || description == null || description.equals(""));
 	}
 	
 
-	
-	private void showExerciseForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("add", "add");
-		request.getRequestDispatcher(theView).forward(request, response);
-	}
+	/*private void downloadAttachment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	}*/
 }

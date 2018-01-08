@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<form action='${pageContext.request.contextPath}/exercises' method='post'>
+<form action='${pageContext.request.contextPath}/exercises?action=create' method='post'>
 Title: <br>
 <input type='text' name='title'><br>
 Description: <br> 
