@@ -1,4 +1,4 @@
-package pl.coderslab.controller.exercise;
+package pl.coderslab.controller.solution;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,25 +13,32 @@ import javax.servlet.http.HttpSession;
 
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.dao.MySQLExerciseDao;
+import pl.coderslab.dao.MySQLSolutionDao;
+import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.model.Exercise;
+import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
-@WebServlet("/exercises")
-public class ExercisesServlet extends HttpServlet {
+/**
+ * Servlet implementation class SolutionServlet
+ */
+@WebServlet("/solutions")
+public class SolutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private final ExerciseDao exDao = new MySQLExerciseDao();
-	private final String theView = "/views/exercises.jsp";
+	private final SolutionDao solDao = new MySQLSolutionDao();
+	private final String theView = "/views/solutions.jsp";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String action = request.getParameter("action");
 		if (action == null)
 			action = "list";
 		switch (action) {
 		case "create":
-			showExerciseForm(request,response);
+			showSolutionForm(request,response);
 			break;
 		case "view":
 			viewOneExercise(request, response); 
@@ -39,14 +46,19 @@ public class ExercisesServlet extends HttpServlet {
 		/*case "download":
 			downloadAttachment(request, response);
 			break;*/
+		case "listForOneExercise":
+			someMethod(request, response); 
+			break;
 		case "list":
 		default:
-			listExercises(request, response);
+			listSolutions(request, response);
 		}
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
         if(action == null)
@@ -54,34 +66,49 @@ public class ExercisesServlet extends HttpServlet {
         switch(action)
         {
             case "create":
-                this.createExercise(request, response);
+                createSolution(request, response);
                 break;
             case "list":
             default:
                 response.sendRedirect("exercises");
                 break;
         }
-		
 	}
+	
+	// TERAZ wyglada na to ze jest zrobione
+	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-	private void createExercise(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("create is called");
-		String title = request.getParameter("title");
+		Long exId = null;
+		try {
+			exId = Long.parseLong(request.getParameter("exId"));
+		} catch (NumberFormatException e) {
+			response.sendRedirect("solutions");
+			return;
+		}
+		
 		String description = request.getParameter("description");
-		Long userId = getUserId(request);
-
-		if (nullOrEmpty(title, description) || userId == null) {
-			System.out.println("forwarding is called");
-			response.sendRedirect("exercises" + "?action=create"); //reloads page; error message is missing
+		if (nullOrEmpty(description)) {
+			response.sendRedirect("solutions" + "?action=create"); // reloads page; error message is missing
 			return;
 		} else {
-			long id = exDao.save(new Exercise(title, description, userId));
+			User user = (User) request.getSession().getAttribute("loggedUser");
+			long id = solDao.save(new Solution(description, exId, user.getId()));
 			if (id > 0) {
-				response.sendRedirect("exercises" + "?action=view&exerciseId=" + id);
+				System.out.println("The solution has been saved!");
+				response.sendRedirect("solutions" + "?action=view&solId=" + id);
 			}
 		}
 	}
+	
+	
+	
+	private void someMethod(HttpServletRequest request, HttpServletResponse response) {
 
+	}
+	
+	
+	
+	
 		// uruchamia sie po doPost
 	private void viewOneExercise(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -97,17 +124,18 @@ public class ExercisesServlet extends HttpServlet {
 		}
 	}
 	
-	private void listExercises(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// CAŁE PRZEROBIONE
+	private void listSolutions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// getExercises - generateExercises
-		List<Exercise> allExercises = (List<Exercise>) exDao.loadAllExercises();
+		List<Solution> allSolutions = (List<Solution>) solDao.loadAllSolutions();
 
-		if (allExercises == null) {
-			response.sendRedirect("exercises");
+		if (allSolutions == null) {
+			response.sendRedirect("solutions");
 			return;
 		} else {
-			Collections.reverse(allExercises); // to improve
-			request.getSession().setAttribute("allExercises", allExercises);
+			Collections.reverse(allSolutions); // to improve
+			request.getSession().setAttribute("allSolutions", allSolutions);
 			request.getRequestDispatcher(theView).forward(request, response); // mozna forward
 		}
 		
@@ -120,22 +148,23 @@ public class ExercisesServlet extends HttpServlet {
 	private Exercise getExercise(String idString, HttpServletResponse response) throws ServletException, IOException {
 		 
 		if (idString == null || idString.length() == 0) {
-			response.sendRedirect("exercises");
+			response.sendRedirect("solutions");
 			return null;
 		}
 
 		try {
-			Exercise ex = this.exDao.loadExerciseById(Integer.parseInt(idString));
+			Exercise ex = exDao.loadExerciseById(Integer.parseInt(idString));
 			if (ex == null) {
-				response.sendRedirect("exercises");
+				response.sendRedirect("solutions");
 				return null;
 			}
 			return ex;
 
 		} catch (Exception e) {
-			response.sendRedirect("exercises");
+			response.sendRedirect("solutions");
 			return null;
 		}
+		
 	 }
 	 
 	 
@@ -152,13 +181,19 @@ public class ExercisesServlet extends HttpServlet {
 	}
 	
 	
-	private void showExerciseForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void showSolutionForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request.setAttribute("add", "add");
+		
+		String exIdString = request.getParameter("exId");
+		Exercise ex = getExercise(exIdString, response);
+		
+		request.setAttribute("selectedExercise", ex);
+		System.out.println("exId is " + exIdString +  " and the retrieved exercise is " + ex );
 		request.getRequestDispatcher(theView).forward(request, response);
 	}
 	
-	private boolean nullOrEmpty(String title, String description) {
-		return (title == null || title.equals("") || description == null || description.equals(""));
+	private boolean nullOrEmpty( String description) {
+		return  description == null || description.equals("");
 	}
 	
 

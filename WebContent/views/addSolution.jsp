@@ -14,13 +14,11 @@
 <%@include file="/WEB-INF/fragments/header.jspf"%>
 
 <% 
-
 if( request.getParameter("exIndex") == null ){
 	System.out.println("exIndex is null at page addSolution.jsp"); 
 } else {
 	System.out.println("exIndex is NOT null at page addSolution.jsp"); 
 }
-
 %>
 
 <h2>Add a solution</h2>

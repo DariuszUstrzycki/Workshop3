@@ -13,14 +13,13 @@
 		</tr>
 	</thead>
 	<tbody>
-	<% String id = request.getParameter("exId"); %>
-	<% out.append("param.exId is " + request.getParameter("exId")); %>
+	<%  request.getAttribute("selectedExercise"); %>
+	<% out.append("selectedExercise is " + request.getAttribute("selectedExercise")); %>
 			<tr>
-				<td>${allExercises[param.exId].id}</td>
-				<td>${allExercises[param.exId].title}</td>
-				<td>${allExercises[param.exId].description}</td>
-				<td>${allExercises[param.exId].userId}</td>
+				<td>${selectedExercise.id}</td>
+				<td>${selectedExercise.title}</td>
+				<td>${selectedExercise.description}</td>
+				<td>${selectedExercise.userId}</td>
 			</tr>
 	</tbody>
 </table>
-

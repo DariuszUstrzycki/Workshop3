@@ -8,7 +8,6 @@
       (us3cki@zoho.com), who should be contacted for
       more information.
     </description>
-    
   <welcome-file-list>
     <welcome-file>home</welcome-file>
     <welcome-file>index.html</welcome-file>
@@ -18,7 +17,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <context-param>
     <description>The EMAIL address of the administrator to whom questions 
       and comments about this application should be addressed.</description>
@@ -40,27 +38,23 @@
     <param-name>numberOfDisplayed</param-name>
     <param-value>5</param-value>
   </context-param>
-  
-  
   <servlet>
-	<servlet-name>firstServlet</servlet-name>
-	<servlet-class>pl.coderslab.controller.First</servlet-class>
-	<init-param>
-            <param-name>database</param-name>
-            <param-value>CustomerSupport</param-value>
-        </init-param>
-        <init-param>
-            <param-name>server</param-name>
-            <param-value>10.0.12.5</param-value>
-        </init-param>
-	<load-on-startup>1</load-on-startup>
-</servlet>
-<servlet-mapping>
-<servlet-name>firstServlet</servlet-name>
-<url-pattern>/first</url-pattern>
-</servlet-mapping>
-
-  
+    <servlet-name>firstServlet</servlet-name>
+    <servlet-class>pl.coderslab.controller.First</servlet-class>
+    <init-param>
+      <param-name>database</param-name>
+      <param-value>CustomerSupport</param-value>
+    </init-param>
+    <init-param>
+      <param-name>server</param-name>
+      <param-value>10.0.12.5</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>firstServlet</servlet-name>
+    <url-pattern>/first</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>pl.coderslab.filters.EncodingFilter</filter-class>

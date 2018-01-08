@@ -4,9 +4,10 @@
 
 <table>
 	<tr>
+	<td><a href='${pageContext.request.contextPath}/home'>Home</a></td>
 		<td><a href='${pageContext.request.contextPath}/exercises?action=list'>Exercises</a></td>
 		<td><a href='${pageContext.request.contextPath}/exercises?action=create'>Add exercise</a></td>
-		<td><a href='${pageContext.request.contextPath}/home'>Solutions</a></td>
+		<td><a href='${pageContext.request.contextPath}/solutions?action=list'>Solutions</a></td>
 	</tr>
 </table>
 

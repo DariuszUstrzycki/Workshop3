@@ -35,7 +35,7 @@
 <!-- list all exercises -->
 	<c:if test="${param.action eq 'list'}">
 	<h2>All exercises</h2>
-	<%@include file="/WEB-INF/fragments/allExercises.jspf" %>
+	<%@include file="/WEB-INF/fragments/all_exercises.jspf" %>
 	</c:if>
 	
 

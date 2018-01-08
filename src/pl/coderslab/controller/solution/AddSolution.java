@@ -34,22 +34,17 @@ public class AddSolution extends HttpServlet {
 	
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-	System.out.println("Value of request.getParameter(\"exId\") is " + request.getParameter("exId"));
 		long exId = Long.valueOf(request.getParameter("exId"));
 		String description = request.getParameter("description");
-		
-		System.out.println("Entering post with " + exId + ", " + description);
 		
 		if (nullOrEmpty(description)) {
 			forwardToFormPage(request, response, "Ooops, the description field can't be empty!");
 			return;
 		} else {
 			SolutionDao dao = new MySQLSolutionDao();
-			System.out.println("About to add a solution");
 			User user = (User) request.getSession().getAttribute("loggedUser");
 			long id = dao.save(new Solution(description, exId, user.getId()));
 			if (id > 0) {
-				System.out.println("id of solution is " + id);
 				request.getSession().setAttribute("newSolution", new Solution(id, description, exId, user.getId()));
 				forwardToFormPage(request, response, "Solution has been added.");
 			}
