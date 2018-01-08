@@ -10,13 +10,34 @@
 <title>Exercises</title>
 </head>
 <body>
-
 <%@include file="/WEB-INF/fragments/header.jspf"%>
 
 
-<%@include file="/WEB-INF/fragments/latestExercises.jspf"%>
+<!-- display info about adding/deleting exercise or errors -->
 
-<h2>ALL EXERCISES BELOW:</h2>
-<%@include file="/WEB-INF/fragments/allExercises.jspf"%>
+	<%  String action = request.getParameter("action"); 
+	out.append("Action is " + action);
+	%>
+
+
+	<!-- form to add exercises -->
+	<c:if test="${param.action eq 'create'}">
+	<h2>Add an exercise</h2>
+		<%@include file="/WEB-INF/fragments/add_exercise.jspf"%>
+	</c:if>
+	
+	<!-- view 1 exercise -->
+	<c:if test="${param.action eq 'view'}">
+	<h2>The exercise has been added</h2>
+		<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
+	</c:if>
+
+<!-- list all exercises -->
+	<c:if test="${param.action eq 'list'}">
+	<h2>All exercises</h2>
+	<%@include file="/WEB-INF/fragments/allExercises.jspf" %>
+	</c:if>
+	
+
 </body>
 </html>
