@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="exercise"  items="${allExercises}"> 
+		<c:forEach var="exercise"  items="${requestScope.allExercises}"> 
 			<tr>
 				<td>
 				<a href='${pageContext.request.contextPath}/solutions?action=create&exId=${exercise.id}'>Add solution</a><br>

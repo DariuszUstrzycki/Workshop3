@@ -105,7 +105,7 @@ public class ExercisesServlet extends HttpServlet {
 			return;
 		} else {
 			Collections.reverse(allExercises); // to improve
-			request.getSession().setAttribute("allExercises", allExercises);
+			request.setAttribute("allExercises", allExercises);
 			request.getRequestDispatcher(theView).forward(request, response); // mozna forward
 		}
 		

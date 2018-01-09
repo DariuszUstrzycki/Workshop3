@@ -117,7 +117,7 @@ System.out.println("2.Entering description is null or empty");
 				} else {
 					System.out.println("allSolsForEx have been created");
 					Collections.reverse(allSolsForEx); // to improve
-					request.getSession().setAttribute("allSolsForEx", allSolsForEx);
+					request.setAttribute("allSolsForEx", allSolsForEx);
 					request.setAttribute("oneExercise", ex);
 					request.getRequestDispatcher(theView).forward(request, response); // mozna forward
 				}
@@ -154,7 +154,7 @@ System.out.println("2.Entering description is null or empty");
 			return;
 		} else {
 			Collections.reverse(allSolutions); // to improve
-			request.getSession().setAttribute("allSolutions", allSolutions);
+			request.setAttribute("allSolutions", allSolutions);
 			request.getRequestDispatcher(theView).forward(request, response); // mozna forward
 		}
 		
