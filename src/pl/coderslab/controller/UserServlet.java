@@ -59,6 +59,19 @@ public class UserServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String action = request.getParameter("action");
+        if(action == null)
+            action = "list";
+        switch(action)
+        {
+            case "create":
+               // createUser(request, response); - not implemented
+                break;
+            case "list":
+            default:
+                response.sendRedirect("users");
+                break;
+        }
 	}
 	
 	private void listUsers(HttpServletRequest request, HttpServletResponse response)

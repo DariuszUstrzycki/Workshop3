@@ -16,7 +16,7 @@ public class UserGroup {
 	}
 	
 	public UserGroup(String name) {
-		this.id = id;
+		this.id = 0L;
 		this.name = name;
 	}
 

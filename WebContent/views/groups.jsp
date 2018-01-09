@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+    pageEncoding="UTF-8"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <%@include file="/WEB-INF/fragments/cssFileLocation.jspf"%>
-<title>Solutions</title>
+<title>Groups</title>
 </head>
 <body>
 <%@include file="/WEB-INF/fragments/header.jspf"%>
@@ -15,6 +16,15 @@
 	<%  String action = request.getParameter("action"); 
 	out.append("Action is " + action);
 	%>
+	
+	<%-- links --%>
+	<td><h3><a href='${pageContext.request.contextPath}/groups?action=create'>Add group</a></h3></td>
+	
+	<!-- form to add group -->
+	<c:if test="${param.action eq 'create'}">
+	<h2>Add a group</h2>
+		<%@include file="/WEB-INF/fragments/add_group.jspf"%>
+	</c:if>
 
 	<!-- view one group -->
 	<c:if test="${param.action eq 'view'}">

@@ -16,7 +16,10 @@
 	<%  String action = request.getParameter("action"); 
 	out.println("Action is " + action);
 	out.println("Session id is " + session.getId() + ", time is " + LocalTime.now());
-	%>
+	%><br>
+	
+	<%-- links --%>
+	<td><h3><a href='${pageContext.request.contextPath}/exercises?action=create'>Add exercise</a></h3></td>
 
 	<!-- form to add exercises -->
 	<c:if test="${param.action eq 'create'}">
