@@ -47,7 +47,7 @@ public class SolutionServlet extends HttpServlet {
 			downloadAttachment(request, response);
 			break;*/
 		case "listForOneExercise":
-			someMethod(request, response); 
+			listForOneExercise(request, response); 
 			break;
 		case "list":
 		default:
@@ -103,8 +103,26 @@ System.out.println("2.Entering description is null or empty");
 	
 	
 	
-	private void someMethod(HttpServletRequest request, HttpServletResponse response) {
+	private void listForOneExercise(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// action=listForOneExercise&exId=35
+			
+		Exercise ex = getExercise(request.getParameter("exId"), response);
+		
+		// getExercises - generateExercises
+				List<Solution> allSolsForEx = (List<Solution>) solDao.loadSolutionsByExId(ex.getId());
 
+				if (allSolsForEx == null) {
+					response.sendRedirect("solutions");
+					return;
+				} else {
+					System.out.println("allSolsForEx have been created");
+					Collections.reverse(allSolsForEx); // to improve
+					request.getSession().setAttribute("allSolsForEx", allSolsForEx);
+					request.setAttribute("oneExercise", ex);
+					request.getRequestDispatcher(theView).forward(request, response); // mozna forward
+				}
+		
+		
 	}
 	
 	

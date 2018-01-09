@@ -59,11 +59,14 @@
 
 
 
-	<!-- list all solutions for an exercise 
-	<c:if test="${param.action eq 'list'}">
-	<h2>All solutions</h2>
+	<!-- list all solutions for an exercise -->
+	<c:if test="${param.action eq 'listForOneExercise'}">
+	<h2>All solutions for this exercise</h2>
+	<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
+	<br>
 	<%@include file="/WEB-INF/fragments/allSols_forEx.jspf" %>
-	</c:if> -->
+	</c:if> 
+	
 	
 	<!-- list all solutions -->
 	<c:if test="${param.action eq 'list'}">

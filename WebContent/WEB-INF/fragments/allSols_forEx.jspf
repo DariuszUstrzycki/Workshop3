@@ -15,7 +15,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="solution"  items="${allSolutions}"> 
+		<c:forEach var="solution"  items="${sessionScope.allSolsForEx}"> 
 			<tr>
 				<td>${solution.id}</td>
 				<td>${solution.created}</td>
