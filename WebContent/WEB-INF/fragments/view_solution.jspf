@@ -1,12 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-</body>
-</html>
+<table class='displayTable' id='solutions'>
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>created</th>
+			<th>updated</th>
+			<th>description</th>
+			<th>exerciseId</th>
+			<th>userId</th>
+		</tr>
+	</thead>
+	<tbody>
+			<tr>
+				<td>${requestScope.oneSolution.id}</td>
+				<td>${requestScope.oneSolution.created}</td>
+				<td>${requestScope.oneSolution.updated}</td>
+				<td>${requestScope.oneSolution.description}</td>
+				<td>${requestScope.oneSolution.exerciseId}</td>
+				<td>${requestScope.oneSolution.userId}</td>
+			</tr>
+	</tbody>
+</table>

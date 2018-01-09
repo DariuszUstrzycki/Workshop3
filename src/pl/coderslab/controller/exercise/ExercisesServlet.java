@@ -54,7 +54,7 @@ public class ExercisesServlet extends HttpServlet {
         switch(action)
         {
             case "create":
-                this.createExercise(request, response);
+                createExercise(request, response);
                 break;
             case "list":
             default:
@@ -65,13 +65,11 @@ public class ExercisesServlet extends HttpServlet {
 	}
 
 	private void createExercise(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("create is called");
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
 		Long userId = getUserId(request);
 
 		if (nullOrEmpty(title, description) || userId == null) {
-			System.out.println("forwarding is called");
 			response.sendRedirect("exercises" + "?action=create"); //reloads page; error message is missing
 			return;
 		} else {

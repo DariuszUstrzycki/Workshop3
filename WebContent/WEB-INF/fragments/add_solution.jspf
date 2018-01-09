@@ -4,7 +4,7 @@
 
 
 <form action='${pageContext.request.contextPath}/solutions?action=create' method='post'>
-<input type="hidden" name='exId' value='${allExercises[param.exId].id}'>
+<input type="hidden" name='exId' value='${oneExercise.id}'> <!--  tak bylo przed chwilą   -allExercises[param.exId].id-->
 Description: <br> 
 <textarea name="description" rows="10" cols="110">
 </textarea><br>

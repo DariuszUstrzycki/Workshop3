@@ -55,6 +55,10 @@
 		<%@include file="/WEB-INF/fragments/view_solution.jspf"%>
 	</c:if>
 
+
+
+
+
 	<!-- list all solutions for an exercise 
 	<c:if test="${param.action eq 'list'}">
 	<h2>All solutions</h2>

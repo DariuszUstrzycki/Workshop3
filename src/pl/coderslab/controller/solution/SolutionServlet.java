@@ -41,7 +41,7 @@ public class SolutionServlet extends HttpServlet {
 			showSolutionForm(request,response);
 			break;
 		case "view":
-			viewOneExercise(request, response); 
+			viewOneSolution(request, response); 
 			break;
 		/*case "download":
 			downloadAttachment(request, response);
@@ -77,7 +77,7 @@ public class SolutionServlet extends HttpServlet {
 	
 	// TERAZ wyglada na to ze jest zrobione
 	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+System.out.println("1.Entering createSolution, exId is " + request.getParameter("exId"));
 		Long exId = null;
 		try {
 			exId = Long.parseLong(request.getParameter("exId"));
@@ -85,16 +85,17 @@ public class SolutionServlet extends HttpServlet {
 			response.sendRedirect("solutions");
 			return;
 		}
-		
+
 		String description = request.getParameter("description");
 		if (nullOrEmpty(description)) {
-			response.sendRedirect("solutions" + "?action=create"); // reloads page; error message is missing
+System.out.println("2.Entering description is null or empty");			
+			response.sendRedirect("solutions" + "?action=create&exId=" + exId); // reloads page; error message is missing
 			return;
 		} else {
 			User user = (User) request.getSession().getAttribute("loggedUser");
 			long id = solDao.save(new Solution(description, exId, user.getId()));
 			if (id > 0) {
-				System.out.println("The solution has been saved!");
+	System.out.println("The solution has been saved!");
 				response.sendRedirect("solutions" + "?action=view&solId=" + id);
 			}
 		}
@@ -110,16 +111,16 @@ public class SolutionServlet extends HttpServlet {
 	
 	
 		// uruchamia sie po doPost
-	private void viewOneExercise(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void viewOneSolution(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String idString = request.getParameter("exerciseId");
-		Exercise ex = this.getExercise(idString, response); // jesli nie bedzie bledow zwraca ex o tym id lub null
-		
-		if (ex == null) {
-			response.sendRedirect("exercises");
+		String idString = request.getParameter("solId");
+		Solution sol = getSolution(idString, response); 
+		System.out.println("Solution found in viewSolution is " + sol);
+		if (sol == null) {
+			response.sendRedirect("solutions");
 			return;
 		} else {  
-			request.setAttribute("oneExercise", ex); // przekazany zostanie parametr: ?action=view&exerciseId=
+			request.setAttribute("oneSolution", sol); // przekazany zostanie parametr: ?action=view&solutionId=
 			request.getRequestDispatcher(theView).forward(request, response); //preceded by sendredirect w doPost
 		}
 	}
@@ -142,11 +143,27 @@ public class SolutionServlet extends HttpServlet {
 	}
 
 	
-	 /**
-	 * @return when null, redirects to "exercises"
+	private void showSolutionForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//request.setAttribute("add", "add");
+		
+		String exIdString = request.getParameter("exId");
+		Exercise ex = getExercise(exIdString, response);
+		
+		request.setAttribute("oneExercise", ex);
+		System.out.println("exId is " + exIdString +  " and the retrieved exercise is " + ex );
+		request.getRequestDispatcher(theView).forward(request, response);
+	}
+	
+	private boolean nullOrEmpty( String description) {
+		return  description == null || description.equals("");
+	}
+	
+	
+	/**
+	 * @return when null, redirects to "solutions"
 	 */
 	private Exercise getExercise(String idString, HttpServletResponse response) throws ServletException, IOException {
-		 
+
 		if (idString == null || idString.length() == 0) {
 			response.sendRedirect("solutions");
 			return null;
@@ -164,9 +181,35 @@ public class SolutionServlet extends HttpServlet {
 			response.sendRedirect("solutions");
 			return null;
 		}
-		
-	 }
-	 
+
+	}
+
+	/**
+	 * @return when null, redirects to "solutions"
+	 */
+	private Solution getSolution(String idString, HttpServletResponse response) throws ServletException, IOException {
+
+		if (idString == null || idString.length() == 0) {
+			response.sendRedirect("solutions");
+			return null;
+		}
+
+		try {
+			Solution sol = solDao.loadSolutionById(Integer.parseInt(idString));
+			if (sol == null) {
+				response.sendRedirect("solutions");
+				return null;
+			}
+			return sol;
+
+		} catch (Exception e) {
+			response.sendRedirect("solutions");
+			return null;
+		}
+
+	}
+	
+
 	 
 	private Long getUserId(HttpServletRequest request) {
 		Long id = null;
@@ -178,22 +221,6 @@ public class SolutionServlet extends HttpServlet {
 			}
 		}
 		return id;
-	}
-	
-	
-	private void showSolutionForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//request.setAttribute("add", "add");
-		
-		String exIdString = request.getParameter("exId");
-		Exercise ex = getExercise(exIdString, response);
-		
-		request.setAttribute("oneExercise", ex);
-		System.out.println("exId is " + exIdString +  " and the retrieved exercise is " + ex );
-		request.getRequestDispatcher(theView).forward(request, response);
-	}
-	
-	private boolean nullOrEmpty( String description) {
-		return  description == null || description.equals("");
 	}
 	
 
