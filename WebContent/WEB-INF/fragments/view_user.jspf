@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<table class='displayTable'>
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>username</th>
+			<th>email</th>
+			<th>group id</th>
+		</tr>
+	</thead>
+	<tbody>
+			<tr>
+				<td>${requestScope.oneUser.id}</td>
+				<td>${requestScope.oneUser.username}</td>
+				<td>${requestScope.oneUser.email}</td>
+				<td>${requestScope.oneUser.userGroupId}</td>
+			</tr>
+	</tbody>
+</table>

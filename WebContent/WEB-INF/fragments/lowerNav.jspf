@@ -8,6 +8,8 @@
 		<td><a href='${pageContext.request.contextPath}/exercises?action=list'>Exercises</a></td>
 		<td><a href='${pageContext.request.contextPath}/exercises?action=create'>Add exercise</a></td>
 		<td><a href='${pageContext.request.contextPath}/solutions?action=list'>Solutions</a></td>
+		<td><a href='${pageContext.request.contextPath}/users?action=list'>Users</a></td>
+		<td><a href='${pageContext.request.contextPath}/groups?action=list'>Groups</a></td>
 	</tr>
 </table>
 

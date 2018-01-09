@@ -3,8 +3,6 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<h2>Users</h2>
-
 <table class='displayTable'>
 	<thead>
 		<tr>
@@ -17,9 +15,10 @@
 	<tbody>
 		<c:forEach var="user"  items="${allUsers}" varStatus="status"> 
 			<tr>
-				<td>${user.id} ${status.index}<br>
-				<a href='${pageContext.request.contextPath}/admin/panel?userId=${user.id}'>Change group</a><br>
-				<a href='${pageContext.request.contextPath}/admin/panel?deleteUserId=${user.id}'>Delete</a></td>
+				<td>${user.id}<br>
+				<a href='${pageContext.request.contextPath}/users?userId=${user.id}'>Change group</a><br>
+				<a href='${pageContext.request.contextPath}/users?action=view&userId=${user.id}'>View</a><br>
+				<a href='${pageContext.request.contextPath}/users?action=delete&userId=${user.id}'>Delete</a></td>
 				<td>${user.username}</td>
 				<td>${user.email}</td>
 				<td>${user.userGroupId}</td>

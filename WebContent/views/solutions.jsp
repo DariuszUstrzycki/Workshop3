@@ -27,7 +27,7 @@ Session is
 	</c:if>
 	
 	
-	<!-- view the just added solution -->
+	<!-- view one solution -->
 	<c:if test="${param.action eq 'view'}">
 	<h2>The solution has been added</h2>
 		<%@include file="/WEB-INF/fragments/view_solution.jspf"%>

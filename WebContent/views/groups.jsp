@@ -16,16 +16,16 @@
 	out.append("Action is " + action);
 	%>
 
-	<!-- view one user -->
+	<!-- view one group -->
 	<c:if test="${param.action eq 'view'}">
-	<h2>The user #${requestScope.oneUser.id} </h2>
-		<%@include file="/WEB-INF/fragments/view_user.jspf"%>
+	<h2>The group #${requestScope.oneGroup.id} </h2>
+		<%@include file="/WEB-INF/fragments/view_group.jspf"%>
 	</c:if>
 
-	<!-- list all users -->
+	<!-- list all groups -->
 	<c:if test="${param.action eq 'list'}">
-	<h2>All users</h2>
-	<%@include file="/WEB-INF/fragments/all_users.jspf" %>
+	<h2>All groups</h2>
+	<%@include file="/WEB-INF/fragments/all_groups.jspf" %>
 	</c:if>
 
 

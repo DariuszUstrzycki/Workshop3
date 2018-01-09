@@ -120,7 +120,6 @@ public class SolutionServlet extends HttpServlet {
 		
 		String idString = request.getParameter("solId");
 		Solution sol = getSolution(idString, response); 
-		System.out.println("Solution found in viewSolution is " + sol);
 		if (sol == null) {
 			response.sendRedirect("solutions");
 			return;
