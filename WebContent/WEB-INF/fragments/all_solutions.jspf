@@ -7,7 +7,7 @@
 <table class='displayTable' id='solutions'>
 	<thead>
 		<tr>
-			<th>id</th>
+			<th>solution id</th>
 			<th>created</th>
 			<th>updated</th>
 			<th>description</th>
@@ -18,7 +18,8 @@
 	<tbody>
 		<c:forEach var="solution"  items="${requestScope.allSolutions}"> 
 			<tr>
-				<td>${solution.id}</td>
+				<td>${solution.id}
+				<a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}'>Delete</a><br></td>
 				<td>${solution.created}</td>
 				<td>${solution.updated}</td>
 				<td>${solution.description}</td>

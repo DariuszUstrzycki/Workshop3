@@ -38,6 +38,9 @@ public class SolutionServlet extends HttpServlet {
 		case "create":
 			showSolutionFormAndExercise(request,response);
 			break;
+		case "delete":
+			deleteSolution(request, response); 
+			break;
 		case "view":
 			viewOneSolution(request, response); 
 			break;
@@ -208,6 +211,24 @@ public class SolutionServlet extends HttpServlet {
 			return null;
 		}
 
+	}
+	
+	private void deleteSolution(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Long solId = null;
+		try {
+			solId = Long.parseLong(request.getParameter("solId"));
+		} catch (NumberFormatException e) {
+			response.sendRedirect("solutions");
+			return;
+		}
+		
+		boolean deleted = solDao.delete(solId);
+		if (deleted) { // message options: 1) setAttribute (message, "Deleted use userId"  2) dopisac te info do url
+			response.sendRedirect("solutions" + "?action=list" +"&solId=" + solId);
+		}
+		
 	}
 	
 
