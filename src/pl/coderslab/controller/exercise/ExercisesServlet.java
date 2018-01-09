@@ -33,6 +33,9 @@ public class ExercisesServlet extends HttpServlet {
 		case "create":
 			showExerciseForm(request,response);
 			break;
+		case "delete":
+			deleteExercise(request, response); 
+			break;
 		case "view":
 			viewOneExercise(request, response); 
 			break;
@@ -147,6 +150,24 @@ public class ExercisesServlet extends HttpServlet {
 			}
 		}
 		return id;
+	}
+	
+	private void deleteExercise(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Long exId = null;
+		try {
+			exId = Long.parseLong(request.getParameter("exId"));
+		} catch (NumberFormatException e) {
+			response.sendRedirect("exercises");
+			return;
+		}
+		
+		boolean deleted = exDao.delete(exId);
+		if (deleted) { // message options: 1) setAttribute (message, "Deleted use userId"  2) dopisac te info do url
+			response.sendRedirect("exercises" + "?action=list" +"&exId=" + exId);
+		}
+		
 	}
 	
 	
