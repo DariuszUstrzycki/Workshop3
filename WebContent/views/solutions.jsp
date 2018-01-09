@@ -12,54 +12,29 @@
 <body>
 <%@include file="/WEB-INF/fragments/header.jspf"%>
 
+Action is ${param.action}
+Session is 
+<br>
+	
 
-<!-- display info about adding/deleting exercise or errors -->
-			NEW SOLUTIONS
-	<%  String action = request.getParameter("action"); 
-	out.append("Action is " + action);
-	%>
-
-
-	<!-- form to add solution -->
+	<%--form to add solution  --%> 
 	<c:if test="${param.action eq 'create'}">
 	<h2>Add a solution for this exercise</h2>
 	<br>
-		<%
-			if (request.getParameter("exId") == null) {
-					out.append("requestParam exId is null at page solutions.jsp");
-				} else {
-					out.append("requestParam exId is NOT null at page solutions.jsp");
-				}
-		%>
 		<br>
-		<%
-				if (session.getAttribute("allExercises") == null) {
-					out.append("session attribute allExercises is null at page solutions.jsp");
-				} else {
-					out.append("session attributeallExercises is NOT null at page solutions.jsp");
-				}
-		%>
-		<br>
-		<%@include file="/WEB-INF/fragments/view_exercise.jspf"%> <!-- the solution selected by the user -->
+		<%@include file="/WEB-INF/fragments/view_exercise.jspf"%> <%--the solution selected by the user --%>  
 		<%@include file="/WEB-INF/fragments/add_solution.jspf"%>
 	</c:if>
 	
 	
-	
-	
-	
-	
-	<!-- view 1 newly added solution -->
+	<!-- view the just added solution -->
 	<c:if test="${param.action eq 'view'}">
 	<h2>The solution has been added</h2>
 		<%@include file="/WEB-INF/fragments/view_solution.jspf"%>
 	</c:if>
 
 
-
-
-
-	<!-- list all solutions for an exercise -->
+	<!-- list all solutions for the given exercise -->
 	<c:if test="${param.action eq 'listForOneExercise'}">
 	<h2>All solutions for this exercise</h2>
 	<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>

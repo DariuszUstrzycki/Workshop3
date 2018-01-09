@@ -19,9 +19,7 @@ import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
-/**
- * Servlet implementation class SolutionServlet
- */
+
 @WebServlet("/solutions")
 public class SolutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,7 +36,7 @@ public class SolutionServlet extends HttpServlet {
 			action = "list";
 		switch (action) {
 		case "create":
-			showSolutionForm(request,response);
+			showSolutionFormAndExercise(request,response);
 			break;
 		case "view":
 			viewOneSolution(request, response); 
@@ -54,8 +52,6 @@ public class SolutionServlet extends HttpServlet {
 			listSolutions(request, response);
 		}
 	}
-	
-	
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,9 +71,7 @@ public class SolutionServlet extends HttpServlet {
         }
 	}
 	
-	// TERAZ wyglada na to ze jest zrobione
 	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
-System.out.println("1.Entering createSolution, exId is " + request.getParameter("exId"));
 		Long exId = null;
 		try {
 			exId = Long.parseLong(request.getParameter("exId"));
@@ -88,14 +82,12 @@ System.out.println("1.Entering createSolution, exId is " + request.getParameter(
 
 		String description = request.getParameter("description");
 		if (nullOrEmpty(description)) {
-System.out.println("2.Entering description is null or empty");			
 			response.sendRedirect("solutions" + "?action=create&exId=" + exId); // reloads page; error message is missing
 			return;
 		} else {
 			User user = (User) request.getSession().getAttribute("loggedUser");
 			long id = solDao.save(new Solution(description, exId, user.getId()));
 			if (id > 0) {
-	System.out.println("The solution has been saved!");
 				response.sendRedirect("solutions" + "?action=view&solId=" + id);
 			}
 		}
@@ -119,14 +111,9 @@ System.out.println("2.Entering description is null or empty");
 					Collections.reverse(allSolsForEx); // to improve
 					request.setAttribute("allSolsForEx", allSolsForEx);
 					request.setAttribute("oneExercise", ex);
-					request.getRequestDispatcher(theView).forward(request, response); // mozna forward
+					request.getRequestDispatcher(theView).forward(request, response); 
 				}
-		
-		
 	}
-	
-	
-	
 	
 		// uruchamia sie po doPost
 	private void viewOneSolution(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -143,7 +130,6 @@ System.out.println("2.Entering description is null or empty");
 		}
 	}
 	
-	// CAŁE PRZEROBIONE
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// getExercises - generateExercises
@@ -161,19 +147,17 @@ System.out.println("2.Entering description is null or empty");
 	}
 
 	
-	private void showSolutionForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//request.setAttribute("add", "add");
+	private void showSolutionFormAndExercise(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String exIdString = request.getParameter("exId");
-		Exercise ex = getExercise(exIdString, response);
-		
+		Exercise ex = getExercise(request.getParameter("exId"), response);
 		request.setAttribute("oneExercise", ex);
-		System.out.println("exId is " + exIdString +  " and the retrieved exercise is " + ex );
+		
 		request.getRequestDispatcher(theView).forward(request, response);
 	}
 	
-	private boolean nullOrEmpty( String description) {
-		return  description == null || description.equals("");
+	
+	private boolean nullOrEmpty( String string) {
+		return  string == null || string.equals("");
 	}
 	
 	

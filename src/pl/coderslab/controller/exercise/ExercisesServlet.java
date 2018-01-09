@@ -151,7 +151,6 @@ public class ExercisesServlet extends HttpServlet {
 	
 	
 	private void showExerciseForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//request.setAttribute("add", "add");
 		request.getRequestDispatcher(theView).forward(request, response);
 	}
 	

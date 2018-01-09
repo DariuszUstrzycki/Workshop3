@@ -13,14 +13,10 @@
 <body>
 <%@include file="/WEB-INF/fragments/header.jspf"%>
 
-
-<!-- display info about adding/deleting exercise or errors -->
-
 	<%  String action = request.getParameter("action"); 
 	out.println("Action is " + action);
 	out.println("Session id is " + session.getId() + ", time is " + LocalTime.now());
 	%>
-
 
 	<!-- form to add exercises -->
 	<c:if test="${param.action eq 'create'}">
@@ -34,7 +30,7 @@
 		<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
 	</c:if>
 
-<!-- list all exercises -->
+	<!-- list all exercises -->
 	<c:if test="${param.action eq 'list'}">
 	<h2>All exercises</h2>
 	<%@include file="/WEB-INF/fragments/all_exercises.jspf" %>
