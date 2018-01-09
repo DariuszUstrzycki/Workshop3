@@ -36,7 +36,7 @@ Session is
 
 	<!-- list all solutions for the given exercise -->
 	<c:if test="${param.action eq 'listForOneExercise'}">
-	<h2>All solutions for this exercise</h2>
+	<h2>Exercise #${requestScope.oneExercise.id} and its solutions</h2>
 	<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
 	<br>
 	<%@include file="/WEB-INF/fragments/allSols_forEx.jspf" %>
