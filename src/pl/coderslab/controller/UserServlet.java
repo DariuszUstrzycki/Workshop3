@@ -20,7 +20,7 @@ import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
 
-@WebServlet("/users")
+@WebServlet("/admin/users")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -16,9 +16,9 @@
 		<c:forEach var="user"  items="${allUsers}" varStatus="status"> 
 			<tr>
 				<td>${user.id}<br>
-				<a href='${pageContext.request.contextPath}/users?userId=${user.id}'>Change group</a><br>
-				<a href='${pageContext.request.contextPath}/users?action=view&userId=${user.id}'>View</a><br>
-				<a href='${pageContext.request.contextPath}/users?action=delete&userId=${user.id}'>Delete</a></td>
+				<a href='${pageContext.request.contextPath}/admin/users?userId=${user.id}'>Change group</a><br>
+				<a href='${pageContext.request.contextPath}/admin/users?action=view&userId=${user.id}'>View</a><br>
+				<a href='${pageContext.request.contextPath}/admin/users?action=delete&userId=${user.id}'>Delete</a></td>
 				<td>${user.username}</td>
 				<td>${user.email}</td>
 				<td>${user.userGroupId}</td>

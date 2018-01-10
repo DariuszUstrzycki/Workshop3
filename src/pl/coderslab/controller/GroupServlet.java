@@ -35,9 +35,6 @@ public class GroupServlet extends HttpServlet {
 		/*case "create":
 			showSolutionFormAndExercise(request,response);
 			break;*/
-		case "test":
-			response.sendRedirect("groups");//    "/admin/groups" - wyswietli bez kontekstu  /admin/groups
-			break;                               //      "admin/groups" -  Workshop3/admin/admin/groups
 		case "create":
 			showGroupForm(request,response);
 			break;
