@@ -17,9 +17,9 @@
 		<c:forEach var="exercise"  items="${requestScope.allExercises}"> 
 			<tr>
 				<td>
-				<a href='${pageContext.request.contextPath}/solutions?action=create&exId=${exercise.id}'>Add solution</a><br>
+				<a href='${pageContext.request.contextPath}/solutions?action=create&with=exercise&exId=${exercise.id}'>Add solution</a><br>
 				${exercise.id}<br>
-				<a href='${pageContext.request.contextPath}/solutions?action=listForOneExercise&exId=${exercise.id}'>View solutions</a><br>
+				<a href='${pageContext.request.contextPath}/solutions?action=listInnerJoin&joinOn=exercise&with=exercise&exId=${exercise.id}'>View solutions</a><br>
 				<a href='${pageContext.request.contextPath}/exercises?action=delete&exId=${exercise.id}'>Delete</a></td>
 				<td>${exercise.title}</td>
 				<td>${exercise.description}</td>
@@ -31,7 +31,8 @@
 
 
 <!--  
-<a href='${pageContext.request.contextPath}/addsolution?exIndex=${status.index}'>Add solution</a><br>
-				<a href='${pageContext.request.contextPath}/allsolsforex?exId=${exercise.id}&exIndex=${status.index}'>View solutions</a></td>
+<a href='${pageContext.request.contextPath}/solutions?action=listForOneExercise&exId=${exercise.id}'>View solutions</a><br>
 
+
+<a href='${pageContext.request.contextPath}/solutions?action=create&exId=${exercise.id}'>
 -->

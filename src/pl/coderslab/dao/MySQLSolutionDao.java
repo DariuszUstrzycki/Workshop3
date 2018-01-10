@@ -130,6 +130,31 @@ public class MySQLSolutionDao implements SolutionDao{
 		
 		return solutions;
 	}
+	
+	@Override
+	public Collection<Solution> loadSolutionsByUserId(long userId) {
+		Collection<Solution> solutions = null;
+		String sql = "SELECT * FROM solution " + 
+				     " WHERE user_id=?;";
+		
+		try (Connection conn = DbUtil.getConn(); 
+				PreparedStatement ps = conn.prepareStatement(sql)){
+			
+			ps.setLong(1, userId);
+			try(ResultSet rs = ps.executeQuery()){
+				solutions = new ArrayList<>();
+				while (rs.next()) {
+					solutions.add(extractSolutionFromRS(rs));
+				}				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return solutions;
+	}
+	
+	
 
 	@Override
 	public Collection<Solution> loadAllSolutions() {
@@ -189,5 +214,7 @@ public class MySQLSolutionDao implements SolutionDao{
 
 		return sol;
 	}
+
+	
 
 }

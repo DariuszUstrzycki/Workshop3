@@ -17,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="solution" begin="0" end="${initParam.numberOfDisplayed-1}" items="${allSolutions}"> 
+		<c:forEach var="solution" begin="0" end="${initParam.numberOfDisplayed-1}" items="${solutionList}"> 
 			<tr>
 				<td>${solution.id}</td>
 				<td>${solution.created}</td>

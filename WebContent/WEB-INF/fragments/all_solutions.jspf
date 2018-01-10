@@ -2,8 +2,12 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import='java.util.List, pl.coderslab.model.Solution' %>
 
-
+<% List<Solution> solutionList = (List<Solution> )request.getAttribute("solutionList"); 
+if(solutionList.size() == 0){%>
+<h3>There are no solutions for this exercise yet. <br>Be the first!</h3>
+<%}else {%>
 <table class='displayTable' id='solutions'>
 	<thead>
 		<tr>
@@ -16,7 +20,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="solution"  items="${requestScope.allSolutions}"> 
+		<c:forEach var="solution"  items="${requestScope.solutionList}"> 
 			<tr>
 				<td>${solution.id}
 				<a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}'>Delete</a><br></td>
@@ -29,7 +33,7 @@
 		</c:forEach>
 	</tbody>
 </table>
-
+<%} %>
 
 
 

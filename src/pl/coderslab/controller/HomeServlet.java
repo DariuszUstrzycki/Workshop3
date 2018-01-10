@@ -49,13 +49,13 @@ public class HomeServlet extends HttpServlet {
 	private void loadSolutions(HttpServletRequest request, HttpServletResponse response) {
 
 		SolutionDao dao = new MySQLSolutionDao(); // inject
-		ArrayList<Solution> allSolutions = (ArrayList<Solution>) dao.loadAllSolutions(); 
-		Collections.reverse(allSolutions);
+		ArrayList<Solution> solutionList = (ArrayList<Solution>) dao.loadAllSolutions(); 
+		Collections.reverse(solutionList);
 		HttpSession session = request.getSession();
-		session.setAttribute("allSolutions", allSolutions);
+		session.setAttribute("solutionList", solutionList);
 		session.setAttribute("displayPerPage", displayPerPage); 
 		
-		System.out.println("When allSolutions is added to session in HomeServlet on redirect to exercises.jsp, session id is: " + session.getId());
+		System.out.println("When solutionList is added to session in HomeServlet on redirect to exercises.jsp, session id is: " + session.getId());
 		System.out.println("Session recorded at " + LocalTime.now());
 	}
 

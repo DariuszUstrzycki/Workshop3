@@ -11,6 +11,7 @@ public interface SolutionDao {
 	boolean update(Solution ex);
 	Solution loadSolutionById(int id);
 	Collection<Solution> loadSolutionsByExId(long exerciseId);
+	Collection<Solution> loadSolutionsByUserId(long userId);
 	Collection<Solution> loadAllSolutions();
 	boolean delete(long id);
 }

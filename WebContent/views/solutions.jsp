@@ -33,18 +33,31 @@ Session is
 		<%@include file="/WEB-INF/fragments/view_solution.jspf"%>
 	</c:if>
 
-
+JESTEM na solutions top     
 	<!-- list all solutions for the given exercise -->
-	<c:if test="${param.action eq 'listForOneExercise'}">
-	<h2>Exercise #${requestScope.oneExercise.id} and its solutions</h2>
+	<% if(request.getParameter("action").equals("listInnerJoin")
+			&& request.getQueryString().contains("joinOn=exercise")){ %>
+			JESTEM W 1
+			<h2>Exercise #${requestScope.oneExercise.id} and its solutions</h2>
 	<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
 	<br>
-	<%@include file="/WEB-INF/fragments/allSols_forEx.jspf" %>
-	</c:if> 
+	<%@include file="/WEB-INF/fragments/all_solutions.jspf" %>
+	<%} %>		
+	
+	<!-- list all solutions for the given user -->
+	<% if(request.getParameter("action").equals("listInnerJoin")
+			&& request.getQueryString().contains("joinOn=user")){ %>
+			JESTEM W 2
+	<h2>User #${requestScope.oneUser.id} and their solutions</h2>
+	<%@include file="/WEB-INF/fragments/view_user.jspf"%>
+	<br>
+	<%@include file="/WEB-INF/fragments/allSols_forEx.jspf" %> <!-- to jest źle -->
+	<%} %>	
 	
 	
 	<!-- list all solutions -->
 	<c:if test="${param.action eq 'list'}">
+	JESTEM W 3
 	<h2>All solutions</h2>
 	<%@include file="/WEB-INF/fragments/all_solutions.jspf" %>
 	</c:if>
