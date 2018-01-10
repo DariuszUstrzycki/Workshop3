@@ -110,7 +110,6 @@ public class SolutionServlet extends HttpServlet {
 					response.sendRedirect("solutions");
 					return;
 				} else {
-					System.out.println("allSolsForEx have been created");
 					Collections.reverse(allSolsForEx); // to improve
 					request.setAttribute("allSolsForEx", allSolsForEx);
 					request.setAttribute("oneExercise", ex);
