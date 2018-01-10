@@ -23,7 +23,8 @@
 				<a href='${pageContext.request.contextPath}/exercises?action=delete&exId=${exercise.id}'>Delete</a></td>
 				<td>${exercise.title}</td>
 				<td>${exercise.description}</td>
-				<td>${exercise.userId}</td>
+				<td><a href='${pageContext.request.contextPath}/solutions?action=listInnerJoin&joinOn=user&with=user&userId=${exercise.userId}'>${exercise.userId}<br>
+				View user's solutions</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

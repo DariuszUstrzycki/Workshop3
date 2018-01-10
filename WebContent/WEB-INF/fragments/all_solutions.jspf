@@ -28,7 +28,9 @@ if(solutionList.size() == 0){%>
 				<td>${solution.updated}</td>
 				<td>${solution.description}</td>
 				<td>${solution.exerciseId}</td>
-				<td>${solution.userId}</td>
+				<!--  <td>${solution.userId}</td> -->
+				<td><a href='${pageContext.request.contextPath}/solutions?action=listInnerJoin&joinOn=user&with=user&userId=${solution.userId}'>${solution.userId}<br>
+				View user's solutions</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

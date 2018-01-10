@@ -51,7 +51,7 @@ JESTEM na solutions top
 	<h2>User #${requestScope.oneUser.id} and their solutions</h2>
 	<%@include file="/WEB-INF/fragments/view_user.jspf"%>
 	<br>
-	<%@include file="/WEB-INF/fragments/allSols_forEx.jspf" %> <!-- to jest źle -->
+	<%@include file="/WEB-INF/fragments/all_solutions.jspf" %> <!-- to jest źle -->
 	<%} %>	
 	
 	
