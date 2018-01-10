@@ -14,8 +14,8 @@
 		<c:forEach var="group"  items="${allGroups}"> 
 			<tr>
 				<td>${group.id} ${status.index}<br> <!-- usunac status.index? -->
-				<a href='${pageContext.request.contextPath}/groups?action=view&groupId=${group.id}'>View members</a><br>
-				<a href='${pageContext.request.contextPath}/groups?action=delete&groupId=${group.id}'>Delete</a></td>
+				<a href='${pageContext.request.contextPath}/admin/groups?action=view&groupId=${group.id}'>View members</a><br>
+				<a href='${pageContext.request.contextPath}/admin/groups?action=delete&groupId=${group.id}'>Delete</a></td>
 				<td>${group.name}</td>
 			</tr>
 		</c:forEach>

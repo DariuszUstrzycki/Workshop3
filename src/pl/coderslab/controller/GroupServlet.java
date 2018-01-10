@@ -18,7 +18,7 @@ import pl.coderslab.model.Exercise;
 import pl.coderslab.model.UserGroup;
 
 
-@WebServlet("/groups")
+@WebServlet("/admin/groups")
 public class GroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,6 +35,9 @@ public class GroupServlet extends HttpServlet {
 		/*case "create":
 			showSolutionFormAndExercise(request,response);
 			break;*/
+		case "test":
+			response.sendRedirect("groups");//    "/admin/groups" - wyswietli bez kontekstu  /admin/groups
+			break;                               //      "admin/groups" -  Workshop3/admin/admin/groups
 		case "create":
 			showGroupForm(request,response);
 			break;

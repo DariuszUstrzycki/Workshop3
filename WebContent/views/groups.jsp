@@ -18,7 +18,7 @@
 	%>
 	
 	<%-- links --%>
-	<td><h3><a href='${pageContext.request.contextPath}/groups?action=create'>Add group</a></h3></td>
+	<td><h3><a href='${pageContext.request.contextPath}/admin/groups?action=create'>Add group</a></h3></td>
 	
 	<!-- form to add group -->
 	<c:if test="${param.action eq 'create'}">
