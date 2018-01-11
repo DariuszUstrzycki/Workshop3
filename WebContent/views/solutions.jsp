@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="/WEB-INF/fragments/cssFileLocation.jspf"%>
 <title>Solutions</title>
 </head>
@@ -15,6 +15,9 @@
 Action is ${param.action}
 Session is 
 <br>
+
+<% String query = request.getQueryString(); 
+request.setAttribute("previousurl", request.getQueryString()); %>
 	
 
 	<%--form to add solution  --%> 
@@ -33,34 +36,41 @@ Session is
 		<%@include file="/WEB-INF/fragments/view_solution.jspf"%>
 	</c:if>
 
-JESTEM na solutions top     
-	<!-- list all solutions for the given exercise -->
-	<% if(request.getParameter("action").equals("listInnerJoin")
-			&& request.getQueryString().contains("joinOn=exercise")){ %>
-			JESTEM W 1
+i JESTEM na solutions top     
+	
+	<% if(request.getParameter("action").equals("list")) {
+			
+			//list all solutions for the given exercise 
+			if(request.getQueryString().contains("loadBy=exId")){%>
+				JESTEM W 1
 			<h2>Exercise #${requestScope.oneExercise.id} and its solutions</h2>
-	<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
-	<br>
-	<%@include file="/WEB-INF/fragments/all_solutions.jspf" %>
-	<%} %>		
+			<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
+			<br>
+			<%}%>
+			
+			
+			<% // list all solutions for the given user
+				if(request.getQueryString().contains("loadBy=userId")){%>
+				JESTEM W 1
+			<h2>User #${requestScope.oneUser.id} and his/her solutions</h2>
+			<%@include file="/WEB-INF/fragments/view_user.jspf"%>
+			<br>
+			<%}%>
+
+			<!-- list all solutions -->
+			JESTEM W 3
+			<h2>Solutions</h2>
+			<%@include file="/WEB-INF/fragments/all_solutions.jspf"%>
+
+
+	<%}%>
+		
 	
-	<!-- list all solutions for the given user -->
-	<% if(request.getParameter("action").equals("listInnerJoin")
-			&& request.getQueryString().contains("joinOn=user")){ %>
-			JESTEM W 2
-	<h2>User #${requestScope.oneUser.id} and their solutions</h2>
-	<%@include file="/WEB-INF/fragments/view_user.jspf"%>
-	<br>
-	<%@include file="/WEB-INF/fragments/all_solutions.jspf" %> <!-- to jest źle -->
-	<%} %>	
+			
 	
 	
-	<!-- list all solutions -->
-	<c:if test="${param.action eq 'list'}">
-	JESTEM W 3
-	<h2>All solutions</h2>
-	<%@include file="/WEB-INF/fragments/all_solutions.jspf" %>
-	</c:if>
+	
+	
 	
 
 </body>

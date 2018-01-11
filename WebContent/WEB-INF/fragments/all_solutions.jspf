@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import='java.util.List, pl.coderslab.model.Solution' %>
 
+<%=request.getQueryString()%>
+
 <% List<Solution> solutionList = (List<Solution> )request.getAttribute("solutionList"); 
 if(solutionList.size() == 0){%>
 <h3>There are no solutions for this exercise yet. <br>Be the first!</h3>
@@ -29,7 +31,7 @@ if(solutionList.size() == 0){%>
 				<td>${solution.description}</td>
 				<td>${solution.exerciseId}</td>
 				<!--  <td>${solution.userId}</td> -->
-				<td><a href='${pageContext.request.contextPath}/solutions?action=listInnerJoin&joinOn=user&with=user&userId=${solution.userId}'>${solution.userId}<br>
+				<td><a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${solution.userId}'>${solution.userId}<br>
 				View user's solutions</a></td>
 			</tr>
 		</c:forEach>

@@ -37,31 +37,28 @@ public class SolutionServlet extends HttpServlet {
 		if (action == null)
 			action = "list";
 		switch (action) {
-		case "create":
-			showForm(request, response); // nie interesuje nas: form + 1 exercise
-			break;
-		case "delete":
-			deleteSolution(request, response);
-			break;
-		case "view":
-			viewOneSolution(request, response);
-			break;
-		case "listInnerJoin":
-			listSolutions(request, response);
-			break;
 		/*
 		 * case "download": downloadAttachment(request, response); break;
 		 */
+		case "create": //solutions?action=create&exId=15 lub solutions?action=create&show=exId&exId=15
+			showForm(request, response); 
+			break;
+		case "delete": //solutions?action=delete&solId=15 
+			deleteSolution(request, response);
+			break;
+		case "view": // solutions?action=view&solId=15
+			view(request, response); 
+			break;
 		case "list":
 		default:
-			listSolutions(request, response);
+			listSolutions(request, response); // solutions?action=list&loadBy=exId&show=exId&exId=15
 		}
 
 		System.out.println(request.getRequestURL());
 		System.out.println(request.getRequestURI());
 		System.out.println(request.getQueryString());
+		System.out.println("previous url: " + request.getAttribute("previousurl"));
 	}
-	// solutions?action=list&joinOn&joinOn=exercise&exId=7
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -70,7 +67,7 @@ public class SolutionServlet extends HttpServlet {
 		if (action == null)
 			action = "list";
 		switch (action) {
-		case "create":
+		case "create": // solutions?action=view&solId=17
 			createSolution(request, response);
 			break;
 		case "list":
@@ -80,62 +77,101 @@ public class SolutionServlet extends HttpServlet {
 		}
 	}
 
-	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Long exId = null;
+
+	private void showItem(String item, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer id = null;
 		try {
-			exId = Long.parseLong(request.getParameter("exId"));
+			switch (item) {
+			case "exId":
+				id = Integer.parseInt(request.getParameter("exId"));
+				Exercise ex = exDao.loadExerciseById(id);
+				if (ex == null) {
+					response.sendRedirect("solutions");
+					return;
+				} else {
+					request.setAttribute("oneExercise", ex); // show=exId
+				}
+				break;
+			case "userId":
+				id = Integer.parseInt(request.getParameter("userId"));
+				User user = userDao.loadUserById(id);
+				if (user == null) {
+					response.sendRedirect("solutions");
+					return;
+				}
+				request.setAttribute("oneUser", user); // show=userId
+				break;
+			case "solId":
+				id = Integer.parseInt(request.getParameter("solId"));
+				Solution sol = solDao.loadSolutionById(id);
+				if (sol == null) {
+					response.sendRedirect("solutions");
+					return;
+				}
+				request.setAttribute("oneSolution", sol);// show=solId
+			default:
+				// do nothing
+			}
+
 		} catch (NumberFormatException e) {
 			response.sendRedirect("solutions");
 			return;
 		}
-
-		String description = request.getParameter("description");
-		if (nullOrEmpty(description)) {
-			response.sendRedirect("solutions" + "?action=create&exId=" + exId); // reloads page; error message is
-																				// missing
-			return;
-		} else {
-			User user = (User) request.getSession().getAttribute("loggedUser");
-			long id = solDao.save(new Solution(description, exId, user.getId()));
-			if (id > 0) {
-				response.sendRedirect("solutions" + "?action=view&solId=" + id);
-			}
-		}
 	}
 
-	// uruchamia sie po doPost
-	private void viewOneSolution(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	
 
-		String idString = request.getParameter("solId");
-		Solution sol = getSolution(idString, response);
-		if (sol == null) {
-			response.sendRedirect("solutions");
-			return;
+	// sets idItem defined in query string as show=exId
+	// idString: solId, exId, userId
+	// solutions?action=list&loadBy=exId&&show=exId&exId=15
+	private void view(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String item = request.getParameter("show");
+		if (item == null || item.equals("")) {
+			return; // no item is supposed to be displayed
 		} else {
-			request.setAttribute("oneSolution", sol); // przekazany zostanie parametr: ?action=view&solutionId=
-			request.getRequestDispatcher(theView).forward(request, response); // preceded by sendredirect w doPost
+			showItem(item, request, response);
 		}
+		
+		request.getRequestDispatcher(theView).forward(request, response); 
 	}
 
-	/**
-	 * Generates a list of solutions; optionally adds an entity (a User/a 
-	 */
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// solutions?action=listInnerJoin&joinOn=exercise&with=exercise&exId=7
 
-		// filter for extras to response
-		String entity = request.getParameter("with");
-		if (!nullOrEmpty(entity)) {
-			addEntityToResponse(entity, request, response);
-		}
-
-		// filter for inner join
+		// solutions?action=list&loadBy=exId&show=exId&exId=15
+		//// part 2 - list collecion: where=exId/solId/userId or all
 		List<Solution> solutionList = null;
-		String joinOn = request.getParameter("joinOn");
-		if (!nullOrEmpty(joinOn)) {
-			solutionList = doInnerJoin(solutionList, joinOn, request, response);
+
+		String loadBy = request.getParameter("loadBy");
+		if (loadBy != null && loadBy.length() > 0) {
+			try {
+				switch (loadBy) {
+				case "exId":
+					String exId = request.getParameter("exId");
+					if (exId != null & exId.length() > 0) {
+						solutionList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
+					}
+					break;
+				case "userId":
+					String userId = request.getParameter("userId");
+					if (userId != null & userId.length() > 0) {
+						solutionList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
+					}
+					break;
+				case "solId":
+					String solId = request.getParameter("solId");
+					if (solId != null & solId.length() > 0) {
+						solutionList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(solId));
+					}
+					break;
+				default:
+					// do nothing
+				}
+			} catch (NumberFormatException e) {
+				response.sendRedirect("solutions");
+				e.printStackTrace();
+			}
 		} else {
 			solutionList = (List<Solution>) solDao.loadAllSolutions();
 		}
@@ -146,151 +182,17 @@ public class SolutionServlet extends HttpServlet {
 		} else {
 			Collections.reverse(solutionList); // to improve
 			request.setAttribute("solutionList", solutionList);
+			
+			//show other entities
+			String item = request.getParameter("show");
+			if (item != null && item.length() > 0) {
+				showItem(item, request, response);
+			}
+			
 			request.getRequestDispatcher(theView).forward(request, response);
 		}
-
 	}
-
-	private List<Solution> doInnerJoin(List<Solution> list, String joinOn, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-
-		switch (joinOn) {
-		case "exercise": {
-			Exercise ex = getExerciseOrRedirectOnError(request.getParameter("exId"), "solutions", response);
-			request.setAttribute("oneExercise", ex); // to tez inne
-
-			list = (List<Solution>) solDao.loadSolutionsByExId(ex.getId());
-		}
-			break;
-		case "user": {
-			User user = getUserORedirectOnError(request.getParameter("userId"), "solutions", response);
-			request.setAttribute("oneUser", user); // to tez inne
-
-			list = (List<Solution>) solDao.loadSolutionsByUserId(user.getId());
-		}
-			break;
-		default:
-			response.sendRedirect("solutions");
-			return null;
-		}
-
-		return new ArrayList<Solution>(list);
-
-	}
-
-	private void showForm(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// action=create&with=exercise&exId=7
-
-		String entity = request.getParameter("with");
-		if (!nullOrEmpty(entity)) {
-			addEntityToResponse(entity, request, response);
-		}
-
-		request.getRequestDispatcher(theView).forward(request, response);
-	}
-
-	private void addEntityToResponse(String entity, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		switch (entity) {
-		case "exercise": {
-			Exercise ex = getExerciseOrRedirectOnError(request.getParameter("exId"), "solutions", response);
-			request.setAttribute("oneExercise", ex);
-		}
-			break;
-		case "user": {
-			User sol = getUserORedirectOnError(request.getParameter("userId"), "solutions", response);
-			request.setAttribute("oneUser", sol);
-		}
-			break;
-		default:
-			response.sendRedirect("solutions");
-		}
-
-	}
-
-	private boolean nullOrEmpty(String string) {
-		return string == null || string.equals("");
-	}
-
-	/**
-	 * @return when null, redirects to "solutions"
-	 */
-	private Exercise getExerciseOrRedirectOnError(String idString, String redirectPage, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		if (idString == null || idString.length() == 0) {
-			response.sendRedirect("solutions");
-			return null;
-		}
-
-		try {
-			Exercise ex = exDao.loadExerciseById(Integer.parseInt(idString));
-			if (ex == null) {
-				response.sendRedirect("solutions");
-				return null;
-			}
-			return ex;
-
-		} catch (Exception e) {
-			response.sendRedirect("solutions");
-			return null;
-		}
-
-	}
-
-	/**
-	 * @return when null, redirects to "solutions"
-	 */
-	private User getUserORedirectOnError(String idString, String redirectPage, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		if (idString == null || idString.length() == 0) {
-			response.sendRedirect(redirectPage);
-			return null;
-		}
-
-		try {
-			User user = userDao.loadUserById(Integer.parseInt(idString));
-			if (user == null) {
-				response.sendRedirect(redirectPage);
-				return null;
-			}
-			return user;
-
-		} catch (Exception e) {
-			response.sendRedirect(redirectPage);
-			return null;
-		}
-
-	}
-
-	/**
-	 * @return when null, redirects to "solutions"
-	 */
-	private Solution getSolution(String idString, HttpServletResponse response) throws ServletException, IOException {
-
-		if (idString == null || idString.length() == 0) {
-			response.sendRedirect("solutions");
-			return null;
-		}
-
-		try {
-			Solution sol = solDao.loadSolutionById(Integer.parseInt(idString));
-			if (sol == null) {
-				response.sendRedirect("solutions");
-				return null;
-			}
-			return sol;
-
-		} catch (Exception e) {
-			response.sendRedirect("solutions");
-			return null;
-		}
-
-	}
-
+	
 	private void deleteSolution(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -307,8 +209,64 @@ public class SolutionServlet extends HttpServlet {
 						// info do url
 			response.sendRedirect("solutions" + "?action=list" + "&solId=" + solId);
 		}
+		// solutions?action=list&loadBy=userId&show=userId&userId=6
+		// solutions?action=list&loadBy=exId&show=exId&exId=7
+		// action=list
 
 	}
+	
+	private void showForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		// TERAZ LINK Z WIDOKU BEDZIE DECYDOWAL CZY WYSWIETLIC EXERCISE CZY NIE. POSREDNIO JUZ TO ROBIL, BO BYLO TAM
+		// ZAPISANE "oneExercise". Ale teraz w nowej wersji, tylko z linku sie dowiesz ze to ma byc zapisane
+		//show=exId&exId=15
+		
+		Integer id = null;
+		try {
+			id = Integer.parseInt(request.getParameter("exId"));
+			Exercise ex = exDao.loadExerciseById(id);
+			if (ex == null) {
+				response.sendRedirect("solutions");
+				return;
+			} else {
+				request.setAttribute("oneExercise", ex); // show=exId
+			}
+		} catch (NumberFormatException e) {
+			response.sendRedirect("solutions");
+			return;
+		}		
+
+		request.getRequestDispatcher(theView).forward(request, response);
+	}
+	
+
+	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Long exId = null;
+		try {
+			exId = Long.parseLong(request.getParameter("exId"));
+		} catch (NumberFormatException e) {
+			response.sendRedirect("solutions");
+			return;
+		}
+
+		String description = request.getParameter("description");
+		if (description == null || description.length() == 0) {
+			response.sendRedirect("solutions" + "?action=create&exId=" + exId); // reloads page; error message is
+																				// missing
+			return;
+		} else {
+			User user = (User) request.getSession().getAttribute("loggedUser");
+			long id = solDao.save(new Solution(description, exId, user.getId())); 
+			if (id > 0) {
+				response.sendRedirect("solutions" + "?action=view&show=solId&solId=" + id); 
+			}
+		}
+	}
+
+	
+	
+	
 
 	/*
 	 * private void downloadAttachment(HttpServletRequest request,
