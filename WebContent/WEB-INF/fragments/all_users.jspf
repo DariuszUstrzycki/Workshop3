@@ -6,22 +6,29 @@
 <table class='displayTable'>
 	<thead>
 		<tr>
-			<th>id</th>
+			<th>user id</th>
+			<th>group id</th>
+			<th>actions</th>
 			<th>username</th>
 			<th>email</th>
-			<th>group id</th>
+			<th>solutions</th>
+			<th>exercises</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="user"  items="${allUsers}" varStatus="status"> 
 			<tr>
-				<td>${user.id}<br>
+				<td>${user.id}</td>
+				<td>${user.userGroupId}</td>
+				<td>
 				<a href='${pageContext.request.contextPath}/admin/users?userId=${user.id}'>Change group</a><br>
 				<a href='${pageContext.request.contextPath}/admin/users?action=view&userId=${user.id}'>View</a><br>
-				<a href='${pageContext.request.contextPath}/admin/users?action=delete&userId=${user.id}'>Delete</a></td>
+				<a href='${pageContext.request.contextPath}/admin/users?action=delete&userId=${user.id}'>Delete</a>
+				</td>
 				<td>${user.username}</td>
 				<td>${user.email}</td>
-				<td>${user.userGroupId}</td>
+				<td><a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${user.id}'>View</a></td>
+				<td><a href='${pageContext.request.contextPath}/exercises?action=list&loadBy=userId&show=userId&userId=${user.id}'>View</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
