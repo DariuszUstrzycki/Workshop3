@@ -151,14 +151,14 @@ public class SolutionServlet extends HttpServlet {
 						solutionList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
 					}
 					break;
-				case "solId":
+				/*case "solId":
 					String solId = request.getParameter("solId");
 					if (solId != null & solId.length() > 0) {
 						solutionList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(solId));
 					}
-					break;
+					break;*/
 				default:
-					// do nothing
+					solutionList = (List<Solution>) solDao.loadAllSolutions();
 				}
 			} catch (NumberFormatException e) {
 				response.sendRedirect("solutions");

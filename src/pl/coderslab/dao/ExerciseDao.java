@@ -1,8 +1,10 @@
 package pl.coderslab.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import pl.coderslab.model.Exercise;
+import pl.coderslab.model.Solution;
 
 public interface ExerciseDao {
 	
@@ -11,5 +13,6 @@ public interface ExerciseDao {
 	Exercise loadExerciseById(int id);
 	Collection<Exercise> loadAllExercises();
 	boolean delete(long id);
+	List<Exercise> loadExercisesByUserId(int i);
 
 }

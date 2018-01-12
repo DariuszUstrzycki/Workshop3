@@ -45,7 +45,7 @@ public class ExercisesServlet extends HttpServlet {
 			break;
 		case "list":
 		default:
-			listExercises(request, response);
+			OLDlistExercises(request, response);
 		}
 		
 		System.out.println(request.getRequestURL());
@@ -111,7 +111,7 @@ public class ExercisesServlet extends HttpServlet {
 		}
 	}
 	
-	private void listExercises(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void OLDlistExercises(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// getExercises - generateExercises
 		List<Exercise> allExercises = (List<Exercise>) exDao.loadAllExercises();
@@ -128,11 +128,68 @@ public class ExercisesServlet extends HttpServlet {
 	}
 
 	
+
+	private void listExercises(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		List<Exercise> exercisesList = null;
+
+		String loadBy = request.getParameter("loadBy");
+		if (loadBy != null && loadBy.length() > 0) {
+			try {
+				switch (loadBy) {
+				/*case "exId":
+					String exId = request.getParameter("exId");
+					if (exId != null & exId.length() > 0) {
+						exercisesList = (List<Solution>) exDao.loadExerciseByExId(Integer.parseInt(exId));
+					}
+					break;*/
+				case "userId":
+					String userId = request.getParameter("userId");
+					if (userId != null & userId.length() > 0) {
+						exercisesList = (List<Exercise>) exDao.loadExercisesByUserId((Integer.parseInt(userId))); // not implemented!!!
+					}
+					break;
+				default:
+					exercisesList = (List<Exercise>) exDao.loadAllExercises();
+				}
+			} catch (NumberFormatException e) {
+				response.sendRedirect("solutions");
+				e.printStackTrace();
+			}
+		} else {
+			exercisesList = (List<Exercise>) exDao.loadAllExercises();
+		}
+
+		if (exercisesList == null) {
+			response.sendRedirect("exercises");
+			return;
+		} else {
+			Collections.reverse(exercisesList); // to improve
+			request.setAttribute("exerciseList", exercisesList);
+			
+			//show other entities
+			String item = request.getParameter("show");
+			if (item != null && item.length() > 0) {
+				showItem(item, request, response);
+			}
+			
+			request.getRequestDispatcher(theView).forward(request, response);
+		}
+	}
+	
+	
+	
 	 /**
 	 * @return when null, redirects to "exercises"
 	 */
 	private Exercise getExercise(String idString, HttpServletResponse response) throws ServletException, IOException {
 		 
+		
+		
+		
+		
+		/////////////////////////// stare ponizej /////////////////
 		if (idString == null || idString.length() == 0) {
 			response.sendRedirect("exercises");
 			return null;
@@ -152,18 +209,8 @@ public class ExercisesServlet extends HttpServlet {
 		}
 	 }
 	 
-	 
-	private Long getUserId(HttpServletRequest request) {
-		Long id = null;
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			User user = (User) session.getAttribute("loggedUser");
-			if (user != null) {
-				id = user.getId();
-			}
-		}
-		return id;
-	}
+	
+	
 	
 	private void deleteExercise(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
