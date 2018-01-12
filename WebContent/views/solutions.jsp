@@ -13,12 +13,7 @@
 <%@include file="/WEB-INF/fragments/header.jspf"%>
 
 Action is ${param.action}
-Session is 
 <br>
-
-<% String query = request.getQueryString(); 
-request.setAttribute("previousurl", request.getQueryString()); %>
-	
 
 	<%--form to add solution  --%> 
 	<c:if test="${param.action eq 'create'}">
@@ -30,48 +25,35 @@ request.setAttribute("previousurl", request.getQueryString()); %>
 	</c:if>
 	
 	
-	<!-- view one solution -->
+	<!-- view the given newly added solution -->
 	<c:if test="${param.action eq 'view'}">
 	<h2>The solution has been added</h2>
 		<%@include file="/WEB-INF/fragments/view_solution.jspf"%>
 	</c:if>
-
-i JESTEM na solutions top     
+ 
 	
 	<% if(request.getParameter("action").equals("list")) {
 			
-			//list all solutions for the given exercise 
+			//show the exercise with its solutions
 			if(request.getQueryString().contains("loadBy=exId")){%>
-				JESTEM W 1
-			<h2>Exercise #${requestScope.oneExercise.id} and its solutions</h2>
+			<h2>Exercise #${requestScope.oneExercise.id} with its solutions</h2>
 			<%@include file="/WEB-INF/fragments/view_exercise.jspf"%>
 			<br>
 			<%}%>
 			
-			
-			<% // list all solutions for the given user
-				if(request.getQueryString().contains("loadBy=userId")){%>
-				JESTEM W 1
+			<% //show the user with their solutions
+			if(request.getQueryString().contains("loadBy=userId")){%>
 			<h2>User #${requestScope.oneUser.id} and his/her solutions</h2>
 			<%@include file="/WEB-INF/fragments/view_user.jspf"%>
 			<br>
 			<%}%>
 
 			<!-- list all solutions -->
-			JESTEM W 3
 			<h2>Solutions</h2>
 			<%@include file="/WEB-INF/fragments/all_solutions.jspf"%>
 
-
 	<%}%>
 		
-	
-			
-	
-	
-	
-	
-	
 
 </body>
 </html>

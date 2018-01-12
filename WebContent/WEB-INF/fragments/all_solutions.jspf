@@ -6,6 +6,10 @@
 
 <%=request.getQueryString()%>
 
+<% 
+String deleteView = request.getQueryString().replaceAll("=", "_").replaceAll("&", "_");
+%>
+
 <% List<Solution> solutionList = (List<Solution> )request.getAttribute("solutionList"); 
 if(solutionList.size() == 0){%>
 <h3>There are no solutions for this exercise yet. <br>Be the first!</h3>
@@ -25,7 +29,7 @@ if(solutionList.size() == 0){%>
 		<c:forEach var="solution"  items="${requestScope.solutionList}"> 
 			<tr>
 				<td>${solution.id}
-				<a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}'>Delete</a><br></td>
+				<a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a><br></td>
 				<td>${solution.created}</td>
 				<td>${solution.updated}</td>
 				<td>${solution.description}</td>

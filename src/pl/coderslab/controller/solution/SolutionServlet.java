@@ -1,7 +1,6 @@
 package pl.coderslab.controller.solution;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class SolutionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		String action = request.getParameter("action");
 		if (action == null)
 			action = "list";
@@ -120,10 +119,6 @@ public class SolutionServlet extends HttpServlet {
 	}
 
 	
-
-	// sets idItem defined in query string as show=exId
-	// idString: solId, exId, userId
-	// solutions?action=list&loadBy=exId&&show=exId&exId=15
 	private void view(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String item = request.getParameter("show");
@@ -139,8 +134,6 @@ public class SolutionServlet extends HttpServlet {
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// solutions?action=list&loadBy=exId&show=exId&exId=15
-		//// part 2 - list collecion: where=exId/solId/userId or all
 		List<Solution> solutionList = null;
 
 		String loadBy = request.getParameter("loadBy");
@@ -205,13 +198,29 @@ public class SolutionServlet extends HttpServlet {
 		}
 
 		boolean deleted = solDao.delete(solId);
-		if (deleted) { // message options: 1) setAttribute (message, "Deleted use userId" 2) dopisac te
-						// info do url
-			response.sendRedirect("solutions" + "?action=list" + "&solId=" + solId);
+		if(!deleted) {
+			response.sendRedirect("solutions");
+			return;
 		}
-		// solutions?action=list&loadBy=userId&show=userId&userId=6
-		// solutions?action=list&loadBy=exId&show=exId&exId=7
-		// action=list
+					
+		String previousPageData = request.getParameter("returnTo");
+		String returnView = "";
+		if (previousPageData != null && previousPageData.length() > 0) {
+
+			String listSolutionsForTheUserView = "&loadBy=userId&show=userId&userId=";
+			String listSolutionsFortheExerciseView = "&loadBy=exId&show=exId&exId=";
+
+			if (previousPageData.contains("loadBy_userId_show_" + "userId")) {
+				String userId = previousPageData.replaceAll("[^0-9]", "");
+				returnView += listSolutionsForTheUserView + userId;
+			} else if (previousPageData.contains("loadBy_exId_show_"+ "exId")) {
+				String exId = previousPageData.replaceAll("[^0-9]", "");
+				returnView += listSolutionsFortheExerciseView + exId;
+			}
+
+		}
+		
+		response.sendRedirect("solutions" + "?action=list" + returnView);
 
 	}
 	
