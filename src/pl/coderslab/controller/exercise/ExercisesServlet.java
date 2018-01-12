@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.dao.MySQLExerciseDao;
 import pl.coderslab.model.Exercise;
+import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
 @WebServlet("/exercises")
@@ -30,22 +31,26 @@ public class ExercisesServlet extends HttpServlet {
 		if (action == null)
 			action = "list";
 		switch (action) {
+		/*case "download":
+		downloadAttachment(request, response);
+		break;*/
 		case "create":
-			showExerciseForm(request,response);
+			showForm(request,response);
 			break;
 		case "delete":
 			deleteExercise(request, response); 
 			break;
 		case "view":
-			viewOneExercise(request, response); 
+			viewOneExercise(request, response);  //. ma byc  list(...)
 			break;
-		/*case "download":
-			downloadAttachment(request, response);
-			break;*/
 		case "list":
 		default:
 			listExercises(request, response);
 		}
+		
+		System.out.println(request.getRequestURL());
+		System.out.println(request.getRequestURI());
+		System.out.println(request.getQueryString());
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -68,18 +73,26 @@ public class ExercisesServlet extends HttpServlet {
 	}
 
 	private void createExercise(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
-		Long userId = getUserId(request);
-
-		if (nullOrEmpty(title, description) || userId == null) {
-			response.sendRedirect("exercises" + "?action=create"); //reloads page; error message is missing
+		if(title == null || title.length() == 0 || description == null || description.length() == 0) {
+			response.sendRedirect("exercises" + "?action=create"); // reloads page; 
 			return;
+		} 
+			
+		User user = (User) request.getSession().getAttribute("loggedUser");
+		if (user == null) {
+			response.sendRedirect("exercises");
+			return;
+		}
+		
+		Long userId = user.getId();
+		long id = exDao.save(new Exercise(title, description, userId));
+		if (id > 0) {
+			response.sendRedirect("exercises" + "?action=view&show=exId&exId=" + id);
 		} else {
-			long id = exDao.save(new Exercise(title, description, userId));
-			if (id > 0) {
-				response.sendRedirect("exercises" + "?action=view&exerciseId=" + id);
-			}
+			response.sendRedirect("exercises");
 		}
 	}
 
@@ -171,12 +184,9 @@ public class ExercisesServlet extends HttpServlet {
 	}
 	
 	
-	private void showExerciseForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void showForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		request.getRequestDispatcher(theView).forward(request, response);
-	}
-	
-	private boolean nullOrEmpty(String title, String description) {
-		return (title == null || title.equals("") || description == null || description.equals(""));
 	}
 	
 

@@ -56,7 +56,6 @@ public class SolutionServlet extends HttpServlet {
 		System.out.println(request.getRequestURL());
 		System.out.println(request.getRequestURI());
 		System.out.println(request.getQueryString());
-		System.out.println("previous url: " + request.getAttribute("previousurl"));
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -261,14 +260,15 @@ public class SolutionServlet extends HttpServlet {
 
 		String description = request.getParameter("description");
 		if (description == null || description.length() == 0) {
-			response.sendRedirect("solutions" + "?action=create&exId=" + exId); // reloads page; error message is
-																				// missing
+			response.sendRedirect("solutions" + "?action=create&exId=" + exId); // reloads page;no error message
 			return;
 		} else {
 			User user = (User) request.getSession().getAttribute("loggedUser");
 			long id = solDao.save(new Solution(description, exId, user.getId())); 
 			if (id > 0) {
 				response.sendRedirect("solutions" + "?action=view&show=solId&solId=" + id); 
+			} else {
+				response.sendRedirect("solutions");
 			}
 		}
 	}
