@@ -18,22 +18,23 @@ if(solutionList.size() == 0){%>
 	<thead>
 		<tr>
 			<th>solution id</th>
+			<th>exercise id</th>
+			<th>actions</th>
 			<th>created</th>
 			<th>updated</th>
 			<th>description</th>
-			<th>exerciseId</th>
 			<th>userId</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="solution"  items="${requestScope.solutionList}"> 
 			<tr>
-				<td>${solution.id}
-				<a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a><br></td>
+				<td>${solution.id}</td>
+				<td>${solution.exerciseId}</td>
+				<td><a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a><br></td>
 				<td>${solution.created}</td>
 				<td>${solution.updated}</td>
 				<td>${solution.description}</td>
-				<td>${solution.exerciseId}</td>
 				<!--  <td>${solution.userId}</td> -->
 				<td><a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${solution.userId}'>${solution.userId}<br>
 				View user's solutions</a></td>
