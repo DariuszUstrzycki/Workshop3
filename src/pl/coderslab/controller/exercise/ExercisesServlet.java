@@ -13,6 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.dao.MySQLExerciseDao;
+import pl.coderslab.dao.MySQLSolutionDao;
+import pl.coderslab.dao.MySQLUserDao;
+import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
@@ -22,6 +26,8 @@ public class ExercisesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private final ExerciseDao exDao = new MySQLExerciseDao();
+	private final SolutionDao solDao = new MySQLSolutionDao();
+	private final UserDao userDao = new MySQLUserDao();
 	private final String theView = "/views/exercises.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -127,6 +133,59 @@ public class ExercisesServlet extends HttpServlet {
 		
 	}
 
+	
+	
+
+	private void showItem(String item, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer id = null;
+		try {
+			switch (item) {
+			case "exId":
+				id = Integer.parseInt(request.getParameter("exId"));
+				Exercise ex = exDao.loadExerciseById(id);
+				if (ex == null) {
+					response.sendRedirect("exercises");
+					return;
+				} else {
+					request.setAttribute("oneExercise", ex); // show=exId
+				}
+				break;
+			case "userId":
+				id = Integer.parseInt(request.getParameter("userId"));
+				User user = userDao.loadUserById(id);
+				if (user == null) {
+					response.sendRedirect("exercises");
+					return;
+				}
+				request.setAttribute("oneUser", user); // show=userId
+				break;
+			case "solId":
+				id = Integer.parseInt(request.getParameter("solId"));
+				Solution sol = solDao.loadSolutionById(id);
+				if (sol == null) {
+					response.sendRedirect("exercises");
+					return;
+				}
+				request.setAttribute("oneSolution", sol);// show=solId
+			default:
+				// do nothing
+			}
+
+		} catch (NumberFormatException e) {
+			response.sendRedirect("exercises");
+			return;
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void view(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String item = request.getParameter("show");
