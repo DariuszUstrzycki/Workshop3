@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.dao.MySQLExerciseDao;
@@ -101,39 +100,6 @@ public class ExercisesServlet extends HttpServlet {
 			response.sendRedirect("exercises");
 		}
 	}
-
-		// uruchamia sie po doPost
-	private void viewOneExercise(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String idString = request.getParameter("exerciseId");
-		Exercise ex = this.getExercise(idString, response); // jesli nie bedzie bledow zwraca ex o tym id lub null
-		
-		if (ex == null) {
-			response.sendRedirect("exercises");
-			return;
-		} else {  
-			request.setAttribute("oneExercise", ex); // przekazany zostanie parametr: ?action=view&exerciseId=
-			request.getRequestDispatcher(theView).forward(request, response); //preceded by sendredirect w doPost
-		}
-	}
-	
-	private void OLDlistExercises(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// getExercises - generateExercises
-		List<Exercise> allExercises = (List<Exercise>) exDao.loadAllExercises();
-
-		if (allExercises == null) {
-			response.sendRedirect("exercises");
-			return;
-		} else {
-			Collections.reverse(allExercises); // to improve
-			request.setAttribute("allExercises", allExercises);
-			request.getRequestDispatcher(theView).forward(request, response); // mozna forward
-		}
-		
-	}
-
-	
 	
 
 	private void showItem(String item, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -177,14 +143,6 @@ public class ExercisesServlet extends HttpServlet {
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	private void view(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -246,39 +204,6 @@ public class ExercisesServlet extends HttpServlet {
 			request.getRequestDispatcher(theView).forward(request, response);
 		}
 	}
-	
-	
-	
-	 /**
-	 * @return when null, redirects to "exercises"
-	 */
-	private Exercise getExercise(String idString, HttpServletResponse response) throws ServletException, IOException {
-		 
-		
-		
-		
-		
-		/////////////////////////// stare ponizej /////////////////
-		if (idString == null || idString.length() == 0) {
-			response.sendRedirect("exercises");
-			return null;
-		}
-
-		try {
-			Exercise ex = this.exDao.loadExerciseById(Integer.parseInt(idString));
-			if (ex == null) {
-				response.sendRedirect("exercises");
-				return null;
-			}
-			return ex;
-
-		} catch (Exception e) {
-			response.sendRedirect("exercises");
-			return null;
-		}
-	 }
-	 
-	
 	
 	
 	private void deleteExercise(HttpServletRequest request, HttpServletResponse response)
