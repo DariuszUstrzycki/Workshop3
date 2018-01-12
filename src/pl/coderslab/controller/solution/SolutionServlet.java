@@ -201,6 +201,8 @@ public class SolutionServlet extends HttpServlet {
 			response.sendRedirect("solutions");
 			return;
 		}
+		
+		//return the same view from which the delete request came
 					
 		String previousPageData = request.getParameter("returnTo");
 		String returnView = "";

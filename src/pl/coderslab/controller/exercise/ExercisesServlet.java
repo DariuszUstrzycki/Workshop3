@@ -177,9 +177,27 @@ public class ExercisesServlet extends HttpServlet {
 		}
 		
 		boolean deleted = exDao.delete(exId);
-		if (deleted) { // message options: 1) setAttribute (message, "Deleted use userId"  2) dopisac te info do url
-			response.sendRedirect("exercises" + "?action=list" +"&exId=" + exId);
+		if (!deleted) { 
+			response.sendRedirect("exercises");
+			return;
 		}
+		
+		//return the same view from which the delete request came
+		
+		String previousPageData = request.getParameter("returnTo");
+		String returnView = "";
+		if (previousPageData != null && previousPageData.length() > 0) {
+
+			String listExercisesForTheUserView = "&loadBy=userId&show=userId&userId=";
+
+			if (previousPageData.contains("loadBy_userId_show_" + "userId")) {
+				String userId = previousPageData.replaceAll("[^0-9]", "");
+				returnView += listExercisesForTheUserView + userId;
+			} 
+
+		}
+		
+		response.sendRedirect("exercises" + "?action=list" + returnView);
 		
 	}
 	
