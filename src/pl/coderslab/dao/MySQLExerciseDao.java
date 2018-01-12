@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
 import pl.coderslab.db.DbUtil;
 import pl.coderslab.model.Exercise;
+import pl.coderslab.model.Solution;
 
 public class MySQLExerciseDao implements ExerciseDao {
 	/**
@@ -100,10 +102,31 @@ public class MySQLExerciseDao implements ExerciseDao {
 
 		return null;
 	}
+	
+		
+	@Override
+	public Collection<Exercise> loadExercisesByUserId(long userId) {
+		Collection<Exercise> exercises = null;
+		String sql = "SELECT * FROM exercise " + 
+				     " WHERE user_id=?;";
+		
+		try (Connection conn = DbUtil.getConn(); 
+				PreparedStatement ps = conn.prepareStatement(sql)){
+			
+			ps.setLong(1, userId);
+			try(ResultSet rs = ps.executeQuery()){
+				exercises = new ArrayList<>();
+				while (rs.next()) {
+					exercises.add(extractExerciseFromRS(rs));
+				}				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return exercises;
+	}
 
-	
-	
-	
 	@Override
 	public Collection<Exercise> loadAllExercises() {
 		Collection<Exercise> exercises = null;

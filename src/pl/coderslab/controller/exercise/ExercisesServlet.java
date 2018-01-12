@@ -47,11 +47,11 @@ public class ExercisesServlet extends HttpServlet {
 			deleteExercise(request, response); 
 			break;
 		case "view":
-			viewOneExercise(request, response);  //. ma byc  list(...)
+			view(request, response);  
 			break;
 		case "list":
 		default:
-			OLDlistExercises(request, response);
+			listExercises(request, response);
 		}
 		
 		System.out.println(request.getRequestURL());

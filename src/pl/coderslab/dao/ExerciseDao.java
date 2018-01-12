@@ -13,6 +13,6 @@ public interface ExerciseDao {
 	Exercise loadExerciseById(int id);
 	Collection<Exercise> loadAllExercises();
 	boolean delete(long id);
-	List<Exercise> loadExercisesByUserId(int i);
+	Collection<Exercise> loadExercisesByUserId(long i);
 
 }
