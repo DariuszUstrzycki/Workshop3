@@ -1,3 +1,8 @@
+body {
+	background: rgb(255, 253, 238);
+	font-family: font-family: 'Merriweather', serif;
+}
+
 td {
 	/*border: 1px solid black;*/
 	padding-right: 20px;
@@ -27,7 +32,7 @@ td {
 }
 
 .displayTable {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+   /* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
     border-collapse: collapse;
     width: 100%;
 }
@@ -37,12 +42,14 @@ td {
     padding: 8px;
 }
 
-.displayTable td:nth-child(1) {
-    white-space:nowrap;
+.displayTable th:nth-child(1), td:nth-child(1) {
+    width: 20px;
+    /*white-space:nowrap;*/
 }
 
-.displayTable td:nth-child(2) {
-    min-width: 150px;
+.displayTable th:nth-child(2), td:nth-child(2) {
+	 width: 130px;
+    
 }
 
 .displayTable tr:nth-child(even){background-color: #f2f2f2;}
@@ -53,10 +60,57 @@ td {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: darkcyan; 
     color: white;
 }
 
+
+
+#exercises td:nth-child(2)  {
+	font-weight: bold; 
+	text-transform: uppercase;
+}
+#exercises td:nth-child(4), td:nth-child(5)   {
+	white-space:nowrap;
+}
+
+#solutions td:last-child  {
+	white-space:nowrap;
+} 
+
+h1, h2, h3 {
+	color: rgb(50,20,0);
+}
+
+#exercises th {
+	background-color: rgb(70,40,0);
+}
+
 #solutions th {
-	background-color: plum; 
+	background-color: rgb(85,13,0); 
+}
+
+#users th {
+	background-color: rgb(125, 35, 19);
+}
+#groups th {
+	background-color: rgb(170, 75, 57);      
+}
+
+a {font-family: Arial, Helvetica, sans-serif; }
+
+
+.menu a:link, a:visited {
+	font-family: Helvetica, sans-serif;
+    background-color: rgb(219, 198, 144);   
+    color: black;
+    padding:8px 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    background-color: rgb(179, 168, 114); 
 }

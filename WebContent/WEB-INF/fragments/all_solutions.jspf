@@ -17,27 +17,30 @@ if(solutionList.size() == 0){%>
 <table class='displayTable' id='solutions'>
 	<thead>
 		<tr>
-			<th>solution id</th>
-			<th>exercise id</th>
-			<th>actions</th>
-			<th>created</th>
-			<th>updated</th>
-			<th>description</th>
-			<th>userId</th>
+			<th>Id</th>
+			
+			<th>Action</th>
+			<th>Created</th>
+			<th>Updated</th>
+			<th>Description</th>
+			<th>Exercise id</th>
+			<th>User Id</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="solution"  items="${requestScope.solutionList}"> 
 			<tr>
 				<td>${solution.id}</td>
-				<td>${solution.exerciseId}</td>
+				
 				<td><a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${solution.id}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a><br></td>
 				<td>${solution.created}</td>
 				<td>${solution.updated}</td>
 				<td>${solution.description}</td>
-				<!--  <td>${solution.userId}</td> -->
-				<td><a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${solution.userId}'>${solution.userId}<br>
-				View user's solutions</a></td>
+				<td>${solution.exerciseId}</td>
+				<td>${solution.userId}<br>
+				<a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${solution.userId}'>
+				View user's solutions</a><br>
+				<a href='${pageContext.request.contextPath}/exercises?action=list&loadBy=userId&show=userId&userId=${solution.userId}'>View user's exercises</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

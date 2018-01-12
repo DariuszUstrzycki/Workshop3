@@ -3,23 +3,23 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<table class='displayTable'>
+<table class='displayTable' id='users'>
 	<thead>
 		<tr>
-			<th>user id</th>
-			<th>group id</th>
-			<th>actions</th>
-			<th>username</th>
-			<th>email</th>
-			<th>solutions</th>
-			<th>exercises</th>
+			<th>Id</th>
+			
+			<th>Action</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Solutions</th>
+			<th>Exercises</th>
+			<th>Group id</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="user"  items="${allUsers}" varStatus="status"> 
 			<tr>
 				<td>${user.id}</td>
-				<td>${user.userGroupId}</td>
 				<td>
 				<a href='${pageContext.request.contextPath}/admin/users?userId=${user.id}'>Change group</a><br>
 				<a href='${pageContext.request.contextPath}/admin/users?action=view&userId=${user.id}'>View</a><br>
@@ -29,6 +29,7 @@
 				<td>${user.email}</td>
 				<td><a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${user.id}'>View</a></td>
 				<td><a href='${pageContext.request.contextPath}/exercises?action=list&loadBy=userId&show=userId&userId=${user.id}'>View</a></td>
+				<td>${user.userGroupId}</td>
 			</tr>
 		</c:forEach>
 	</tbody>

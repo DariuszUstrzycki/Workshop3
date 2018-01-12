@@ -5,13 +5,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- oneExercise -->
-<table class='displayTable'>
+<table class='displayTable' id='exercises'>
 	<thead>
 		<tr>
-			<th>exercise id</th>
-			<th>title</th>
-			<th>description</th>
-			<th>user id</th>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>User id</th>
 		</tr>
 	</thead>
 	<tbody>

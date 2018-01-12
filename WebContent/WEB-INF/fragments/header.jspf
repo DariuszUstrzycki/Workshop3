@@ -5,7 +5,7 @@
 <header>
 
 
-<table>
+<table class="menu">
 	<tr>
 		<td><a href='${pageContext.request.contextPath}/home'>Home</a></td>
 
@@ -20,7 +20,7 @@
 	</tr>
 </table>
 
-<h1>School - workshop 2/3</h1>
+<h1>Solvebank.com</h1>
 
 <c:if test="${not empty loggedUser}">
 	<%@include file="/WEB-INF/fragments/lowerNav.jspf"%>

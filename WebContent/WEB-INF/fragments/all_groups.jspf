@@ -3,17 +3,19 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<table class='displayTable'>
+<table class='displayTable' id='groups'>
 	<thead>
 		<tr>
-			<th>id</th>
-			<th>name</th>
+			<th>Id</th>
+			<th>Action</th>
+			<th>Name</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="group"  items="${allGroups}"> 
 			<tr>
-				<td>${group.id} ${status.index}<br> <!-- usunac status.index? -->
+				<td>${group.id}</td>
+				<td>
 				<a href='${pageContext.request.contextPath}/admin/groups?action=view&groupId=${group.id}'>View members</a><br>
 				<a href='${pageContext.request.contextPath}/admin/groups?action=delete&groupId=${group.id}'>Delete</a></td>
 				<td>${group.name}</td>
