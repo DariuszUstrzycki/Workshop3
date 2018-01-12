@@ -127,7 +127,17 @@ public class ExercisesServlet extends HttpServlet {
 		
 	}
 
-	
+	private void view(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String item = request.getParameter("show");
+		if (item == null || item.equals("")) {
+			return; // no item is supposed to be displayed
+		} else {
+			showItem(item, request, response);
+		}
+		
+		request.getRequestDispatcher(theView).forward(request, response); 
+	}
 
 	private void listExercises(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
