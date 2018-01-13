@@ -17,7 +17,7 @@ if(solutionList.size() == 0){%>
 			<th>Email</th>
 			<th>Solutions</th>
 			<th>Exercises</th>
-			<th>Group id</th>
+			<th>Group  id</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,9 +33,9 @@ if(solutionList.size() == 0){%>
 				<td><a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${user.id}'>View</a></td>
 				<td><a href='${pageContext.request.contextPath}/exercises?action=list&loadBy=userId&show=userId&userId=${user.id}'>View</a></td>
 				<td>${user.userGroupId}<br>
-				<form action="/admin/users?action=changeGroup&userId=${user.id}">
-					<select name="groupID">
-						<option value="1" <c:if test="${user.userGroupId eq 1}">selected</c:if>>Students</option>
+				<form action="${pageContext.request.contextPath}/admin/users?action=changeGroup&userId=${user.id}" method='POST'>
+					<select name="groupId">
+						<option value='1'<c:if test="${user.userGroupId eq 1}">selected</c:if>>Students</option>
 						<option value="2" <c:if test="${user.userGroupId eq 2}">selected</c:if>>Teachers</option>
 						<option value="3" <c:if test="${user.userGroupId eq 3}">selected</c:if>>Admins</option>
 					</select> <br>

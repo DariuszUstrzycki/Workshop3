@@ -63,6 +63,44 @@ public class UserServlet extends HttpServlet {
 	}
 
 	
+	private void changeGroup(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String groupIdString = request.getParameter("groupId");
+		System.out.println(groupIdString);
+		
+		String userIdString = request.getParameter("userId");
+		System.out.println(userIdString);
+		
+		if(groupIdString == null || groupIdString.length() == 0 || userIdString == null || userIdString.length() == 0) {
+			response.sendRedirect("users");
+			return;
+		}
+		
+		
+		try {
+			int groupId = Integer.parseInt(groupIdString);
+			int userId = Integer.parseInt(userIdString);
+			
+			User user = userDao.loadUserById(userId);
+			if(user != null) {
+				user.setUserGroupId(groupId);
+				boolean success = userDao.update(user);
+				if(success) {
+					response.sendRedirect("users?action=list");
+				} else {
+					response.sendRedirect("users");
+					return;
+				}
+			}
+		} catch (NumberFormatException e) {
+			response.sendRedirect("users");
+			return;
+		}
+		
+		
+	}
+
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
@@ -73,6 +111,9 @@ public class UserServlet extends HttpServlet {
             /*case "create":
                createUser(request, response); - not implemented
                 break;*/
+        	case "changeGroup":
+			changeGroup(request, response); 
+			break;
             case "list":
             default:
                 response.sendRedirect("users");
