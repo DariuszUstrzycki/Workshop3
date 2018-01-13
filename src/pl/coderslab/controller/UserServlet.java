@@ -115,9 +115,12 @@ public class UserServlet extends HttpServlet {
 		}
 		
 		boolean deleted = userDao.delete(userId);
-		if (deleted) { // message options: 1) setAttribute (message, "Deleted use userId"  2) dopisac te info do url
-			response.sendRedirect("users" + "?action=list" +"&userId=" + userId);
+		if (!deleted) { 
+			response.sendRedirect("users");
+			return;
 		}
+		
+		response.sendRedirect("exercises" + "?action=list");
 		
 	}
 		
