@@ -176,6 +176,33 @@ public class MySQLSolutionDao implements SolutionDao{
 		
 		return solutions;
 	}
+	
+	
+	
+	
+	@Override
+	public Collection<Solution> loadAllSolutions(int limit) {
+		Collection<Solution> solutions = null;
+		String sql = "SELECT * FROM	solution LIMIT ?";
+		
+		try (Connection conn = DbUtil.getConn(); 
+				PreparedStatement ps = conn.prepareStatement(sql)){
+			
+			ps.setInt(1, limit);
+			
+			try(ResultSet rs = ps.executeQuery()){
+				solutions = new ArrayList<>();
+				while (rs.next()) {
+					solutions.add(extractSolutionFromRS(rs));
+				}				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return solutions;
+	}
+
 	/**
 	 * @return true on success, false on failure
 	 */

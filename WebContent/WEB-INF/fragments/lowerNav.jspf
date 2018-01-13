@@ -6,7 +6,6 @@
 
 <table class='menu'>
 	<tr>
-	<td><a href='${pageContext.request.contextPath}/home'>Home</a></td>
 		<td><a href='${pageContext.request.contextPath}/exercises?action=list'>Exercises</a></td>
 		<td><a href='${pageContext.request.contextPath}/solutions?action=list'>Solutions</a></td>
 		<c:if test="${sessionScope.loggedUser.username eq 'admin' }">

@@ -133,7 +133,7 @@ public class SolutionServlet extends HttpServlet {
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List<Solution> solutionList = null;
+		List<Solution> solutionsList = null;
 
 		String loadBy = request.getParameter("loadBy");
 		if (loadBy != null && loadBy.length() > 0) {
@@ -142,38 +142,38 @@ public class SolutionServlet extends HttpServlet {
 				case "exId":
 					String exId = request.getParameter("exId");
 					if (exId != null & exId.length() > 0) {
-						solutionList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
+						solutionsList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
 					}
 					break;
 				case "userId":
 					String userId = request.getParameter("userId");
 					if (userId != null & userId.length() > 0) {
-						solutionList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
+						solutionsList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
 					}
 					break;
 				/*case "solId":
 					String solId = request.getParameter("solId");
 					if (solId != null & solId.length() > 0) {
-						solutionList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(solId));
+						solutionsList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(solId));
 					}
 					break;*/
 				default:
-					solutionList = (List<Solution>) solDao.loadAllSolutions();
+					solutionsList = (List<Solution>) solDao.loadAllSolutions();
 				}
 			} catch (NumberFormatException e) {
 				response.sendRedirect("solutions");
 				e.printStackTrace();
 			}
 		} else {
-			solutionList = (List<Solution>) solDao.loadAllSolutions();
+			solutionsList = (List<Solution>) solDao.loadAllSolutions();
 		}
 
-		if (solutionList == null) {
+		if (solutionsList == null) {
 			response.sendRedirect("solutions");
 			return;
 		} else {
-			Collections.reverse(solutionList); // to improve
-			request.setAttribute("solutionList", solutionList);
+			Collections.reverse(solutionsList); // to improve
+			request.setAttribute("solutionsList", solutionsList);
 			
 			//show other entities
 			String item = request.getParameter("show");

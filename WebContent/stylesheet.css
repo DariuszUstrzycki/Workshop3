@@ -1,6 +1,6 @@
 body {
 	background: rgb(255, 253, 238);
-	font-family: font-family: 'Merriweather', serif;
+	font-family: font-family : 'Merriweather', serif;
 }
 
 td {
@@ -9,20 +9,20 @@ td {
 }
 
 .btn {
-  background: #3498db;
-  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-  background-image: -o-linear-gradient(top, #3498db, #2980b9);
-  background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 15px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
+	background: #3498db;
+	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+	background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+	background-image: -o-linear-gradient(top, #3498db, #2980b9);
+	background-image: linear-gradient(to bottom, #3498db, #2980b9);
+	-webkit-border-radius: 28;
+	-moz-border-radius: 28;
+	border-radius: 28px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 15px;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
 }
 
 #cookieInfo {
@@ -32,84 +32,89 @@ td {
 }
 
 .displayTable {
-   /* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
-    border-collapse: collapse;
-    width: 100%;
+	/* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .displayTable td, .displayTable th {
-    border: 1px solid #ddd;
-    padding: 8px;
+	border: 1px solid #ddd;
+	padding: 8px;
 }
 
 .displayTable th:nth-child(1), td:nth-child(1) {
-    width: 20px;
-    /*white-space:nowrap;*/
+	width: 20px;
+	/*white-space:nowrap;*/
 }
 
 .displayTable th:nth-child(2), td:nth-child(2) {
-	 width: 130px;
-    
+	width: 130px;
 }
 
-.displayTable tr:nth-child(even){background-color: #f2f2f2;}
+.displayTable tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
 
-.displayTable tr:hover {background-color: #ddd;}
+.displayTable tr:hover {
+	background-color: #ddd;
+}
 
 .displayTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    color: white;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	color: white;
 }
 
-
-
-#exercises td:nth-child(2)  {
-	font-weight: bold; 
+#exercises td:nth-child(2) {
+	font-weight: bold;
 	text-transform: uppercase;
 }
-#exercises td:nth-child(4), td:nth-child(5)   {
-	white-space:nowrap;}
 
-#solutions td:last-child  {
-	white-space:nowrap;
-} 
+#exercises td:nth-child(4), #exercises td:nth-child(5) {
+	white-space: nowrap;
+}
+
+#solutions td:last-child {
+	white-space: nowrap;
+}
 
 h1, h2, h3 {
-	color: rgb(50,20,0);
+	color: rgb(50, 20, 0);
 }
 
 #exercises th {
-	background-color: rgb(70,40,0);
+	background-color: rgb(70, 40, 0);
 }
 
 #solutions th {
-	background-color: rgb(85,13,0); 
+	background-color: rgb(85, 13, 0);
 }
 
 #users th {
 	background-color: rgb(125, 35, 19);
 }
+
 #groups th {
-	background-color: rgb(170, 75, 57);      
+	background-color: rgb(170, 75, 57);
 }
 
-a {font-family: Arial, Helvetica, sans-serif; }
-
+a {
+	font-family: Arial, Helvetica, sans-serif;
+}
 
 .menu a:link, a:visited {
 	font-family: Helvetica, sans-serif;
-    background-color: rgb(219, 198, 144);   
-    color: black;
-    padding:8px 10px;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: bold;
-    display: inline-block;
+	background-color: rgb(219, 198, 144);
+	color: black;
+	padding: 8px 10px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	display: inline-block;
 }
 
 a:hover, a:active {
-    background-color: rgb(179, 168, 114); 
+	background-color: rgb(179, 168, 114);
 }

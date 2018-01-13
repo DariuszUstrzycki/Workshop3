@@ -13,5 +13,6 @@ public interface SolutionDao {
 	Collection<Solution> loadSolutionsByExId(long exerciseId);
 	Collection<Solution> loadSolutionsByUserId(long userId);
 	Collection<Solution> loadAllSolutions();
+	Collection<Solution> loadAllSolutions(int limit);
 	boolean delete(long id);
 }

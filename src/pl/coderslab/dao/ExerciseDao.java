@@ -14,5 +14,6 @@ public interface ExerciseDao {
 	Collection<Exercise> loadAllExercises();
 	boolean delete(long id);
 	Collection<Exercise> loadExercisesByUserId(long i);
+	Collection<Exercise> loadAllExercises(int limit);
 
 }

@@ -24,10 +24,8 @@ Action is ${param.action}
 
     <%--form to add solution  --%> 
 	<c:if test="${param.action eq 'create'}">
-	<h2>Add a solution for this exercise</h2>
 	<br>
 		<br>
-		<%@include file="/WEB-INF/fragments/view_exercise.jspf"%> <%--the solution selected by the user --%>  
 		<%@include file="/WEB-INF/fragments/add_solution.jspf"%>
 	</c:if>
 	

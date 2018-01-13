@@ -2,8 +2,8 @@ package pl.coderslab.controller;
 
 import java.io.IOException;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,44 +19,44 @@ import pl.coderslab.model.Solution;
 @WebServlet({ "/home" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int displayPerPage; // usunac to dziadostwo, bo nigdzie indziej go nie ma
-	
+	private int numberOfDisplayed; // usunac to dziadostwo, bo nigdzie indziej go nie ma
+	private SolutionDao dao = new MySQLSolutionDao(); // inject
+
 	@Override
 	public void init() throws ServletException {
-		super.init();
+		Integer displayParam = -1;
 		try {
-			Integer displayParam = Integer.parseInt(getServletContext().getInitParameter("numberOfDisplayed"));
-			if(displayParam!= null) {
-				displayPerPage = displayParam;
+			displayParam = Integer.parseInt(getServletContext().getInitParameter("numberOfDisplayed"));
+			if (displayParam != null) {
+				numberOfDisplayed = displayParam;
 			}
 		} catch (NumberFormatException e) {
-			displayPerPage = 4;
+			numberOfDisplayed = 5;
 		}
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		loadSolutions(request, response);
-		
-		System.out.println("HomeServlet is working...");
+		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 
-		if (!response.isCommitted()) {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 	private void loadSolutions(HttpServletRequest request, HttpServletResponse response) {
 
-		SolutionDao dao = new MySQLSolutionDao(); // inject
-		ArrayList<Solution> solutionList = (ArrayList<Solution>) dao.loadAllSolutions(); 
-		Collections.reverse(solutionList);
-		HttpSession session = request.getSession();
-		session.setAttribute("solutionList", solutionList);
-		session.setAttribute("displayPerPage", displayPerPage); 
-		
-		System.out.println("When solutionList is added to session in HomeServlet on redirect to exercises.jsp, session id is: " + session.getId());
-		System.out.println("Session recorded at " + LocalTime.now());
+		List<Solution> solutionsList = (List<Solution>) dao.loadAllSolutions(numberOfDisplayed);
+
+		if (solutionsList != null) {
+			Collections.reverse(solutionsList); // remove later
+			request.setAttribute("solutionsList", solutionsList);
+		}
 	}
 
 }

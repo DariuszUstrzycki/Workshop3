@@ -46,10 +46,3 @@ if(exerciseList.size() == 0){%>
 	</tbody>
 </table>
 <%} %>
-
-<!--  
-<a href='${pageContext.request.contextPath}/solutions?action=listForOneExercise&exId=${exercise.id}'>View solutions</a><br>
-
-
-<a href='${pageContext.request.contextPath}/solutions?action=create&exId=${exercise.id}'>
--->

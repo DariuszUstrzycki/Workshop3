@@ -23,11 +23,9 @@
 	<font color='green'>${message}</font>
 	
 	<p>Welcome to the application which enables adding exercises and solutionsContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" Below you can see the latest solutions </p>
-
 	 
-	<%@include file="/WEB-INF/fragments/latestSolutions.jspf"%>
+	<%@include file="/WEB-INF/fragments/all_solutions.jspf"%>
 
-	
 
 	<c:if test="${empty cookie.cookieConsent}">
 	<div id='cookieInfo'>
