@@ -112,7 +112,7 @@ public class MySQLUserDao implements UserDao{
 	public Collection<User> loadUsersByGroupId(long groupId) {
 		
 		Collection<User> users = null;
-		String sql = "SELECT * FROM	user WHERE user_group = ?";
+		String sql = "SELECT * FROM	user WHERE user_group_id = ?";
 
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -129,7 +129,7 @@ public class MySQLUserDao implements UserDao{
 			e.printStackTrace();
 		}
 
-		return null;
+		return users;
 	}
 
 	@Override

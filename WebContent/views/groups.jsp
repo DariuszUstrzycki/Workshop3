@@ -26,15 +26,16 @@
 		<%@include file="/WEB-INF/fragments/add_group.jspf"%>
 	</c:if>
 
-	<!-- view one group -->
+	<!-- view the given newly added group -->
 	<c:if test="${param.action eq 'view'}">
-	<h2>The group #${requestScope.oneGroup.id} </h2>
+	<h2>Group #${requestScope.oneGroup.id} has been added</h2>
 		<%@include file="/WEB-INF/fragments/view_group.jspf"%>
 	</c:if>
+	
 
 	<!-- list all groups -->
 	<c:if test="${param.action eq 'list'}">
-	<h2>All groups</h2>
+	<h2>Groups</h2>
 	<%@include file="/WEB-INF/fragments/all_groups.jspf" %>
 	</c:if>
 

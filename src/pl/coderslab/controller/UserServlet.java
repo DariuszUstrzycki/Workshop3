@@ -32,9 +32,17 @@ public class UserServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println(request.getRequestURL());
+		System.out.println(request.getRequestURI());
+		System.out.println(request.getQueryString());
+		
 		String action = request.getParameter("action");
+		
+		System.out.println("1.Users. action is: " + action);
+		
 		if (action == null)
 			action = "list";
+		
 		switch (action) {
 		/*case "create":
 			showSolutionFormAndExercise(request,response);
@@ -92,7 +100,7 @@ public class UserServlet extends HttpServlet {
 				case "groupId":
 					String groupId = request.getParameter("groupId");
 					if (groupId != null & groupId.length() > 0) {
-						usersList = (List<User>) userDao.loadUsersByGroupId((Integer.parseInt(groupId))); // not implemented!!!
+						usersList = (List<User>) userDao.loadUsersByGroupId((Integer.parseInt(groupId))); 
 					}
 					break;
 				default:

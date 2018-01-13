@@ -12,11 +12,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="group"  items="${allGroups}"> 
+		<c:forEach var="group"  items="${groupsList}"> 
 			<tr>
 				<td>${group.id}</td>
 				<td>
-				<a href='${pageContext.request.contextPath}/admin/exercises?action=list&show=groupId&groupId=${group.id}'>View members</a><br>
+				<a href='${pageContext.request.contextPath}/admin/users?action=list&loadBy=groupId&show=groupId&groupId=${group.id}'>View members</a><br>
 				<a href='${pageContext.request.contextPath}/admin/groups?action=delete&groupId=${group.id}'>Delete</a></td>
 				<td>${group.name}</td>
 			</tr>
