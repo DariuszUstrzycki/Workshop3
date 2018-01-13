@@ -7,7 +7,6 @@
 	<thead>
 		<tr>
 			<th>Id</th>
-			
 			<th>Action</th>
 			<th>Name</th>
 			<th>Email</th>
@@ -17,12 +16,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="user"  items="${allUsers}" varStatus="status"> 
+		<c:forEach var="user"  items="${usersList}" varStatus="status"> 
 			<tr>
 				<td>${user.id}</td>
 				<td>
 				<a href='${pageContext.request.contextPath}/admin/users?userId=${user.id}'>Change group</a><br>
-				<a href='${pageContext.request.contextPath}/admin/users?action=view&userId=${user.id}'>View</a><br>
+				<a href='${pageContext.request.contextPath}/admin/users?action=view&show=userId&userId=${user.id}'>View</a><br>
 				<a href='${pageContext.request.contextPath}/admin/users?action=delete&userId=${user.id}'>Delete</a>
 				</td>
 				<td>${user.username}</td>

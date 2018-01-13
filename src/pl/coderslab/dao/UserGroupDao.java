@@ -1,7 +1,9 @@
 package pl.coderslab.dao;
 
 import java.util.Collection;
+import java.util.List;
 
+import pl.coderslab.model.Exercise;
 import pl.coderslab.model.UserGroup;
 
 public interface UserGroupDao {

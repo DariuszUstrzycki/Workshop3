@@ -16,7 +16,7 @@
 			<tr>
 				<td>${group.id}</td>
 				<td>
-				<a href='${pageContext.request.contextPath}/admin/groups?action=view&groupId=${group.id}'>View members</a><br>
+				<a href='${pageContext.request.contextPath}/admin/exercises?action=list&show=groupId&groupId=${group.id}'>View members</a><br>
 				<a href='${pageContext.request.contextPath}/admin/groups?action=delete&groupId=${group.id}'>Delete</a></td>
 				<td>${group.name}</td>
 			</tr>

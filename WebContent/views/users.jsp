@@ -18,13 +18,13 @@
 
 	<!-- view one user -->
 	<c:if test="${param.action eq 'view'}">
-	<h2>The user #${requestScope.oneUser.id} </h2>
+	<h2>User #${requestScope.oneUser.id} </h2>
 		<%@include file="/WEB-INF/fragments/view_user.jspf"%>
 	</c:if>
 
 	<!-- list all users -->
 	<c:if test="${param.action eq 'list'}">
-	<h2>All users</h2>
+	<h2>Users</h2>
 	<%@include file="/WEB-INF/fragments/all_users.jspf" %>
 	</c:if>
 

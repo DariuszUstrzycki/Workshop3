@@ -13,6 +13,7 @@ public interface UserDao {
 	User loadUserByUsername(String username);
 	User loadUserByEmail(String email);
 	Collection<User> loadAllUsers();
+	Collection<User> loadUsersByGroupId(long groupId);
 	boolean delete(long id);
 	
 

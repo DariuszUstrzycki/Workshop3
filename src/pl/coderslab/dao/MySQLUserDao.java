@@ -106,6 +106,32 @@ public class MySQLUserDao implements UserDao{
 	
 	
 	
+	
+	
+	@Override
+	public Collection<User> loadUsersByGroupId(long groupId) {
+		
+		Collection<User> users = null;
+		String sql = "SELECT * FROM	user WHERE user_group = ?";
+
+		try (Connection conn = DbUtil.getConn(); 
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setLong(1, groupId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				users = new ArrayList<>();
+				while (rs.next()) {
+					users.add(extractUserFromRS(rs));
+				}	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	@Override
 	public  Collection<User> loadAllUsers() {
 		
