@@ -112,7 +112,8 @@ public class MySQLSolutionDao implements SolutionDao{
 	public Collection<Solution> loadSolutionsByExId(long exerciseId) {
 		Collection<Solution> solutions = null;
 		String sql = "SELECT * FROM solution " + 
-				     " WHERE exercise_id=?;";
+				     " WHERE exercise_id=? "
+				     + " ORDER BY created DESC";
 		
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)){
@@ -135,7 +136,8 @@ public class MySQLSolutionDao implements SolutionDao{
 	public Collection<Solution> loadSolutionsByUserId(long userId) {
 		Collection<Solution> solutions = null;
 		String sql = "SELECT * FROM solution " + 
-				     " WHERE user_id=?;";
+				     " WHERE user_id=? "
+				     + " ORDER BY created DESC";
 		
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)){
@@ -159,7 +161,8 @@ public class MySQLSolutionDao implements SolutionDao{
 	@Override
 	public Collection<Solution> loadAllSolutions() {
 		Collection<Solution> solutions = null;
-		String sql = "SELECT * FROM	solution";
+		String sql = "SELECT * FROM	solution "
+				+ " ORDER BY created DESC";
 		
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)){
@@ -183,13 +186,13 @@ public class MySQLSolutionDao implements SolutionDao{
 	@Override
 	public Collection<Solution> loadAllSolutions(int limit) {
 		Collection<Solution> solutions = null;
-		String sql = "SELECT * FROM	solution LIMIT ?";
+		String sql = "SELECT * FROM	solution "
+				+ " ORDER BY created DESC LIMIT ? ";
 		
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)){
 			
 			ps.setInt(1, limit);
-			
 			try(ResultSet rs = ps.executeQuery()){
 				solutions = new ArrayList<>();
 				while (rs.next()) {

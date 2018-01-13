@@ -172,7 +172,6 @@ public class SolutionServlet extends HttpServlet {
 			response.sendRedirect("solutions");
 			return;
 		} else {
-			Collections.reverse(solutionsList); // to improve
 			request.setAttribute("solutionsList", solutionsList);
 			
 			//show other entities
