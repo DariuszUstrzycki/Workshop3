@@ -12,12 +12,10 @@ import java.util.List;
 import pl.coderslab.db.DbUtil;
 import pl.coderslab.model.SolutionDto;
 
+public class SolutionDtoDao {
 
-public class SolutionDtoDao {  
-	
-	
 	public static List<SolutionDto> loadSolutionDto() {
-		
+
 		ArrayList<SolutionDto> solutionsDto = null;
 		
 		String sql = "SELECT  " + 
@@ -38,44 +36,44 @@ public class SolutionDtoDao {
 				"LEFT JOIN exercise ON exercise.id = solution.exercise_id        " + 
 				"ORDER BY solution.created DESC; ";
 		
-		try (Connection conn = DbUtil.getConn(); 
-				PreparedStatement ps = conn.prepareStatement(sql)){
-			
-			try(ResultSet rs = ps.executeQuery()){
+		try (Connection conn = DbUtil.getConn(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			try (ResultSet rs = ps.executeQuery()) {
 				solutionsDto = new ArrayList<>();
 				while (rs.next()) {
 					solutionsDto.add(extractSolutionDtoFromRS(rs));
-				}				
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		// System.out.println("solutionsDto size in SolutionDTO; " + solutionsDto.size());
+
 		return solutionsDto;
-		
+
 	}
-	
-private static SolutionDto extractSolutionDtoFromRS(ResultSet rs) throws SQLException {
-		
-	SolutionDto loaded = new SolutionDto();
-	loaded.setExcerciseId(rs.getLong("exercise.id"));
-	loaded.setExcerciseTitle(rs.getString("exercise.title"));
-	loaded.setAttachementId(rs.getLong("attachment.id"));
-	loaded.setAttachmentName(rs.getString("attachment.attachment_name"));
-	loaded.setSolutionId(rs.getLong("solution.id"));
-	loaded.setCreated(LocalDateTime.ofInstant(rs.getTimestamp("solution.created").toInstant(), ZoneOffset.ofHours(0)));
-	loaded.setUpdated(LocalDateTime.ofInstant(rs.getTimestamp("solution.updated").toInstant(), ZoneOffset.ofHours(0)));
-	loaded.setDescription(rs.getString("solution.description"));
-	loaded.setExcerciseId(rs.getLong("solution.exercise_id"));
-	loaded.setUserId(rs.getLong("solution.user_id"));
-	loaded.setUserName(rs.getString("user.username"));
+
+	private static SolutionDto extractSolutionDtoFromRS(ResultSet rs) throws SQLException {
+
+		SolutionDto loaded = new SolutionDto();
+		loaded.setExerciseId(rs.getLong("exercise.id"));
+		loaded.setExerciseTitle(rs.getString("exercise.title"));
+		loaded.setAttachementId(rs.getLong("attachment.id"));
+		loaded.setAttachmentName(rs.getString("attachment.attachment_name"));
+		loaded.setSolutionId(rs.getLong("solution.id"));
+		loaded.setCreated(
+				LocalDateTime.ofInstant(rs.getTimestamp("solution.created").toInstant(), ZoneOffset.ofHours(0)));
+		loaded.setUpdated(
+				LocalDateTime.ofInstant(rs.getTimestamp("solution.updated").toInstant(), ZoneOffset.ofHours(0)));
+		loaded.setDescription(rs.getString("solution.description"));
+		loaded.setExerciseId(rs.getLong("solution.exercise_id"));
+		loaded.setUserId(rs.getLong("solution.user_id"));
+		loaded.setUserName(rs.getString("user.username"));
 
 		return loaded;
 	}
 
-public List<SolutionDto> loadSolutionDtoByExId(int exerciseId) {
-	ArrayList<SolutionDto> solutionsDto = null;
+	public List<SolutionDto> loadSolutionDtoByExId(int exerciseId) {
+		ArrayList<SolutionDto> solutionsDto = null;
 	
 	String sql = "SELECT  " + 
 			"    exercise.id, " + 
@@ -96,26 +94,24 @@ public List<SolutionDto> loadSolutionDtoByExId(int exerciseId) {
 			"WHERE solution.exercise_id = ? " +
 			"ORDER BY solution.created DESC; ";
 	
-	try (Connection conn = DbUtil.getConn(); 
-			PreparedStatement ps = conn.prepareStatement(sql)){
-		
-		ps.setLong(1, exerciseId);
-		try(ResultSet rs = ps.executeQuery()){
-			solutionsDto = new ArrayList<>();
-			while (rs.next()) {
-				solutionsDto.add(extractSolutionDtoFromRS(rs));
-			}				
-		}
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	// System.out.println("solutionsDto size in SolutionDTO; " + solutionsDto.size());
-	return solutionsDto;
-}
+		try (Connection conn = DbUtil.getConn(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-public List<SolutionDto> loadSolutionDtoByUserId(int userId) {
-ArrayList<SolutionDto> solutionsDto = null;
+			ps.setLong(1, exerciseId);
+			try (ResultSet rs = ps.executeQuery()) {
+				solutionsDto = new ArrayList<>();
+				while (rs.next()) {
+					solutionsDto.add(extractSolutionDtoFromRS(rs));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return solutionsDto;
+	}
+
+	public List<SolutionDto> loadSolutionDtoByUserId(int userId) {
+		ArrayList<SolutionDto> solutionsDto = null;
 	
 	String sql = "SELECT  " + 
 			"    exercise.id, " + 
@@ -136,24 +132,20 @@ ArrayList<SolutionDto> solutionsDto = null;
 			"WHERE solution.user_id = ? " +
 			"ORDER BY solution.created DESC; ";
 	
-	try (Connection conn = DbUtil.getConn(); 
-			PreparedStatement ps = conn.prepareStatement(sql)){
-		
-		ps.setLong(1, userId);
-		try(ResultSet rs = ps.executeQuery()){
-			solutionsDto = new ArrayList<>();
-			while (rs.next()) {
-				solutionsDto.add(extractSolutionDtoFromRS(rs));
-			}				
+		try (Connection conn = DbUtil.getConn(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setLong(1, userId);
+			try (ResultSet rs = ps.executeQuery()) {
+				solutionsDto = new ArrayList<>();
+				while (rs.next()) {
+					solutionsDto.add(extractSolutionDtoFromRS(rs));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	} catch (SQLException e) {
-		e.printStackTrace();
+
+		return solutionsDto;
 	}
-	
-	System.out.println("solutionsDto size in SolutionDTO; " + solutionsDto.size());
-	return solutionsDto;
-}
-	
-	
 
 }

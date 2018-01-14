@@ -42,7 +42,7 @@ if(solutionsList != null & solutionsList.size() == 0){%>
 				<td>${dto.updated}</td>
 				<td>${dto.description}</td>
 				<td><a href='${dto.attachementId}'>${dto.attachmentName}</a></td>
-				<td><a href='${pageContext.request.contextPath}/exercises?action=view&show=exId&exId=${dto.exerciseId}'>${dto.excerciseTitle}</td>
+				<td><a href='${pageContext.request.contextPath}/exercises?action=view&show=exId&exId=${dto.exerciseId}'>${dto.exerciseTitle}</td>
 				<td>${dto.userName}<br>
 				<a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${dto.userId}'>
 				View ${dto.userName}'s solutions</a><br>

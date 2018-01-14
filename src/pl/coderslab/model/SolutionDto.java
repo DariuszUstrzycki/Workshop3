@@ -3,8 +3,8 @@ package pl.coderslab.model;
 import java.time.LocalDateTime;
 
 public class SolutionDto {
-	private String excerciseTitle;
-	private long excerciseId; // new
+	private String exerciseTitle;
+	//private long excerciseId; // new
 	//-------------
 	private long attachementId;
 	private String attachmentName;
@@ -17,18 +17,13 @@ public class SolutionDto {
 	private long userId;
 	// ------------
 	private String userName;
-	public String getExcerciseTitle() {
-		return excerciseTitle;
+	public String getExerciseTitle() {
+		return exerciseTitle;
 	}
-	public void setExcerciseTitle(String excerciseTitle) {
-		this.excerciseTitle = excerciseTitle;
+	public void setExerciseTitle(String excerciseTitle) {
+		this.exerciseTitle = excerciseTitle;
 	}
-	public long getExcerciseId() {
-		return excerciseId;
-	}
-	public void setExcerciseId(long excerciseId) {
-		this.excerciseId = excerciseId;
-	}
+	
 	public long getAttachementId() {
 		return attachementId;
 	}
