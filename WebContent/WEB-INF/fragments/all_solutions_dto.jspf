@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import='java.util.List, pl.coderslab.model.Solution' %>
+
+<%=request.getQueryString()%>
+
+<% 
+String deleteView = request.getQueryString();
+if(deleteView != null){
+	deleteView = deleteView.replaceAll("=", "_").replaceAll("&", "_");
+} else {
+	deleteView = "";
+}
+%>
+
+<% List<Solution> solutionsList = (List<Solution> )request.getAttribute("solutionsList"); 
+if(solutionsList != null & solutionsList.size() == 0){%>
+<h3>There are no solutions for this exercise yet. <br>Be the first!</h3>
+<%}else {%>
+<table class='displayTable' id='solutions'>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Action</th>
+			<th>Created</th>
+			<th>Updated</th>
+			<th>Description</th>
+			<th>Attachment</th>
+			<th>Exercise id</th>
+			<th>User Id</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach var="dto"  items="${requestScope.solutionsList}"> 
+			<tr>
+				<td>${dto.solutionId}</td>
+				
+				<td><a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${dto.solutionId}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a><br></td>
+				<td>${dto.created}</td>
+				<td>${dto.updated}</td>
+				<td>${dto.description}</td>
+				<td><a href='${dto.attachementId}'>${dto.attachmentName}</a></td>
+				<td><a href='${pageContext.request.contextPath}/exercises?action=view&show=exId&exId=${dto.exerciseId}'>${dto.excerciseTitle}</td>
+				<td>${dto.userName}<br>
+				<a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${dto.userId}'>
+				View ${dto.userName}'s solutions</a><br>
+				<a href='${pageContext.request.contextPath}/exercises?action=list&loadBy=userId&show=userId&userId=${dto.userId}'>View ${dto.userName}'s exercises</a></td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
+<%} %>
+
+
+
+

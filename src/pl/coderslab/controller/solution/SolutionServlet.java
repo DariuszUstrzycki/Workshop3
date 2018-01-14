@@ -21,10 +21,12 @@ import pl.coderslab.dao.MySQLExerciseDao;
 import pl.coderslab.dao.MySQLSolutionDao;
 import pl.coderslab.dao.MySQLUserDao;
 import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.dao.SolutionDtoDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Attachment;
 import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
+import pl.coderslab.model.SolutionDto;
 import pl.coderslab.model.User;
 
 @WebServlet("/solutions")
@@ -40,6 +42,7 @@ import pl.coderslab.model.User;
 public class SolutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	SolutionDtoDao solDtoDao = new SolutionDtoDao();
 	private final AttachmentDao attachDao = new MySQLAttachmentDao();
 	private final ExerciseDao exDao = new MySQLExerciseDao();
 	private final SolutionDao solDao = new MySQLSolutionDao();
@@ -172,7 +175,8 @@ public class SolutionServlet extends HttpServlet {
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List<Solution> solutionsList = null;
+		// List<Solution> solutionsList = null;
+		 List<SolutionDto> solutionsList = null;
 
 		String loadBy = request.getParameter("loadBy");
 		if (loadBy != null && loadBy.length() > 0) {
@@ -181,30 +185,27 @@ public class SolutionServlet extends HttpServlet {
 				case "exId":
 					String exId = request.getParameter("exId");
 					if (exId != null & exId.length() > 0) {
-						solutionsList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
+						//solutionsList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
+						solutionsList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByExId(Integer.parseInt(exId));
 					}
 					break;
 				case "userId":
 					String userId = request.getParameter("userId");
 					if (userId != null & userId.length() > 0) {
-						solutionsList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
+						//solutionsList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
+						solutionsList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByUserId(Integer.parseInt(userId));
 					}
 					break;
-				/*case "solId":
-					String solId = request.getParameter("solId");
-					if (solId != null & solId.length() > 0) {
-						solutionsList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(solId));
-					}
-					break;*/
 				default:
-					solutionsList = (List<Solution>) solDao.loadAllSolutions();
+					//solutionsList = (List<Solution>) solDao.loadAllSolutions();
 				}
 			} catch (NumberFormatException e) {
 				response.sendRedirect("solutions");
 				e.printStackTrace();
 			}
 		} else {
-			solutionsList = (List<Solution>) solDao.loadAllSolutions();
+			//solutionsList = (List<Solution>) solDao.loadAllSolutions();
+			solutionsList = (List<SolutionDto>)  solDtoDao.loadSolutionDto();
 		}
 
 		if (solutionsList == null) {
@@ -212,6 +213,7 @@ public class SolutionServlet extends HttpServlet {
 			return;
 		} else {
 			request.setAttribute("solutionsList", solutionsList);
+			// request.setAttribute("solutionsDto", solutionsList);
 			
 			//show other entities
 			String item = request.getParameter("show");
