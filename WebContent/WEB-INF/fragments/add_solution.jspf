@@ -8,5 +8,11 @@
 Description: <br> 
 <textarea name="description" rows="10" cols="110">
 </textarea><br>
+<div>
+<b>Attachments</b><br/>
+<input type="file" name="file1" /><br/><br/>
 <input class="btn" type='submit'>
+</div>
 </form>
+
+

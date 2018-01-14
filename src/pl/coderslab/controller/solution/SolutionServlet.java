@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,12 @@ import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
 @WebServlet("/solutions")
+
+@MultipartConfig(
+        fileSizeThreshold = 5_242_880, //5MB
+        maxFileSize = 20_971_520L, //20MB
+        maxRequestSize = 41_943_040L //40MB
+)
 public class SolutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
