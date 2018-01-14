@@ -21,6 +21,7 @@ if(exerciseList.size() == 0){%>
 			<th>Id</th>
 			<th>Title</th>
 			<th>Description</th>
+			<th>Attachment</th>
 			<th>Action</th>
 			<th>User id</th>
 		</tr>
@@ -31,6 +32,7 @@ if(exerciseList.size() == 0){%>
 				<td>${exercise.id}</td>
 				<td>${exercise.title}</td>
 				<td>${exercise.description}</td>
+				<td>---</td>
 				<td><a	href='${pageContext.request.contextPath}/solutions?action=create&show=exId&exId=${exercise.id}'>Add Solution</a><br> 
 				<a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=exId&show=exId&exId=${exercise.id}'>View Solutions</a><br> 
 				<a href='${pageContext.request.contextPath}/exercises?action=delete&exId=${exercise.id}&${pageScope.query}returnTo=<%=deleteView%>'>

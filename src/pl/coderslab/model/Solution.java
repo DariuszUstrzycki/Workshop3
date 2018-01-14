@@ -21,21 +21,11 @@ public class Solution {
 	}
 	
 	public Solution(String description, long exerciseId, long userId) {
-		this.id = 0L;
-		this.created = LocalDateTime.now();
-		this.updated = LocalDateTime.now();
-		this.description = description;
-		this.exerciseId = exerciseId;
-		this.userId = userId;
+		this(0L, description, exerciseId,  userId);
 	}
 
 	public Solution() {
-		this.id = 0L;
-		this.created = LocalDateTime.now();
-		this.updated = LocalDateTime.now();
-		this.description = "";
-		this.exerciseId = 0L;
-		this.userId = 0L;
+		this(0L, "", 0L,  0L);
 	}
 
 	public long getId() {

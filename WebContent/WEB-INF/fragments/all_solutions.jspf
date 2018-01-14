@@ -27,6 +27,7 @@ if(solutionsList != null & solutionsList.size() == 0){%>
 			<th>Created</th>
 			<th>Updated</th>
 			<th>Description</th>
+			<th>Attachment</th>
 			<th>Exercise id</th>
 			<th>User Id</th>
 		</tr>
@@ -40,6 +41,7 @@ if(solutionsList != null & solutionsList.size() == 0){%>
 				<td>${solution.created}</td>
 				<td>${solution.updated}</td>
 				<td>${solution.description}</td>
+				<td>attName & downolad link</td>
 				<td><a href='${pageContext.request.contextPath}/exercises?action=view&show=exId&exId=${solution.exerciseId}'>${solution.exerciseId}</td>
 				<td>${solution.userId}<br>
 				<a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${solution.userId}'>

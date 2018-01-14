@@ -15,14 +15,6 @@ public class User {
 	private String password;
 	private String email;
 	private int userGroupId;
-
-	public User(String username, String email, String password, int userGroupId) {
-		this.id = 0l;
-		this.username = username;
-		this.email = email;
-		setPassword(password);
-		this.userGroupId = userGroupId;
-	}
 	
 	public User(long id, String username, String email, String password, int userGroupId) {
 		this.id = id;
@@ -32,12 +24,12 @@ public class User {
 		this.userGroupId = userGroupId;
 	}
 
+	public User(String username, String email, String password, int userGroupId) {
+		this(0L, username, email, password, 0);
+	}
+
 	public User() {
-		this.id = 0L;
-		this.username = "";
-		this.email = "";
-		this.password = "";
-		this.userGroupId = 0;
+		this(0L, "", "", "", 0);
 	}
 
 	public long getId() {

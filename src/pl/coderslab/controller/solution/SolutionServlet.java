@@ -1,22 +1,28 @@
 package pl.coderslab.controller.solution;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collections;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+import pl.coderslab.dao.AttachmentDao;
 import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.MySQLAttachmentDao;
 import pl.coderslab.dao.MySQLExerciseDao;
 import pl.coderslab.dao.MySQLSolutionDao;
 import pl.coderslab.dao.MySQLUserDao;
 import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.UserDao;
+import pl.coderslab.model.Attachment;
 import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
@@ -24,13 +30,17 @@ import pl.coderslab.model.User;
 @WebServlet("/solutions")
 
 @MultipartConfig(
-        fileSizeThreshold = 5_242_880, //5MB
+        fileSizeThreshold = 5_242_880, //5MB //5MB tells the web container how big the file has to be
+        						//before it is written to the temporary directory. uploaded files smaller than 5 megabytes are kept in memory until the request completes
+        		//and then they become eligible for garbage. After a file exceeds 5 megabytes, the container instead stores
+        		//it in location (or default) until the request completes, after which it deletes the file from disk.
         maxFileSize = 20_971_520L, //20MB
         maxRequestSize = 41_943_040L //40MB
 )
 public class SolutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private final AttachmentDao attachDao = new MySQLAttachmentDao();
 	private final ExerciseDao exDao = new MySQLExerciseDao();
 	private final SolutionDao solDao = new MySQLSolutionDao();
 	private final UserDao userDao = new MySQLUserDao();
@@ -80,6 +90,28 @@ public class SolutionServlet extends HttpServlet {
 			response.sendRedirect("solutions");
 			break;
 		}
+	}
+	
+	private void downloadAttachment(String solutionId, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String solIdString = request.getParameter(solutionId);
+		if(solIdString == null) {
+			response.sendRedirect("solutions" + "?action=view" + "&solId=" + solutionId); 
+		}
+		
+		Long solId = Long.parseLong(solIdString);	
+
+		Attachment attachment =  (Attachment) attachDao.loadAttachmentByAttachedToId(solId, "solution"); 
+		if (attachment == null) {
+			response.sendRedirect("solutions" + "?action=view" + "&solId=" + solutionId);
+			return;
+		}
+
+		response.setHeader("Content-Disposition", "attachment; filename=" + attachment.getName());
+		response.setContentType("application/octet-stream");
+
+		ServletOutputStream stream = response.getOutputStream();
+		stream.write(attachment.getContents());
 	}
 
 
@@ -257,7 +289,7 @@ public class SolutionServlet extends HttpServlet {
 	}
 	
 
-	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void createSolution(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		Long exId = null;
 		try {
 			exId = Long.parseLong(request.getParameter("exId"));
@@ -272,16 +304,51 @@ public class SolutionServlet extends HttpServlet {
 			return;
 		} else {
 			User user = (User) request.getSession().getAttribute("loggedUser");
+			
 			long id = solDao.save(new Solution(description, exId, user.getId())); 
 			if (id > 0) {
+
+				///////////////////mozemy dodac attachement/////////////////////
+				Part filePart = request.getPart("file1"); 
+				if (filePart != null && filePart.getSize() > 0) {
+					Attachment attachment = this.processAttachment(filePart);
+					if (attachment != null) {
+						attachment.setAttachedToId(id);
+						long attId = attachDao.save(attachment, "solution"); 
+					}
+				}
+				//brakuje odwolania do url linka o dodanym attachement
 				response.sendRedirect("solutions" + "?action=view&show=solId&solId=" + id); 
 			} else {
 				response.sendRedirect("solutions");
 			}
 		}
+		
+		
+		
 	}
 
-	
+	 private Attachment processAttachment(Part filePart)
+	            throws IOException
+	    {
+	        InputStream inputStream = filePart.getInputStream();
+	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+	        int read;
+	        final byte[] bytes = new byte[1024];
+
+	        while((read = inputStream.read(bytes)) != -1)
+	        {
+	            outputStream.write(bytes, 0, read);
+	        }
+
+	        Attachment attachment = new Attachment();
+	        attachment.setName(filePart.getSubmittedFileName());
+	        attachment.setMimeType(filePart.getContentType()); 
+	        attachment.setContents(outputStream.toByteArray());
+
+	        return attachment;
+	    }
 	
 	
 

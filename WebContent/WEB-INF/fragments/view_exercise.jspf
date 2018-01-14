@@ -11,6 +11,7 @@
 			<th>Id</th>
 			<th>Title</th>
 			<th>Description</th>
+			<th>Attachment</th>
 			<th>User id</th>
 		</tr>
 	</thead>
@@ -19,6 +20,7 @@
 				<td>${requestScope.oneExercise.id} <br>
 				<td>${requestScope.oneExercise.title}</td>
 				<td>${requestScope.oneExercise.description}</td>
+				<td>---</td>
 				<td>${requestScope.oneExercise.userId}</td>
 			</tr>
 	</tbody>

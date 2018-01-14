@@ -5,12 +5,14 @@
 <table class='displayTable' id='solutions'>
 	<thead>
 		<tr>
-			<th>id</th>
-			<th>created</th>
-			<th>updated</th>
-			<th>description</th>
-			<th>exerciseId</th>
-			<th>userId</th>
+			<th>Id</th>
+			<th>Action</th>
+			<th>Created</th>
+			<th>Updated</th>
+			<th>Description</th>
+			<th>Attachment</th>
+			<th>Exercise id</th>
+			<th>User Id</th>
 		</tr>
 	</thead>
 	<tbody>

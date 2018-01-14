@@ -1,7 +1,6 @@
 package pl.coderslab.controller;
 
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import pl.coderslab.dao.MySQLAttachmentDao;
 import pl.coderslab.dao.MySQLSolutionDao;
 import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.dao.SolutionDtoDao;
+import pl.coderslab.model.Attachment;
 import pl.coderslab.model.Solution;
 
 @WebServlet({ "/home" })
@@ -38,6 +39,25 @@ public class HomeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		///////////////////////////
+		
+		
+		/*MySQLAttachmentDao dao = new MySQLAttachmentDao();
+		List<Attachment> list =  (List<Attachment>) dao.loadAttachmentByAttachedToId(19, "solution");
+		if(list != null)
+			System.out.println(">>>>>>att list size is " + list.size());
+		else 
+			System.out.println(">>>>>>>att list size is " + list.size());*/
+		
+		
+		SolutionDtoDao solDtoDao = new SolutionDtoDao();
+		solDtoDao.loadSolutionDto();
+		
+
+		
+		
+		
+		//////////////////
 
 		loadSolutions(request, response);
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

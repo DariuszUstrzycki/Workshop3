@@ -14,18 +14,12 @@ public class Exercise {
 		this.userId = userId;
 	}
 
-	public Exercise() {
-		this.id = 0L;
-		this.title = "";
-		this.description = "";
-		this.userId = 0L;
-	}
-
 	public Exercise(String title, String description, long userId) {
-		this.id = 0L;
-		this.title = title;
-		this.description = description;
-		this.userId = userId;
+		this(0L, title, description, 0L);
+	}
+	
+	public Exercise() {
+		this(0L, "", "", 0L);
 	}
 
 	public long getId() {

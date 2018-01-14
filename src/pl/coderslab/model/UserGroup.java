@@ -5,11 +5,6 @@ public class UserGroup {
 	private long id;
 	private String name;
 
-	public UserGroup() {
-		this.id = 0L;
-		this.name = "";
-	}
-
 	public UserGroup(long id, String name) {
 		this.id = id;
 		this.name = name;
@@ -18,6 +13,10 @@ public class UserGroup {
 	public UserGroup(String name) {
 		this.id = 0L;
 		this.name = name;
+	}
+	
+	public UserGroup() {
+		this(0L, "");
 	}
 
 	public long getId() {

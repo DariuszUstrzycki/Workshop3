@@ -41,10 +41,12 @@ CREATE TABLE solution(
     
 CREATE TABLE attachment (
 	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	solution_id BIGINT UNSIGNED NOT NULL,
+	solution_id BIGINT UNSIGNED,
+	exercise_id BIGINT UNSIGNED,
 	attachment_name VARCHAR(255) NULL,
 	mime_content_type VARCHAR(255) NOT NULL,
 	contents BLOB NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY(solution_id) REFERENCES solution(id) ON DELETE CASCADE
+	FOREIGN KEY(solution_id) REFERENCES solution(id) ON DELETE CASCADE,
+	FOREIGN KEY(exercise_id) REFERENCES exercise(id) ON DELETE CASCADE
 	) ENGINE = InnoDB CHARACTER SET utf8mb4;
