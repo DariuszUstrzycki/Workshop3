@@ -25,7 +25,7 @@ public class User {
 	}
 
 	public User(String username, String email, String password, int userGroupId) {
-		this(0L, username, email, password, 0);
+		this(0L, username, email, password, userGroupId);
 	}
 
 	public User() {

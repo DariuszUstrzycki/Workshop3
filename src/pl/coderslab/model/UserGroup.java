@@ -11,8 +11,7 @@ public class UserGroup {
 	}
 	
 	public UserGroup(String name) {
-		this.id = 0L;
-		this.name = name;
+		this(0L,  name);
 	}
 	
 	public UserGroup() {

@@ -16,7 +16,7 @@
 			<%@include file="/WEB-INF/fragments/unloggedMenu.jspf"%>
 		</c:if>
 		<td><a href='${pageContext.request.contextPath}/test1'>LoggedOnly</a></td>
-		<td><a href='${pageContext.request.contextPath}/admin/panel'>AdminOnly</a></td>
+		<td><a href='${pageContext.request.contextPath}/admin/users?action=list'>AdminOnly</a></td>
 	</tr>
 </table>
 

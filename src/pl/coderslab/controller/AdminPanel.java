@@ -26,6 +26,8 @@ public class AdminPanel extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		System.out.println("Admin panel");
 
 		HttpSession session = request.getSession();
 

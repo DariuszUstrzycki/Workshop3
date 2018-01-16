@@ -66,14 +66,16 @@ if (session.isNew()) {
 	<c:set var = "message" scope='session' value = '${null}'/> <!-- clear message -->
 	</c:if>
 	
+	<%System.out.println("111111111"); %>
+	
 	<!-- display form to add a group -->
 	<c:if test="${not empty param.showForm}">
 	<%@include file="/WEB-INF/fragments/add_group.jspf"%>
 	</c:if>
-	
+	<%System.out.println("2222222222"); %>
 	<!-- display groups -->
 	<%@include file="/WEB-INF/fragments/list_groupDTOs.jspf" %>
-	
+	<%System.out.println("3333333333333333"); %>
 	<!-- display users -->
 	<%@include file="/WEB-INF/fragments/list_userDTOs.jspf" %>
 

@@ -3,9 +3,9 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <%@ page import='java.util.List, pl.coderslab.model.User' %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<% List<User> solutionList = (List<User> )request.getAttribute("usersList"); 
-if(solutionList.size() == 0){%>
+<%System.out.print("usersList attribute is" + request.getAttribute("usersList")); %>
+<% List<User> usersList = (List<User> )request.getAttribute("usersList"); 
+if(usersList.size() == 0){%>
 <h3>There are no users.</h3>
 <%}else {%>
 <table class='displayTable' id='users'>
@@ -21,6 +21,7 @@ if(solutionList.size() == 0){%>
 		</tr>
 	</thead>
 	<tbody>
+	<%System.out.print("usersList is" + usersList); %>
 		<c:forEach var="user"  items="${usersList}" varStatus="status"> 
 			<tr>
 				<td>${user.id}</td>

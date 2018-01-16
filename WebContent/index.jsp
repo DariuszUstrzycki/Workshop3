@@ -16,13 +16,15 @@
 
 
 	<c:if test="${empty loggedUser}">
-		<p>Please sign up or log in to fully use this website. If there
+		<h3 style="color:red;"><b>Please sign up or log in to fully use this website!</b></h3><p> If there
 			are any problems, make sure LoginFilter is not blocking access to a
 			page</p>
 	</c:if>
 	<font color='green'>${message}</font>
 	
+	
 	<ul>
+	<h3>Known bugs and shortcomings</h3>
 	<li>Data resubmission on using back button</li>
 	<li>No refresh on using back button</li>
 	<li>Home page doesnt show the number of solutions declared in web.xml</li>
@@ -30,11 +32,7 @@
 	<li>Null exercises show no user's name</li>
 	<li>You cant edit anything</li>
 	<li>You cant add an attachemnt to an exercise</li>
-	<li></li>
-	<li></li>
-	
-	<li></li>
-	
+	<li>sign up doesnt work</li>
 	</ul>
 	
 	<p>Welcome to the application which enables adding exercises and solutionsContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" Below you can see the latest solutions </p>
