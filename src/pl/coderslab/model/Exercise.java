@@ -15,7 +15,7 @@ public class Exercise {
 	}
 
 	public Exercise(String title, String description, long userId) {
-		this(0L, title, description, 0L);
+		this(0L, title, description, userId);
 	}
 	
 	public Exercise() {
