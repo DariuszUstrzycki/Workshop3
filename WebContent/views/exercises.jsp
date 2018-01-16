@@ -22,12 +22,7 @@ Action is ${param.action}
 <h3><a href='${pageContext.request.contextPath}/exercises?action=create'>Add exercise</a></h3>
 
 
-    <%--form to add solution  --%> 
-	<c:if test="${param.action eq 'create'}">
-	<br>
-		<br>
-		<%@include file="/WEB-INF/fragments/add_solution.jspf"%>
-	</c:if>
+    
 	
 	<!-- form to add exercises -->
 	<c:if test="${param.action eq 'create'}">
