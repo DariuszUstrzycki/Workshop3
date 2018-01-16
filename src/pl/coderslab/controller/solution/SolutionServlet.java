@@ -175,7 +175,6 @@ public class SolutionServlet extends HttpServlet {
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// List<Solution> solutionDtoList = null;
 		 List<SolutionDto> solutionDtoList = null;
 
 		String loadBy = request.getParameter("loadBy");
@@ -185,26 +184,23 @@ public class SolutionServlet extends HttpServlet {
 				case "exId":
 					String exId = request.getParameter("exId");
 					if (exId != null & exId.length() > 0) {
-						//solutionDtoList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
 						solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByExId(Integer.parseInt(exId));
 					}
 					break;
 				case "userId":
 					String userId = request.getParameter("userId");
 					if (userId != null & userId.length() > 0) {
-						//solutionDtoList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
 						solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByUserId(Integer.parseInt(userId));
 					}
 					break;
 				default:
-					//solutionDtoList = (List<Solution>) solDao.loadAllSolutions();
+					
 				}
 			} catch (NumberFormatException e) {
 				response.sendRedirect("solutions");
 				e.printStackTrace();
 			}
 		} else {
-			//solutionDtoList = (List<Solution>) solDao.loadAllSolutions();
 			solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDto();
 		}
 
@@ -213,7 +209,6 @@ public class SolutionServlet extends HttpServlet {
 			return;
 		} else {
 			request.setAttribute("solutionDtoList", solutionDtoList);
-			// request.setAttribute("solutionsDto", solutionDtoList);
 			
 			//show other entities
 			String item = request.getParameter("show");
