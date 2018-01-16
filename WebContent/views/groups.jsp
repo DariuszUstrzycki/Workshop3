@@ -36,7 +36,7 @@
 	<!-- list all groups -->
 	<c:if test="${param.action eq 'list'}">
 	<h2>Groups</h2>
-	<%@include file="/WEB-INF/fragments/all_groups.jspf" %>
+	<%@include file="/WEB-INF/fragments/list_groupDTOs.jspf" %>
 	</c:if>
 
 

@@ -2,20 +2,20 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import='java.util.List, pl.coderslab.model.Solution' %>
+<%@ page import='java.util.List, pl.coderslab.model.SolutionDto' %>
 
 <%=request.getQueryString()%>
 
 <% 
-String deleteView = request.getQueryString();
-if(deleteView != null){
-	deleteView = deleteView.replaceAll("=", "_").replaceAll("&", "_");
+String requestCameFromURL = request.getQueryString();
+if(requestCameFromURL != null){
+	requestCameFromURL = requestCameFromURL.replaceAll("=", "_").replaceAll("&", "_");
 } else {
-	deleteView = "";
+	requestCameFromURL = "";
 }
 %>
 
-<% List<Solution> solutionDtoList = (List<Solution> )request.getAttribute("solutionDtoList"); 
+<% List<SolutionDto> solutionDtoList = (List<SolutionDto> )request.getAttribute("solutionDtoList"); 
 if(solutionDtoList != null & solutionDtoList.size() == 0){%>
 <h3>There are no solutions for this exercise yet. <br>Be the first!</h3>
 <%}else {%>
@@ -37,11 +37,13 @@ if(solutionDtoList != null & solutionDtoList.size() == 0){%>
 			<tr>
 				<td>${dto.solutionId}</td>
 				
-				<td><a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${dto.solutionId}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a><br></td>
+				<td><a href='${pageContext.request.contextPath}/solutions?action=delete&solId=${dto.solutionId}&${pageScope.query}returnTo=<%=requestCameFromURL%>'>Delete</a><br></td>
 				<td>${dto.created}</td>
 				<td>${dto.updated}</td>
 				<td>${dto.description}</td>
-				<td><a href='${dto.attachementId}'>${dto.attachmentName}</a></td>
+				
+				<td><a href='${pageContext.request.contextPath}/solutions?action=download&attachmentId=${dto.attachementId}'>${dto.attachmentName}</a></td>
+				
 				<td><a href='${pageContext.request.contextPath}/exercises?action=view&show=exId&exId=${dto.exerciseId}'>${dto.exerciseTitle}</td>
 				<td>${dto.userName}<br>
 				<a href='${pageContext.request.contextPath}/solutions?action=list&loadBy=userId&show=userId&userId=${dto.userId}'>
@@ -52,7 +54,4 @@ if(solutionDtoList != null & solutionDtoList.size() == 0){%>
 	</tbody>
 </table>
 <%} %>
-
-
-
 

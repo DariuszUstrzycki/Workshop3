@@ -25,7 +25,7 @@
 	<!-- list all users -->
 	<c:if test="${param.action eq 'list'}">
 	<h2>Users</h2>
-	<%@include file="/WEB-INF/fragments/all_users.jspf" %>
+	<%@include file="/WEB-INF/fragments/list_userDTOs.jspf" %>
 	</c:if>
 
 

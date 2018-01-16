@@ -35,6 +35,7 @@ public class MySQLAttachmentDao implements AttachmentDao {
 		
 		String sql = "INSERT INTO attachment (" + foreignKey + ", attachment_name,  mime_content_type, contents ) " 
 				+ "VALUES (?, ?, ?, ?)";
+		
 
 		if (attachment.getId() == 0) {
 			
@@ -64,11 +65,11 @@ public class MySQLAttachmentDao implements AttachmentDao {
 	 * @return the Solution with the given id or null on error or if not found
 	 */
 	@Override
-	public Attachment loadAttachmentById(int id, String attachedTo) {
+	public Attachment loadAttachmentById(int attachementId, String attachedToTableName) {
 		
 		String foreignKey = "";
 
-		switch (attachedTo) {
+		switch (attachedToTableName) {
 		case "solution":
 			foreignKey = "solution_id";
 			break;
@@ -78,12 +79,12 @@ public class MySQLAttachmentDao implements AttachmentDao {
 			break;
 		}
 		
-		String sql = "SELECT * FROM	attachment WHERE " +  foreignKey + "= ?";
+		String sql = "SELECT * FROM	attachment WHERE id= ?";
 		
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)){
 		
-			ps.setLong(1, id);
+			ps.setLong(1, attachementId);
 			
 			try(ResultSet rs = ps.executeQuery()){
 				if (rs.next()) {
@@ -100,11 +101,11 @@ public class MySQLAttachmentDao implements AttachmentDao {
 	
 
 	@Override
-	public Collection<Attachment> loadAttachmentByAttachedToId(long attachedToId, String attachedTo) {
+	public Collection<Attachment> loadAttachmentByAttachedToId(long attachedToId, String attachedToTableName) {
 		
 		String foreignKey = "";
 
-		switch (attachedTo) {
+		switch (attachedToTableName) {
 		case "solution":
 			foreignKey = "solution_id";
 			break;
@@ -119,8 +120,6 @@ public class MySQLAttachmentDao implements AttachmentDao {
 		String sql = "SELECT * FROM attachment " + 
 				     " WHERE " + foreignKey + "= ? "
 				     + " ORDER BY attachment_name";
-		
-		System.out.println(sql);
 		
 		try (Connection conn = DbUtil.getConn(); 
 				PreparedStatement ps = conn.prepareStatement(sql)){

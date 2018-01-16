@@ -54,7 +54,7 @@ Action is ${param.action}
 
 			<!-- list all exercises -->
 			<h2>Exercises</h2>
-			<%@include file="/WEB-INF/fragments/all_exercises.jspf"%>
+			<%@include file="/WEB-INF/fragments/list_exerciseDTOs.jspf"%>
 
 	<%}%>
 

@@ -10,18 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pl.coderslab.dao.MySQLAttachmentDao;
 import pl.coderslab.dao.MySQLSolutionDao;
 import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.SolutionDtoDao;
-import pl.coderslab.model.Attachment;
-import pl.coderslab.model.Solution;
+import pl.coderslab.model.SolutionDto;
 
 @WebServlet({ "/home" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int numberOfDisplayed; // usunac to dziadostwo, bo nigdzie indziej go nie ma
 	private SolutionDao dao = new MySQLSolutionDao(); // inject
+	private final SolutionDtoDao solDtoDao = new SolutionDtoDao();
 
 	@Override
 	public void init() throws ServletException {
@@ -50,16 +49,16 @@ public class HomeServlet extends HttpServlet {
 			System.out.println(">>>>>>>att list size is " + list.size());*/
 		
 		
-		SolutionDtoDao solDtoDao = new SolutionDtoDao();
-		solDtoDao.loadSolutionDto();
-		
+		List<SolutionDto> solutionDtoList =  solDtoDao.loadSolutionDto();
 
-		
-		
-		
-		//////////////////
+		if (solutionDtoList == null) {
+			//response.sendRedirect("solutions"); ???
+			return;
+		} else {
+			request.setAttribute("solutionDtoList", solutionDtoList);
+			
+		}
 
-		loadSolutions(request, response);
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 
 	}
@@ -69,14 +68,6 @@ public class HomeServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void loadSolutions(HttpServletRequest request, HttpServletResponse response) {
-
-		List<Solution> solutionDtoList = (List<Solution>) dao.loadAllSolutions(numberOfDisplayed);
-
-		if (solutionDtoList != null) {
-			Collections.reverse(solutionDtoList); // remove later
-			request.setAttribute("solutionDtoList", solutionDtoList);
-		}
-	}
+	
 
 }

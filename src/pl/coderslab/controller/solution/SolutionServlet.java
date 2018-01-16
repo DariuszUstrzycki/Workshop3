@@ -42,7 +42,7 @@ import pl.coderslab.model.User;
 public class SolutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	SolutionDtoDao solDtoDao = new SolutionDtoDao();
+	private final SolutionDtoDao solDtoDao = new SolutionDtoDao();
 	private final AttachmentDao attachDao = new MySQLAttachmentDao();
 	private final ExerciseDao exDao = new MySQLExerciseDao();
 	private final SolutionDao solDao = new MySQLSolutionDao();
@@ -52,13 +52,20 @@ public class SolutionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		System.out.println("1." + request.getRequestURL());
+		System.out.println("1." + request.getRequestURI());
+		System.out.println("1." + request.getQueryString());
+		System.out.println("before action for switch is " + request.getParameter("action"));
 		String action = request.getParameter("action");
-		if (action == null)
+		if (action == null) {
 			action = "list";
+		}
+		System.out.println("aftewr action for switch is " + action);
 		switch (action) {
-		/*
-		 * case "download": downloadAttachment(request, response); break;
-		 */
+		
+		 case "download": 
+			 downloadAttachment(request, response); 
+			 break;
 		case "create": //solutions?action=create&exId=15 lub solutions?action=create&show=exId&exId=15
 			showForm(request, response); 
 			break;
@@ -73,9 +80,7 @@ public class SolutionServlet extends HttpServlet {
 			listSolutions(request, response); // solutions?action=list&loadBy=exId&show=exId&exId=15
 		}
 
-		System.out.println(request.getRequestURL());
-		System.out.println(request.getRequestURI());
-		System.out.println(request.getQueryString());
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -201,7 +206,7 @@ public class SolutionServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else {
-			solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDto();
+			solutionDtoList =   solDtoDao.loadSolutionDto();
 		}
 
 		if (solutionDtoList == null) {
@@ -237,10 +242,17 @@ public class SolutionServlet extends HttpServlet {
 			return;
 		}
 		
-		//return the same view from which the delete request came
-					
+		response.sendRedirect("solutions" + "?action=list" + getReturnViewURL(request));
+
+	}
+	
+	/**
+	 * @return the same view URL from which the latest request came 
+	 */
+	private String  getReturnViewURL(HttpServletRequest request) {
+		
 		String previousPageData = request.getParameter("returnTo");
-		String returnView = "";
+		String returnViewURL = "";
 		if (previousPageData != null && previousPageData.length() > 0) {
 
 			String listSolutionsForTheUserView = "&loadBy=userId&show=userId&userId=";
@@ -248,16 +260,14 @@ public class SolutionServlet extends HttpServlet {
 
 			if (previousPageData.contains("loadBy_userId_show_" + "userId")) {
 				String userId = previousPageData.replaceAll("[^0-9]", "");
-				returnView += listSolutionsForTheUserView + userId;
+				returnViewURL += listSolutionsForTheUserView + userId;
 			} else if (previousPageData.contains("loadBy_exId_show_"+ "exId")) {
 				String exId = previousPageData.replaceAll("[^0-9]", "");
-				returnView += listSolutionsFortheExerciseView + exId;
+				returnViewURL += listSolutionsFortheExerciseView + exId;
 			}
-
 		}
 		
-		response.sendRedirect("solutions" + "?action=list" + returnView);
-
+		return returnViewURL;
 	}
 	
 	private void showForm(HttpServletRequest request, HttpServletResponse response)
@@ -346,11 +356,54 @@ public class SolutionServlet extends HttpServlet {
 
 	        return attachment;
 	    }
+	 
+	 // solutions?action=list       to musi sie znalexc w returnTO= &loadBy=exId&show=exId&exId=7
 	
-	
+	 //solutions?action=list&loadBy=exId&show=exId&exId=4
+	 //delete link ma: /solutions?action=delete&solId=${solution.id}&${pageScope.query}returnTo=<%=requestCameFromURL%>'>Delete</a><br></td>
+	 //solutions?action=delete&solId=${dto.solutionId}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a>
+	 //<a href='${dto.attachementId}'>${dto.attachmentName}</a>
+	 //solutions?action=download&attachementId=${dto.attachementId} &${pageScope.query}returnTo=<%=requestCameFromURL%>'>${dto.attachmentName}</a>
+	private void downloadAttachment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException { // request.getQueryString() >> action=list&loadBy=exId&show=exId&exId=7
+// ma wrocic pod solutions?action=list? action=list&loadBy=exId&show=exId&exId=7
 
-	/*
-	 * private void downloadAttachment(HttpServletRequest request,
-	 * HttpServletResponse response) throws ServletException, IOException { }
-	 */
+		String attachementIdString = request.getParameter("attachmentId");
+		System.out.println("Entered downloadAtt with attachementIdString: " + attachementIdString);
+		Integer attachementId = null;
+		if (attachementIdString != null && attachementIdString.length() > 0) {
+			try {
+				
+
+				attachementId = Integer.parseInt(attachementIdString);
+				System.out.println("Entered downloadAtt with attachmentId: " + attachementId);
+				Attachment attachment = (Attachment) attachDao.loadAttachmentById(attachementId, "solution");
+				System.out.println("attachment is" + attachment );
+						if (attachment != null) {
+							System.out.println("1. attachment is" + attachment );
+					response.setHeader("Content-Disposition", "attachment; filename=" + attachment.getName());
+					response.setContentType("application/octet-stream");
+					// download rather than display in browser
+					System.out.println("after setting headers: " + attachment );
+					ServletOutputStream stream = response.getOutputStream();
+					System.out.println("Stream is " + stream );
+					stream.write(attachment.getContents());
+					System.out.println("attachment is" + attachment.getContents() );
+				}
+			} catch (NumberFormatException e) {
+				// do nothing ERROR LOG action=download&attachementId=2&  returnTo=action_list_loadBy_exId_show_exId_exId_7
+			}
+		}
+		
+		//response.sendRedirect("solutions" + "?action=list" + getReturnViewURL(request));
+
+		////////////// to ponizej bylo ///////
+		// response.sendRedirect("tickets?action=view&ticketId=" + idString);
+		// return;
+	}
+
+	        
+		 
+	 
+
 }

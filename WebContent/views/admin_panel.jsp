@@ -72,10 +72,10 @@ if (session.isNew()) {
 	</c:if>
 	
 	<!-- display groups -->
-	<%@include file="/WEB-INF/fragments/all_groups.jspf" %>
+	<%@include file="/WEB-INF/fragments/list_groupDTOs.jspf" %>
 	
 	<!-- display users -->
-	<%@include file="/WEB-INF/fragments/all_users.jspf" %>
+	<%@include file="/WEB-INF/fragments/list_userDTOs.jspf" %>
 
 
 </body>

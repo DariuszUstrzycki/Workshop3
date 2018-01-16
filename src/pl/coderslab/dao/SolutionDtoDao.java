@@ -14,7 +14,7 @@ import pl.coderslab.model.SolutionDto;
 
 public class SolutionDtoDao {
 
-	public static List<SolutionDto> loadSolutionDto() {
+	public  List<SolutionDto> loadSolutionDto() {
 
 		ArrayList<SolutionDto> solutionsDto = null;
 		
@@ -52,7 +52,7 @@ public class SolutionDtoDao {
 
 	}
 
-	private static SolutionDto extractSolutionDtoFromRS(ResultSet rs) throws SQLException {
+	private  SolutionDto extractSolutionDtoFromRS(ResultSet rs) throws SQLException {
 
 		SolutionDto loaded = new SolutionDto();
 		loaded.setExerciseId(rs.getLong("exercise.id"));

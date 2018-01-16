@@ -50,7 +50,7 @@ Action is ${param.action}
 
 			<!-- list all solutions -->
 			<h2>Solutions</h2>
-			<%@include file="/WEB-INF/fragments/all_solutions_dto.jspf"%>
+			<%@include file="/WEB-INF/fragments/list_solutionDTOs.jspf"%>
 
 	<%}%>
 		
