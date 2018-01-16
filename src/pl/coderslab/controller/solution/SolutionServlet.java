@@ -175,8 +175,8 @@ public class SolutionServlet extends HttpServlet {
 	private void listSolutions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// List<Solution> solutionsList = null;
-		 List<SolutionDto> solutionsList = null;
+		// List<Solution> solutionDtoList = null;
+		 List<SolutionDto> solutionDtoList = null;
 
 		String loadBy = request.getParameter("loadBy");
 		if (loadBy != null && loadBy.length() > 0) {
@@ -185,35 +185,35 @@ public class SolutionServlet extends HttpServlet {
 				case "exId":
 					String exId = request.getParameter("exId");
 					if (exId != null & exId.length() > 0) {
-						//solutionsList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
-						solutionsList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByExId(Integer.parseInt(exId));
+						//solutionDtoList = (List<Solution>) solDao.loadSolutionsByExId(Integer.parseInt(exId));
+						solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByExId(Integer.parseInt(exId));
 					}
 					break;
 				case "userId":
 					String userId = request.getParameter("userId");
 					if (userId != null & userId.length() > 0) {
-						//solutionsList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
-						solutionsList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByUserId(Integer.parseInt(userId));
+						//solutionDtoList = (List<Solution>) solDao.loadSolutionsByUserId(Integer.parseInt(userId));
+						solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByUserId(Integer.parseInt(userId));
 					}
 					break;
 				default:
-					//solutionsList = (List<Solution>) solDao.loadAllSolutions();
+					//solutionDtoList = (List<Solution>) solDao.loadAllSolutions();
 				}
 			} catch (NumberFormatException e) {
 				response.sendRedirect("solutions");
 				e.printStackTrace();
 			}
 		} else {
-			//solutionsList = (List<Solution>) solDao.loadAllSolutions();
-			solutionsList = (List<SolutionDto>)  solDtoDao.loadSolutionDto();
+			//solutionDtoList = (List<Solution>) solDao.loadAllSolutions();
+			solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDto();
 		}
 
-		if (solutionsList == null) {
+		if (solutionDtoList == null) {
 			response.sendRedirect("solutions");
 			return;
 		} else {
-			request.setAttribute("solutionsList", solutionsList);
-			// request.setAttribute("solutionsDto", solutionsList);
+			request.setAttribute("solutionDtoList", solutionDtoList);
+			// request.setAttribute("solutionsDto", solutionDtoList);
 			
 			//show other entities
 			String item = request.getParameter("show");

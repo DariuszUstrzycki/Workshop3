@@ -15,8 +15,8 @@ if(deleteView != null){
 }
 %>
 
-<% List<Solution> solutionsList = (List<Solution> )request.getAttribute("solutionsList"); 
-if(solutionsList != null & solutionsList.size() == 0){%>
+<% List<Solution> solutionDtoList = (List<Solution> )request.getAttribute("solutionDtoList"); 
+if(solutionDtoList != null & solutionDtoList.size() == 0){%>
 <h3>There are no solutions for this exercise yet. <br>Be the first!</h3>
 <%}else {%>
 <table class='displayTable' id='solutions'>
@@ -33,7 +33,7 @@ if(solutionsList != null & solutionsList.size() == 0){%>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="dto"  items="${requestScope.solutionsList}"> 
+		<c:forEach var="dto"  items="${requestScope.solutionDtoList}"> 
 			<tr>
 				<td>${dto.solutionId}</td>
 				

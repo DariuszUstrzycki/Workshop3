@@ -71,11 +71,11 @@ public class HomeServlet extends HttpServlet {
 
 	private void loadSolutions(HttpServletRequest request, HttpServletResponse response) {
 
-		List<Solution> solutionsList = (List<Solution>) dao.loadAllSolutions(numberOfDisplayed);
+		List<Solution> solutionDtoList = (List<Solution>) dao.loadAllSolutions(numberOfDisplayed);
 
-		if (solutionsList != null) {
-			Collections.reverse(solutionsList); // remove later
-			request.setAttribute("solutionsList", solutionsList);
+		if (solutionDtoList != null) {
+			Collections.reverse(solutionDtoList); // remove later
+			request.setAttribute("solutionDtoList", solutionDtoList);
 		}
 	}
 
