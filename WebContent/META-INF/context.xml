@@ -28,7 +28,7 @@
     data sources, session manager configuration and more. 
     This XML file must contain one Context element, which will be considered as if it was the child of the Host element 
     corresponding to the Host to which the web application is being deployed. -->     
-<Context>
+<Context path="/Workshop3" useHttpOnly="true">
 	<Resource 
 	name="jdbc/school" 
 	auth="Container" 

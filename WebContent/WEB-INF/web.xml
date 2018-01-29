@@ -88,4 +88,38 @@
     <filter-name>AdminAuthFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
+  
+  <!-- Note  As of Servlet 3.0/Java EE 6, you can skip the deployment descriptor and
+configure most of these options programmatically using the ServletContext . Use the
+setSessionTrackingModes method to specify a Set of one or more javax
+.servlet.SessionTrackingMode enum constants. getSessionCookieConfig
+returns a javax.servlet.SessionCookieConfig — use this object to configure any
+of the <cookie-config> settings. You can configure the tracking modes or cookie con-
+figuration only within a ServletContextListener ’s contextInitialized method
+or a ServletContainerInitializer ’s onStartup method. You learn about listeners
+in the “Applying Sessions Usefully” section, and ServletContainerInitializer s in
+Chapter 12. Currently you cannot configure the session timeout programmatically —
+this oversight should be corrected in Java EE 8. -->
+  
+  <!-- since JEE 6 If a browser that supports HttpOnly detects a cookie containing the HttpOnly flag, and client side script code 
+  attempts to read the cookie, the browser returns an empty string as the result. This causes the attack to fail 
+  by preventing the malicious (usually XSS) code from sending the data to an attacker's website-->
+  <session-config>
+	<session-timeout>30</session-timeout> <!-- Tomcat’s default container is 30 -->
+	<cookie-config>
+		<http-only>true</http-only>
+		<secure>false</secure><!-- hould be changed to true only if you have HTTPS enabled. -->
+	</cookie-config>
+	<tracking-mode>COOKIE</tracking-mode> <!-- Specifying COOKIE as the only
+tracking mode tells the container to never embed sessions in URLs and always assume the user has
+cookies enabled. -->
+	
+	<!-- <tracking-mode>URL</tracking-mode>The container only embeds session IDs in URLs. It does not use cookies or SSL
+session IDs. This approach is not very secure. which technique the container should use for tracking session IDs. -->
+
+	<!-- The container uses SSL Session IDs as HTTP session IDs. This method is the most
+secure approach available but requires all requests to be HTTPS for it to work properly. <tracking-mode>SSL</tracking-mode> -->
+</session-config>
+  
+  
 </web-app>

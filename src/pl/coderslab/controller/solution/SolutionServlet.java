@@ -49,6 +49,7 @@ public class SolutionServlet extends HttpServlet {
 	private final UserDao userDao = new MySQLUserDao();
 	private final String theView = "/views/solutions.jsp";
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -83,6 +84,7 @@ public class SolutionServlet extends HttpServlet {
 		
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -94,7 +96,7 @@ public class SolutionServlet extends HttpServlet {
 			createSolution(request, response);
 			break;
 		case "list":
-		default:
+		default: 
 			response.sendRedirect("solutions");
 			break;
 		}
@@ -189,13 +191,13 @@ public class SolutionServlet extends HttpServlet {
 				case "exId":
 					String exId = request.getParameter("exId");
 					if (exId != null & exId.length() > 0) {
-						solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByExId(Integer.parseInt(exId));
+						solutionDtoList = solDtoDao.loadSolutionDtoByExId(Integer.parseInt(exId));
 					}
 					break;
 				case "userId":
 					String userId = request.getParameter("userId");
 					if (userId != null & userId.length() > 0) {
-						solutionDtoList = (List<SolutionDto>)  solDtoDao.loadSolutionDtoByUserId(Integer.parseInt(userId));
+						solutionDtoList = solDtoDao.loadSolutionDtoByUserId(Integer.parseInt(userId));
 					}
 					break;
 				default:
@@ -247,7 +249,7 @@ public class SolutionServlet extends HttpServlet {
 	}
 	
 	/**
-	 * @return the same view URL from which the latest request came 
+	 * @return the same view (URL) from which the latest request came 
 	 */
 	private String  getReturnViewURL(HttpServletRequest request) {
 		
@@ -357,16 +359,8 @@ public class SolutionServlet extends HttpServlet {
 	        return attachment;
 	    }
 	 
-	 // solutions?action=list       to musi sie znalexc w returnTO= &loadBy=exId&show=exId&exId=7
-	
-	 //solutions?action=list&loadBy=exId&show=exId&exId=4
-	 //delete link ma: /solutions?action=delete&solId=${solution.id}&${pageScope.query}returnTo=<%=requestCameFromURL%>'>Delete</a><br></td>
-	 //solutions?action=delete&solId=${dto.solutionId}&${pageScope.query}returnTo=<%=deleteView%>'>Delete</a>
-	 //<a href='${dto.attachementId}'>${dto.attachmentName}</a>
-	 //solutions?action=download&attachementId=${dto.attachementId} &${pageScope.query}returnTo=<%=requestCameFromURL%>'>${dto.attachmentName}</a>
 	private void downloadAttachment(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // request.getQueryString() >> action=list&loadBy=exId&show=exId&exId=7
-// ma wrocic pod solutions?action=list? action=list&loadBy=exId&show=exId&exId=7
+			throws ServletException, IOException { 
 
 		String attachementIdString = request.getParameter("attachmentId");
 		System.out.println("Entered downloadAtt with attachementIdString: " + attachementIdString);
@@ -377,7 +371,7 @@ public class SolutionServlet extends HttpServlet {
 
 				attachementId = Integer.parseInt(attachementIdString);
 				System.out.println("Entered downloadAtt with attachmentId: " + attachementId);
-				Attachment attachment = (Attachment) attachDao.loadAttachmentById(attachementId, "solution");
+				Attachment attachment = attachDao.loadAttachmentById(attachementId, "solution");
 				System.out.println("attachment is" + attachment );
 						if (attachment != null) {
 							System.out.println("1. attachment is" + attachment );
@@ -395,11 +389,6 @@ public class SolutionServlet extends HttpServlet {
 			}
 		}
 		
-		//response.sendRedirect("solutions" + "?action=list" + getReturnViewURL(request));
-
-		////////////// to ponizej bylo ///////
-		// response.sendRedirect("tickets?action=view&ticketId=" + idString);
-		// return;
 	}
 
 	        
